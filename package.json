@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development node build/webpack.dev.js",
+    "dev": "cross-env NODE_ENV=development node build/webpack.dev.js --host 0.0.0.0",
     "start": "cross-env NODE_ENV=development node build/webpack.dev.js",
     "build": "cross-env NODE_ENV=produce node build/webpack.produce.js",
     "test": "echo \"Error: no test specified\" && exit 1"

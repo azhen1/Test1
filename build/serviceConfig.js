@@ -1,6 +1,6 @@
 let serviceList = {
     port: 8080,
-    host: '0.0.0.0'
+    host: '47.96.31.91'
 }
 
 module.exports = serviceList
