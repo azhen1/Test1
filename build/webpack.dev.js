@@ -22,6 +22,7 @@ var server = new WebpackDevServer(compiler, {
     inline: true,
     compress: true,
     disableHostCheck: true,
+    host: serviceList.host,
     stats: {
         chunks: false,
         children: false,
