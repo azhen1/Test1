@@ -192,6 +192,7 @@ const Login = React.createClass({
                     window.localStorage.setItem('userName', userName)
                     window.localStorage.setItem('companyName', companyName)
                     window.localStorage.setItem('logoPic', logoPic)
+                    window.localStorage.setItem('memberId', data.memberId)
                     _th.setState({
                         hasSubmit: false,
                         memberId: res.data.memberId,
@@ -200,9 +201,8 @@ const Login = React.createClass({
                         userPosition: res.data.userPosition,
                         logoPic: res.data.logoPic
                     }, () => {
-                        // let {memberId, companyName, userName, userPosition, logoPic} = _th.state
+                        // let {memberId} = _th.state
                         // let hash = `memberId=${memberId}&companyName=${companyName}&userName=${userName}&userPosition=${userPosition}&logoPic=${logoPic}`
-                        // window.localStorage.setItem('memberId', memberId)
                         window.location.hash = `／`
                     })
                 }

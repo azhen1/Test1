@@ -1,12 +1,13 @@
 var webpack = require('webpack');
 var WebpackDevServer = require('webpack-dev-server');
 var config = require('./webpack.config.js');
+var serviceList = require('./serviceConfig.js')
 
-let hot = true;
+var hot = true;
 //publicPath设置虚拟内存中资源访问的路径，不同于path属性，path是设置webpack打包以后的路径
-config.output.publicPath = 'http://127.0.0.1:8081/';
+config.output.publicPath = `http://${serviceList.host}:${serviceList.port}/`;
 //设置in-line模式
-config.entry.main.unshift("webpack-dev-server/client?http://127.0.0.1:8081/");
+config.entry.main.unshift(`webpack-dev-server/client?http://${serviceList.host}:${serviceList.port}/`);
 //方便调试
 config.devtool = 'source-map';
 //in-line模式热加载开关
@@ -20,6 +21,7 @@ var server = new WebpackDevServer(compiler, {
     hot: hot,
     inline: true,
     compress: true,
+    disableHostCheck: true,
     stats: {
         chunks: false,
         children: false,
@@ -48,6 +50,6 @@ var server = new WebpackDevServer(compiler, {
         }
     }
 });
-server.listen(8081, '127.0.0.1', function () {
-    console.log('server start on 127.0.0.1:8081');
+server.listen(serviceList.port, serviceList.host, function () {
+    console.log(`server start on ${serviceList.host}:${serviceList.port}`);
 });

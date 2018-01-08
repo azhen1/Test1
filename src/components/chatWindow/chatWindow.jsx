@@ -161,6 +161,7 @@ let ChatWindow = React.createClass({
         }
     },
     onMessageFn (res) {
+        console.log(213123213)
         let {memberId, toId} = this.state
         let {onInfoFn} = this.props
         let hash = window.location.hash

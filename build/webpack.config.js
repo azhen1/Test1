@@ -18,7 +18,7 @@ var config = {
         path: ROOT + '/dist',
         filename: _DEV_ ? 'js/[name].js' : 'js/[name].[chunkhash:8].js',
         //按需加载时，对应生成的文件名
-        chunkFilename:  _DEV_ ? 'js/[name].js':'js/[name].[chunkHash:8].js'
+        chunkFilename:  _DEV_ ? 'js/[name].js' : 'js/[name].[chunkHash:8].js'
     },
     module: {
         loaders: [
