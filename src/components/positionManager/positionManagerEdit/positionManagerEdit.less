@@ -1,0 +1,227 @@
+.positionManagerEdit {
+  width: calc(~"100% - 200px");
+  background-color: #E6F5FF;
+  margin-left: 200px;
+  margin-top: 90px;
+  padding-left: 10px;
+  padding-top: 10px;
+  height: 100%;
+  .editForm {
+    background-color: #fff;
+    width: 1200px;
+    margin-left: 50%;
+    transform: translate(-50%, 0);
+    border-radius: 4px;
+    padding-top: 30px;
+    padding-left: 20px;
+    padding-right: 20px;
+    height: 100%;
+    .ant-select-selection__placeholder {
+      color: rgba(0,0,0,.65);
+    } 
+    .lab {
+      font-size: 14px;
+      color: #999999;
+      margin-right: 20px;
+    }
+    .publishPosition {
+      margin-bottom: 20px;
+      .juTi {
+        margin: 20px 0 20px 0;
+      }
+    }
+    .jobTitle {
+      margin-bottom: 20px;
+    }
+    .screen {
+      margin-bottom: 20px;
+      .ant-cascader-input::-webkit-input-placeholder{
+        color: rgba(0,0,0,.65);
+      }
+      .ant-cascader-input:-moz-placeholder {
+        color: rgba(0,0,0,.65);
+      }
+      .ant-cascader-input::-moz-placeholder {
+        color: rgba(0,0,0,.65);
+      }
+      .ant-cascader-input:-ms-input-placeholder{
+        color: rgba(0,0,0,.65);
+      }
+    }
+    .welfareLable {
+      margin-bottom: 20px;
+      .lab {
+        vertical-align: top;
+      }
+      .itemBox {
+        display: inline-block;
+        width: calc(~"100% - 80px");
+      }
+      .val {
+        display: inline-block;
+        position: relative;
+        text-align: center;
+        padding: 0 20px;
+        font-size: 14px;
+        margin-right: 10px;
+        border: 1px solid #25CCF6;
+        border-radius: 2px;
+        height: 30px;
+        line-height: 30px;
+        cursor: pointer;
+        margin-bottom: 10px;
+        &:hover .close{
+          display: block;
+        }
+        .close {
+          position: absolute;
+          right: -8px;
+          top: -8px;
+          width: 16px;
+          height: 16px;
+          border-radius: 50%;
+          color: #fff;
+          background-color: #F56767;
+          line-height: 14px;
+          text-align: center;
+          cursor: pointer;
+          display: none;
+        }
+      }
+      .custom {
+        display: inline-block;
+        font-size: 14px;
+        margin-right: 10px;
+        border: 1px solid #25CCF6;
+        border-radius: 2px;
+        height: 30px;
+        line-height: 30px;
+        width: 90px;
+        text-align: center;
+        color: #25CCF6;
+        cursor: pointer;
+      }
+    }
+    .jobDescribe {
+      margin-bottom: 20px;
+      .lab {
+        vertical-align: top;
+      }
+    }
+    .jobPlace {
+      margin-bottom: 20px;
+      .juTi {
+        margin: 20px 0 20px 0;
+      }
+    }
+    .shangJin {
+      margin-bottom: 20px;
+      .lab {
+        vertical-align: top;
+      }
+      .mianBan {
+        display: inline-block;
+        padding: 20px;
+        width: 600px;
+        border: 1px solid #EBEBEB;
+        border-radius: 2px;
+        .audition {
+          margin-bottom: 10px;
+        }
+        .labC {
+          color: #25CCF6;
+          font-size: 14px;
+          margin-right: 16px;
+          vertical-align: top;
+        }
+        .val {
+          display: inline-block;
+          width: 90px;
+          position: relative;
+          text-align: center;
+          font-size: 14px;
+          margin-right: 10px;
+          background: #EBEBEB;
+          border-radius: 2px;
+          height: 30px;
+          line-height: 30px;
+          margin-bottom: 10px;
+          cursor: pointer;
+          &:hover .close{
+            display: block;
+          }
+          .close {
+            position: absolute;
+            right: -8px;
+            top: -8px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            color: #fff;
+            background-color: #F56767;
+            line-height: 14px;
+            text-align: center;
+            cursor: pointer;
+            display: none;
+          }
+        }
+        .activeChioce {
+          border: 1px solid #25CCF6;
+          background-color: #fff;
+        }
+        .chioceInput {
+          background-color: #fff;
+          border: 1px solid #25CCF6;
+        }
+        .custom {
+          display: inline-block;
+          font-size: 14px;
+          margin-right: 10px;
+          border: 1px solid #25CCF6;
+          border-radius: 2px;
+          height: 30px;
+          line-height: 30px;
+          width: 90px;
+          text-align: center;
+          color: #25CCF6;
+          cursor: pointer;
+        }
+        .itemBox {
+          display: inline-block;
+          width: 490px;
+        }
+      }
+    }
+    .confirm {
+      padding-bottom: 28px;
+      text-align: center;
+      .btn {
+        display: inline-block;
+        width: 130px;
+        height: 50px;
+        line-height: 50px;
+        text-align: center;
+        background-color: #25CCF6;
+        border-radius: 25px;
+        font-size: 20px;
+        color: #FFFFFF;
+        cursor: pointer;
+        user-select: none;
+      }
+    }
+  }
+  .selectNullClass {
+    .ant-select-selection {
+      border-color: red;
+    }
+    .ant-input {
+      border-color: red;
+    }
+  }
+}
+.positionPopupCName {
+  .ant-cascader-menu {
+    width: 200px;
+    height: 250px;
+  }
+}

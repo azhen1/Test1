@@ -1,0 +1,227 @@
+.app_header {
+  height: 90px;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  line-height: 90px;
+  background-color: #fff;
+  box-shadow: 5px 0 10px 0;
+  z-index: 10;
+  .left {
+    float: left;
+    .app_logo {
+      display: inline-block;
+      width: 64px;
+      height: 64px;
+      margin-left: 36px;
+      margin-top: 11px;
+      background: url("../../images/logo.jpg") no-repeat;
+      background-size: 100% 100%;
+      vertical-align: top;
+      cursor: pointer;
+    }
+    .name {
+      font-size: 24px;
+      color: #333333;
+      margin-left: 20px;
+    }
+    .operate {
+      display: inline-block;
+      >span {
+        display: inline-block;
+        height: 20px;
+        width: 20px;
+        margin-left: 60px;
+        cursor: pointer;
+      }
+      .info {
+        background: url("../../images/info.png") no-repeat;
+        background-size: 100% 100%;
+        position: relative;
+        .weiDu_info {
+          display: inline-block;
+          width: 20px;
+          height: 20px;
+          border-radius: 50%;
+          color: #fff;
+          background-color: #25CCF6;
+          text-align: center;
+          line-height: 20px;
+          position: absolute;
+          top: -10px;
+          right: -10px;
+        }
+      }
+      .hint {
+        background: url("../../images/xinXi.png") no-repeat;
+        background-size: 100% 100%;
+        position: relative;
+        .weiDu_hint {
+          width: 20px;
+          height: 20px;
+          border-radius: 50%;
+          color: #fff;
+          background-color: #25CCF6;
+          text-align: center;
+          line-height: 20px;
+          position: absolute;
+          top: -10px;
+          right: -10px;
+          display: none;
+        }
+      }
+    }
+  }
+  .right {
+    float: right;
+    .company {
+      display: inline-block;
+      vertical-align: top;
+      line-height: 26px;
+      margin-top: 20px;
+      margin-right: 20px;
+      .HR {
+        font-size: 20px;
+        color: #999999;
+      }
+      .ascription {
+        color: #999999;
+        font-size: 14px;
+      }
+    }
+    .head_pic {
+      display: inline-block;
+      height: 64px;
+      width: 64px;
+      background-color: red;
+      margin-top: 13px;
+      vertical-align: top;
+      cursor: pointer;
+    }
+    .operate_item {
+      display: inline-block;
+      height: 90px;
+      width: 90px;
+      // background: linear-gradient(to bottom, #10F8C4 , #00D4FF);
+      background: url("../../images/tuiChu.png");
+      background-size: 100% 100%;
+      margin-left: 30px;
+      cursor: pointer;
+    }
+  }
+}
+.app_tab {
+  width: 200px;
+  position: fixed;
+  left: 0;
+  top: 90px;
+  background-color: #fff;
+  height: calc(~"100% - 90px");
+  z-index: 9;
+  .tab_item_box1 {
+    &:hover .iconBox_Tab1 {
+      background: url("../../images/zhiWeiGuanliSle.png") no-repeat;
+      background-size: 100% 100%;
+    }
+    &:hover .tab_item {
+      color: #25CCF6;
+    }
+  }
+  .tab_item_box2 {
+    &:hover .iconBox_Tab2 {
+      background: url("../../images/mianshiGLSel.png") no-repeat;
+      background-size: 100% 100%;
+    }
+    &:hover .tab_item {
+      color: #25CCF6;
+    }
+  }
+  .tab_item_box3 {
+    &:hover .iconBox_Tab3 {
+      background: url("../../images/qiYeXinXiSel.png") no-repeat;
+      background-size: 100% 100%;
+    }
+    &:hover .tab_item {
+      color: #25CCF6;
+    }
+  }
+  .tab_item_box4 {
+    &:hover .iconBox_Tab4 {
+      background: url("../../images/yuEGuanLiSel.png") no-repeat;
+      background-size: 100% 100%;
+    }
+    &:hover .tab_item {
+      color: #25CCF6;
+    }
+  }
+  .tab_item_box5 {
+    &:hover .iconBox_Tab5 {
+      background: url("../../images/jingJiRenSel.png") no-repeat;
+      background-size: 100% 100%;
+    }
+    &:hover .tab_item {
+      color: #25CCF6;
+    }
+  }
+  .tab_item {
+    &:hover {
+      color: #25CCF6;
+    }
+  }
+  .iconBox_Tab {
+    display: inline-block;
+    width: 16px;
+    height: 14px;
+    vertical-align: middle;
+    margin-right: 20px;
+  }
+  .iconBox_Tab1 {
+    background: url("../../images/zhiWeiGuanli.png") no-repeat;
+    background-size: 100% 100%;
+  }
+  .iconBox_Tab2 {
+    background: url("../../images/mianshiGL.png") no-repeat;
+    background-size: 100% 100%;
+  }
+  .iconBox_Tab3 {
+    background: url("../../images/qiYeXinXi.png") no-repeat;
+    background-size: 100% 100%;
+  }
+  .iconBox_Tab4 {
+    background: url("../../images/yuEGuanLi.png") no-repeat;
+    background-size: 100% 100%;
+  }
+  .iconBox_Tab5 {
+    background: url("../../images/jingJiRen.png") no-repeat;
+    background-size: 100% 100%;
+  }
+  .ant-menu {
+    background-color: #fff;
+    border-right: 0;
+    .ant-menu-item {
+      height: 60px;
+      line-height: 60px;
+      text-align: left;
+      font-size: 18px;
+      color: #666666;
+    }
+  }
+  .ant-menu-submenu-title {
+    height: 60px;
+    line-height: 60px;
+    font-size: 18px;
+    color: #666666;
+    text-align: left;
+    &:after {
+      font-size: 18px !important;
+    }
+  }
+  .ant-menu-inline .ant-menu-item:after {
+    border-right: 0;
+  }
+  .ant-menu-item-selected {
+    background-color: rgba(235, 235, 235, 0.2) !important;
+    color: #25CCF6 !important;
+  }
+}

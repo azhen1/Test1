@@ -1,0 +1,410 @@
+.BusinessInfo {
+  width: calc(~"100% - 200px");
+  background-color: #E6F5FF;
+  margin-left: 200px;
+  margin-top: 90px;
+  padding-left: 10px;
+  padding-top: 10px;
+  height: calc(~"100% + 10px");
+  .content {
+    width: 1200px;
+    margin-left: 50%;
+    transform: translate(-50%, 0);
+    border-radius: 4px;
+    min-height: calc(~"100% - 10px");
+    background-color: #fff;
+    .showText {
+      font-size: 14px;
+    }
+    .BusinessEdit {
+      display: inline-block;
+      width: 850px;
+      padding-left: 20px;
+      padding-top: 40px;
+      padding-right: 30px;
+      border-right: 1px dashed #E0E0E0;
+      .businessName {
+        height: 108px;
+        border-bottom: 1px dashed #E0E0E0;
+        position: relative;
+        .businessLogo, .name, .editIcon {
+          display: inline-block;
+        }
+        .businessLogo {
+          display: inline-block;
+          vertical-align: text-bottom;
+          .ant-upload-select-picture-card {
+            border-radius: 50%;
+            background-color: #F7FBFF;
+            text-align: center;
+            border: 0;
+            width: 88px;
+            height: 88px;
+          }
+          .ant-upload-list-item {
+            bottom: 0;
+            border-radius: 50%;
+          }
+        }
+        .showLogo {
+          display: inline-block;
+          width: 88px;
+          height: 88px;
+          border-radius: 50%;
+          background-size: 100% 100%;
+        }
+        .name {
+          vertical-align: bottom;
+          top: 32px;
+          left: 92px;
+          margin-left: 18px;
+          position: absolute;
+          .busi {
+            font-size: 20px;
+            color: #333333;
+            margin-right: 10px;
+          }
+          .attestation {
+            display: inline-block;
+            height: 20px;
+            line-height: 20px;
+            width: 70px;
+            text-align: center;
+            background: #25CCF6;
+            border-radius: 4px;
+            color: #fff;
+          }
+          .des {
+            font-size: 14px;
+            color: #999999;
+            margin-top: 4px;
+          }
+        }
+        .editIcon {
+          position: absolute;
+          top: 56px;
+          right: 0;
+          cursor: pointer;
+        }
+      }
+      .tongJi {
+        height: 80px;
+        border-bottom: 1px dashed #E0E0E0;
+        display: flex;
+        span {
+          display: inline-block;
+          flex: 1;
+          text-align: center;
+          padding-top: 14px;
+        }
+        .count {
+          font-size: 20px;
+          color: #333333;
+        }
+        .type {
+          font-size: 14px;
+          color: #999999;
+        }
+      }
+      .tab {
+        .til {
+          height: 48px;
+          line-height: 48px;
+          font-size: 18px;
+          padding-left: 40px;
+          cursor: pointer;
+          user-select: none;
+          margin-bottom: 20px;
+          span {
+            display: inline-block;
+            height: 48px;
+            margin-right: 60px;
+            border-bottom: 2px solid #fff;
+            &:hover {
+              color: #25CCF6;
+            }
+          }
+          .tabActive {
+            color: #25CCF6;
+            border-bottom: 2px solid #25CCF6;
+          }
+        }
+        .introduceBox {
+          .introduce {
+            margin-bottom: 20px;
+          }
+          .lableCls {
+            font-size: 14px;
+            color: #999999;
+            margin-right: 20px;
+            vertical-align: top;
+          }
+          .environment {
+            .Upload {
+              display: inline-block;
+            }
+            .environmentPics {
+              display: inline-block;
+              height: 96px;
+              width: 96px;
+              background-size: 90% 90% !important;
+              margin-right: 10px;
+              border: 1px solid #d9d9d9;
+              border-radius: 4px;
+              padding: 10px;
+              background-position: 5px 5px !important;
+            }
+          }
+          .service {
+            margin-bottom: 20px;
+            margin-top: 20px;
+          }
+          .position {
+            margin-bottom: 10px;
+            .add {
+              display: inline-block;
+              width: 24px;
+              height: 24px;
+              background-color: #25CCF6;
+              color: #fff;
+              font-size: 24px;
+              vertical-align: middle;
+              border-radius: 50%;
+              line-height: 24px;
+              cursor: pointer;
+              margin-left: 32px;
+            }
+            .positionList {
+              display: inline-block;
+              width: 500px;
+              vertical-align: top;
+            }
+          }
+          .diTu {
+            margin-bottom: 50px;
+            #diTuBox, .posEdit {
+              display: inline-block;
+              height: 200px;
+              width: 300px;
+            }
+            .posEdit {
+              width: 280px;
+              border: 1px solid rgba(151,151,151,0.20);
+              border-left: 0;
+              padding-left: 9px;
+              overflow-y: auto;
+              .editBox {
+                height: 60px;
+                padding-top: 10px;
+                font-size: 14px;
+                color: #666666;
+                .shengShi {
+                  margin-bottom: 6px;
+                  position: relative;
+                  span {
+                    display: inline-block;
+                    height: 20px;
+                    width: 20px;
+                    border-radius: 50%;
+                    color: #fff;
+                    text-align: center;
+                    line-height: 20px;
+                    background-color: #25CCF6;
+                    margin-right: 10px;
+                  }
+                  .del {
+                    font-size: 12px;
+                    display: inline-block;
+                    color: #25CCF6;
+                    font-style: normal;
+                    cursor: pointer;
+                    position: absolute;
+                    right: 10px;
+                    top: 28px;
+                    &:hover {
+                      opacity: 0.8;
+                    }
+                  }
+                }
+                .roadDiZhi {
+                  margin-bottom: 8px;
+                  margin-left: 30px;
+                  margin-right: 30px;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  white-space: nowrap;
+                }
+                .line {
+                  height: 1px;
+                  border-bottom: 1px dashed #E0E0E0;
+                  margin-left: 30px;
+                  margin-bottom: 8px;
+                }
+                .total {
+                  padding-left: 30px;
+                  span {
+                    font-size: 14px;
+                    color: #25CCF6;
+                    margin: 0 5px;
+                  }
+                }
+              }
+            }
+            #diTuBox {
+              vertical-align: top;
+              .anchorBL {
+                display: none !important;
+              }
+            }
+          }
+          .save {
+            text-align: center;
+            cursor: pointer;
+            margin-bottom: 60px;
+            span {
+              display: inline-block;
+              width: 130px;
+              height: 50px;
+              border-radius: 25px;
+              line-height: 50px;
+              background: #25CCF6;
+              text-align: center;
+              color: #fff;
+              font-size: 20px;
+            }
+          }
+        }
+        .curJobItemCla {
+          .oneItem {
+            border-bottom: 1px solid #E0E0E0;
+            padding-left: 20px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            .jibType {
+              font-size: 20px;
+              color: #333333;
+            }
+            .info {
+              margin-bottom: 16px;
+              span {
+                color: #999999;
+              }
+              .shuXian {
+                display: inline-block;
+                width: 1px;
+                height: 14px;
+                vertical-align: middle;
+                margin: 0 5px;
+                background-color: #999999;
+              }
+            }
+            .result {
+              height: 38px;
+              line-height: 38px;
+              border-top: 1px dashed #E0E0E0;
+              color: #999999;
+              span {
+                margin-right: 20px;
+              }
+            }
+          }
+        }
+      }
+    }
+    .BasicInfo {
+      padding-left: 20px;
+      display: inline-block;
+      vertical-align: top;
+      .title {
+        height: 60px;
+        line-height: 60px;
+        font-size: 18px;
+        color: #666666;
+        width: 310px;
+        border-bottom: 1px dashed #E0E0E0;
+        margin-bottom: 18px;
+      }
+      .form {
+        .lableL {
+          font-size: 14px;
+          color: #999999;
+          vertical-align: top;
+          margin-right: 20px;
+        }
+        .hangYe, .people, .city, .date {
+          margin-bottom: 20px;
+        }
+        .BasicInfoSelNullClass .ant-select-selection {
+          border-color: red;
+        }
+      }
+      .dateNull .ant-calendar-picker-input {
+        border-color: red;
+      }
+      .lightPoint, .lightFuli {
+        .til {
+          font-size: 18px;
+          color: #666666;
+          padding-bottom: 18px;
+          border-bottom: 1px dashed #E0E0E0;
+          margin-bottom: 18px;
+        }
+      }
+      .lightPointList, .lightFuli {
+        display: inline-block;
+        width: 310px;
+        .item {
+          display: inline-block;
+          padding: 0 18px;
+          font-size: 14px;
+          color: #25CCF6;
+          border: 1px solid #25CCF6;
+          border-radius: 4px;
+          height: 30px;
+          line-height: 30px;
+          margin-bottom: 10px;
+          margin-right: 10px;
+          cursor: pointer;
+          position: relative;
+          &:hover .close {
+            display: inline-block;
+          }
+          .close {
+            height: 16px;
+            line-height: 14px;
+            text-align: center;
+            width: 16px;
+            font-size: 14px;
+            background-color: #F56767;
+            color: #fff;
+            border-radius: 50%;
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            display: none;
+          }
+        }
+      }
+      .save {
+        text-align: right;
+        span {
+          display: inline-block;
+          width: 130px;
+          height: 50px;
+          border-radius: 25px;
+          color: #fff;
+          font-size: 20px;
+          background-color: #25CCF6;
+          text-align: center;
+          cursor: pointer;
+          line-height: 50px;
+        }
+      }
+    }
+  }
+  .selectNullClass {
+    .ant-select-selection {
+      border-color: red;
+    }
+  }
+}

@@ -1,0 +1,230 @@
+.BalanceManager {
+  width: calc(~"100% - 200px");
+  background-color: #E6F5FF;
+  margin-left: 200px;
+  margin-top: 90px;
+  padding-left: 10px;
+  padding-top: 10px;
+  // min-height: calc(~"100% + 10px");
+  height: calc(~"100% + 10px");
+  .my_pagination {
+    padding-right: 20px;
+    margin-top: 20px;
+  }
+  .content {
+    width: 1200px;
+    margin-left: 50%;
+    transform: translate(-50%, 0);
+    border-radius: 4px;
+    min-height: calc(~"100% - 10px");
+    background-color: #fff;
+    padding-bottom: 50px;
+    .header {
+      height: 120px;
+      border-bottom: 1px solid #E0E0E0;
+      display: flex;
+      font-size: 14px;
+      color: #999999;
+      padding-top: 24px;
+      .curBalance, .freezeBalance {
+        flex: 1;
+        text-align: center;
+      }
+      .curBalance .val_b {
+        margin-bottom: 8px;
+        span {
+          font-size: 32px;
+          color: #25CCF6;
+          margin-left: 20px;
+        }
+      }
+      .freezeBalance {
+        .freeze_b {
+          margin-bottom: 8px;
+          span {
+            font-size: 32px;
+            color: #666666;
+            margin-left: 20px;
+          }
+        }
+        .tongJiList {
+          i {
+            font-style: normal;
+            font-size: 18px;
+            color: #25CCF6;
+            margin: 0 5px;
+          }
+        }
+      }
+    }
+    .detail {
+      padding: 0 20px;
+      .search {
+        height: 68px;
+        border-bottom: 1px dashed #E0E0E0;
+        padding-top: 18px;
+        .detailBalance {
+          font-size: 18px;
+          color: #666666;
+          margin-right: 60px;
+        }
+        .date {
+          font-size: 14px;
+          color: #666666;
+          margin-right: 20px;
+        }
+        .btn {
+          width: 106px;
+          height: 30px;
+          display: inline-block;
+          background: #25CCF6;
+          border-radius: 2px;
+          font-size: 14px;
+          color: #FFFFFF;
+          line-height: 30px;
+          cursor: pointer;
+          user-select: none;
+        }
+      }
+      .ant-calendar-picker {
+        margin-right: 10px;
+        width: 254px;
+        .ant-calendar-picker-input {
+          background-color: #E6F5FF;
+        }
+        .ant-calendar-picker-icon {
+          &::after {
+            font-size: 16px;
+            color: #25CCF6;
+          }
+        }
+      }
+    }
+    .itemBalance {
+      padding: 0 20px;
+      padding-top: 10px;
+      .itemBox {
+        margin-bottom: 14px;
+        span {
+          font-size: 14px;
+          color: #999999;
+        }
+        .type {
+          display: inline-block;
+          width: 100px;
+        }
+        .count {
+          float: right;
+        }
+        .shuoMing {
+          span {
+            margin-right: 30px;
+          }
+        }
+      }
+    }
+    .operate {
+      margin-top: 40px;
+      text-align: center;
+      span {
+        display: inline-block;
+        width: 130px;
+        height: 50px;
+        line-height: 50px;
+        color: #fff;
+        font-size: 20px;
+        text-align: center;
+        background: #25CCF6;
+        border-radius: 25px;
+        cursor: pointer;
+      }
+      .rechargeBtn {
+        margin-right: 80px;
+      }
+    }
+    .rechargePage, .refundPage {
+      padding: 100px 410px 0 410px;
+      .title {
+        .c_count {
+          font-size: 20px;
+          color: #666666;
+          margin-right: 54px;
+        }
+        .c_type {
+          font-size: 14px;
+          color: #25CCF6;
+        }
+        margin-bottom: 20px;
+      }
+      .ipt, .iptRefund, .iptRefund1{
+        margin-bottom: 20px;
+        .ant-input {
+          border-right: 0;
+          border-left: 0;
+          border-radius: 0;
+          height: 68px;
+          text-align: center;
+          font-size: 32px;
+          color: #333333;
+          &:focus {
+            box-shadow: none;
+            border-color: #d9d9d9;
+          }
+          &:hover {
+            border-color: #d9d9d9;
+          }
+        }
+      }
+      .iptRefund {
+        margin-bottom: 0;
+        .c_count {
+          font-size: 20px;
+          color: #666666;
+          margin-right: 54px;
+        }
+      }
+      .iptRefund1 {
+        margin-top: 20px;
+        .ant-input {
+          margin-top: 20px;
+        }
+      }
+      .qiChong {
+        font-size: 14px;
+        color: #999999;
+        opacity: .6;
+        text-align: center;
+        margin-bottom: 50px;
+      }
+      .confirm {
+        text-align: center;
+        margin-bottom: 20px;
+        margin-top: 20px;
+        span, input {
+          display: inline-block;
+          font-size: 20px;
+          color: #FFFFFF;
+          background-color: #25CCF6;
+          width: 200px;
+          height: 50px;
+          line-height: 50px;
+          text-align: center;
+          border-radius: 25px;
+          cursor: pointer;
+          user-select: none;
+          border: 0;
+          font-style: normal;
+          &:focus {
+            outline: none;
+          }
+        }
+      }
+      .xieYi {
+        font-size: 14px;
+        color: #25CCF6;
+        text-align: center;
+        cursor: pointer;
+      }
+    }
+  }
+}

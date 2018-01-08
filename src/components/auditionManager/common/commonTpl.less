@@ -1,0 +1,118 @@
+.auditionManager {
+  .tplClass {
+    display: inline-block;
+    margin-right: 10px;
+    font-size: 14px;
+    .pic {
+      display: inline-block;
+      height: 120px;
+      width: 120px;
+      background-color: #cfedf0;
+      vertical-align: top;
+      border-radius: 4px;
+    }
+    .tplCont {
+      display: inline-block;
+      margin-right: 20px;
+      .top {
+        background-color: #fff;
+        .showPeople, .line, .place {
+          display: inline-block;
+        }
+        .showPeople {
+          width: 280px;
+          height: 82px;
+          border-bottom: 1px dashed #E0E0E0;
+          margin-left: 30px;
+          .jianJie {
+            margin-top: 14px;
+            margin-bottom: 5px;
+            .name {
+              font-size: 20px;
+              color: #333333;
+              margin-right: 10px;
+            }
+            .trade {
+              display: inline-block;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              vertical-align: text-bottom;
+            }
+          }
+          .basicInfo {
+            .shuXian {
+              display: inline-block;
+              width: 1px;
+              height: 14px;
+              vertical-align: middle;
+              background-color: #999999;
+              margin: 0 5px;
+            }
+            .jobStates {
+              display: inline-block;
+              width: 40px;
+              height: 20px;
+              line-height: 20px;
+              text-align: center;
+              margin-left: 10px;
+              background: #25CCF6;
+              border-radius: 4px;
+              color: #fff;
+              font-size: 14px;
+              vertical-align: text-bottom;
+              float: right;
+            }
+          }
+        }
+        .line {
+          height: 68px;
+          width: 1px;
+          background-color: #E0E0E0;
+          margin: 0 40px;
+          vertical-align: bottom;
+        }
+        .place {
+          width: 504px;
+          height: 82px;
+          border-bottom: 1px dashed #E0E0E0;
+          .placeTil {
+            margin-top: 14px;
+            margin-bottom: 5px;
+            font-size: 20px;
+            color: #333333;
+          }
+          .basicInfo {
+            .shuXian {
+              display: inline-block;
+              width: 1px;
+              height: 14px;
+              vertical-align: bottom;
+              background-color: #999999;
+              margin: 0 5px;
+            }
+          }
+        }
+      }
+      .bottom {
+        padding-left: 30px;
+        cursor: pointer;
+        padding-top: 10px;
+        user-select: none;
+        color: #25CCF6;
+        .lianXi {
+          margin-left: 304px;
+          .icon {
+            display: inline-block;
+            width: 22px;
+            height: 22px;
+            background: url("../../../images/info.png") no-repeat;
+            background-size: 100% 100%;
+            vertical-align: middle;
+            margin-right: 14px;
+          }
+        }
+      }
+    }
+  }
+}
