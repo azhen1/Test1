@@ -25,12 +25,24 @@ let FriendTabList = React.createClass({
                 return a.date - b.date
             })
             copyReadCache.forEach((v, index) => {
+                let has = false
+                let tarIndex = 0
+                let value = {...v}
                 friendList.forEach((vF, indexF) => {
                     if (v.toId === vF.toId) {
-                        let target = friendList.splice(indexF, 1)
-                        friendList.unshift(target[0])
+                        // let target = friendList.splice(indexF, 1)
+                        // friendList.unshift(target[0])
+                        has = true
+                        tarIndex = indexF
+                        value = {...vF}
                     }
                 })
+                if (has) {
+                    friendList.splice(tarIndex, 1)
+                    friendList.unshift(value)
+                } else {
+                    friendList.unshift(value)
+                }
             })
             console.log(friendList, ';;;;;')
             this.props.friendListChangeFn(friendList)

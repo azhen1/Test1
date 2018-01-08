@@ -4,9 +4,9 @@ var config = require('./webpack.config.js');
 
 let hot = true;
 //publicPath设置虚拟内存中资源访问的路径，不同于path属性，path是设置webpack打包以后的路径
-config.output.publicPath = 'http://127.0.0.1:8080/';
+config.output.publicPath = 'http://127.0.0.1:8081/';
 //设置in-line模式
-config.entry.main.unshift("webpack-dev-server/client?http://127.0.0.1:8080/");
+config.entry.main.unshift("webpack-dev-server/client?http://127.0.0.1:8081/");
 //方便调试
 config.devtool = 'source-map';
 //in-line模式热加载开关
@@ -48,6 +48,6 @@ var server = new WebpackDevServer(compiler, {
         }
     }
 });
-server.listen(8080, '127.0.0.1', function () {
-    console.log('server start on 127.0.0.1:8080');
+server.listen(8081, '127.0.0.1', function () {
+    console.log('server start on 127.0.0.1:8081');
 });
