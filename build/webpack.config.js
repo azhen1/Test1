@@ -83,6 +83,7 @@ var config = {
                 //注意，使用url-loader要额外安装file-loader，不然会报错
                 loaders: [
                     'url-loader?limit=8192&name=imgs/[name].[hash:8].[ext]'
+                    // 'url-loader?limit=8192&name=imgs/[name].[hash:8].[ext]'
                     // 'image-webpack-loader'  //压缩图片
                 ]
             }
@@ -109,7 +110,8 @@ var config = {
         //    // 随着 入口chunk 越来越多，这个配置保证没其它的模块会打包进 公共chunk
         }),
         //css文件打包
-        new ExtractTextPlugin("css/[name].[contenthash:8].css"),
+        // new ExtractTextPlugin("css/[name].[contenthash:8].css"),
+        new ExtractTextPlugin("css/[name].css"),
         new webpack.LoaderOptionsPlugin({
             options: {
                 //加css3前缀
