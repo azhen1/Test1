@@ -1,0 +1,5 @@
+面试管理：
+GET /platformInterview/interviewManager     // 面试管理模块，待处理；待面试；已面试；待入职；已入职；全部推荐list查询接口
+
+职位管理：
+GET /platformPosition/queryByPage           // 在招职位，审核中，已下list查询
