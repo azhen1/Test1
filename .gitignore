@@ -3,3 +3,5 @@ cache
 npm-debug.log
 .idea
 build/serviceConfig.js
+mock
+dist
