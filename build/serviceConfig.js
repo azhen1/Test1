@@ -11,7 +11,7 @@ for (var dev in ifaces) {
 }
 var serviceList = {
     port: 8080,
-    host: iptable.en1
+    host: '192.168.0.106'
 }
 
 module.exports = serviceList
