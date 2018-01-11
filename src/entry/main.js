@@ -19,12 +19,14 @@ import AnditionDetails from '../components/auditionManager/auditionDetails'
 import AgentDetails from '../components/agentPage/agentDetails'
 import Certification from '../components/user/certification'
 import ChatWindow from '../components/chatWindow/chatWindow'
+import JCWebsite from '../components/JCWebsite/JCWebsite'
 
 render(<Router history={hashHistory}>
         <Route path="login" component={Login}/>
         <Route path="register" component={Register}/>
         <Route path="forget" component={ForgetPassword}/>
         <Route path="certification" component={Certification}/>
+        <Route path="jcWebsite" component={JCWebsite}/>
         <Redirect from="/" to="/positionManager"/>
         <Route path="/" component={App}>
             <Redirect from="/positionManager" to="positionManager/recruitIng"/>

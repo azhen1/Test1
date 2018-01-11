@@ -1,5 +1,6 @@
 import $ from 'jquery'
 
+let uuid = window.localStorage.getItem('sessionUuid')
 let getRequest = (async, url, data) => {
     return new Promise(function (resolve, reject) {
         $.ajax({
@@ -7,6 +8,9 @@ let getRequest = (async, url, data) => {
             async: async,
             url: url,
             data: data,
+            headers: {
+                Authorization: uuid === null ? '' : `DingYi ${uuid}`
+            },
             success: function (response) {
                 resolve(response)
             },
@@ -23,6 +27,9 @@ let deleteRequest = (async, url, data) => {
             async: async,
             url: url,
             data: data,
+            headers: {
+                Authorization: uuid === null ? '' : `DingYi ${uuid}`
+            },
             success: function (response) {
                 resolve(response)
             },
@@ -40,6 +47,9 @@ let postRequest = (async, url, data, contentType) => {
                 async: async,
                 url: url,
                 data: data,
+                headers: {
+                    Authorization: uuid === null ? '' : `DingYi ${uuid}`
+                },
                 contentType: 'application/json; charset=utf-8',
                 success: function (response) {
                     resolve(response)
@@ -54,6 +64,9 @@ let postRequest = (async, url, data, contentType) => {
                 async: async,
                 url: url,
                 data: data,
+                headers: {
+                    Authorization: uuid === null ? '' : `DingYi ${uuid}`
+                },
                 success: function (response) {
                     resolve(response)
                 },

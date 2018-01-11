@@ -17,7 +17,6 @@ let FriendTabList = React.createClass({
         // 检测是否有未读信息，并做好未读标记
         let unReadCache = window.sessionStorage.getItem('UNREADCACHE')
         let showWDUDom = Array.from(document.getElementsByClassName('showWDU'))
-        console.log(unReadCache, '/////')
         if (unReadCache !== null) {
             // 未读信息按照时间顺序排序
             let copyReadCache = JSON.parse(unReadCache)
@@ -44,8 +43,9 @@ let FriendTabList = React.createClass({
                     friendList.unshift(value)
                 }
             })
-            console.log(friendList, ';;;;;')
+            // console.log(friendList, ';;;;;')
             this.props.friendListChangeFn(friendList)
+            this.props.toIdChangeFn(friendList[0].toId)
             JSON.parse(unReadCache).forEach((vU, indexU) => {
                 showWDUDom.forEach((vS, indexS) => {
                     let idS = vS.id.split('_')[2]

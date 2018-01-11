@@ -43,7 +43,7 @@ const App = React.createClass({
         let URL = 'member/company/uuidCheck'
         let formData = {}
         if (sessionUuid === null) {
-            window.location.hash = 'login'
+            window.location.hash = 'JCWebsite'
         } else {
             formData.uuid = sessionUuid
             postRequest(false, URL, formData).then(function (res) {

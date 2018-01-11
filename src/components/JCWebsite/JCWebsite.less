@@ -1,0 +1,470 @@
+.jcWebsite {
+  position: relative;
+  .header_jc {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5vw;
+    z-index: 11;
+    padding-left: 16%;
+    padding-right: 16%;
+    .logo {
+      display: inline-block;
+      width: 9.9vw;
+      height: 2.6vw;
+      background: url("../../images/logo.jpeg") no-repeat;
+      background-size: 100% 100%;
+      margin-top: 1.2vw;
+    }
+    .operate {
+      float: right;
+      margin-top: 1.2vw;
+      a {
+        text-decoration: none;
+        position: relative;
+        font-size: 0.8vw;
+        color: #fff;
+        margin-right: 1.8vw;
+        display: inline-block;
+        height: 1.3vw;
+        // border-bottom: 3px solid red;
+        span {
+          content: '';
+          display: none;
+          height: 0.118vw;
+          width: 100%;
+          background: linear-gradient(to right, #10F8C4, #00D4FF);
+          background: -webkit-linear-gradient(to right, #10F8C4, #00D4FF);
+          background: -o-linear-gradient(to right, #10F8C4, #00D4FF);
+          background: -moz-linear-gradient(to right, #10F8C4, #00D4FF);
+          position: absolute;
+          bottom: -0.2vw;
+          left: 0;
+        }
+        &:hover span {
+          display: inline-block;
+        }
+      }
+      .login_jc {
+        padding: 0.8vw 1.4vw;
+        border: 0.15vw solid #10F8C4;
+        line-height: 0.1vw;
+      }
+      .erWeiMa {
+        position: relative;
+        div {
+          position: absolute;
+          width: 6vw;
+          height: 6vw;
+          background-color: #00D4FF;
+          border-radius: 4px;
+          left: -1.4vw;
+        }
+      }
+    }
+  }
+  .banner1, .banner2 {
+    height: 53vw;
+    background: url("../../images/广告1 底图@1x.png") no-repeat;
+    background-size: 100% 100%;
+    position: relative;
+    .textBox {
+      text-align: center;
+      padding-top: 20%;
+      .title {
+        color: #fff;
+        font-size: 2vw;
+        margin-bottom: 24px;
+      }
+      .cont {
+        color: #fff;
+        font-size: 0.7vw;
+        margin-bottom: 24px;
+      }
+      .knowMore {
+        display: inline-block;
+        color: #fff;
+        font-size: 0.6vw;
+        border-radius: 4px;
+        padding: 0.2vw 0.6vw;
+        background: linear-gradient(to right, #10F8C4, #00D4FF);
+        background: -webkit-linear-gradient(to right, #10F8C4, #00D4FF);
+        background: -o-linear-gradient(to right, #10F8C4, #00D4FF);
+        background: -moz-linear-gradient(to right, #10F8C4, #00D4FF);
+        cursor: pointer;
+      }
+    }
+    .point1 {
+      display: inline-block;
+      height: 2.57vw;
+      width: 3.5vw;
+      background: url("../../images/点位@1x.png");
+      position: absolute;
+      // top: 58%;
+      top: -100px;
+      left: 12%;
+      z-index: 10;
+      background-size: 100% 100%;
+      &::after {
+        content: '';
+        display: inline-block;
+        background: url("../../images/定位 @1x.png");
+        position: relative;
+        top: -1.95vw;
+        left: 0.468vw;
+        width: 2.85vw;
+        height: 3.125vw;
+        background-size: 100% 100%;
+      }
+    }
+    .point1Car {
+      top: 58%;
+    }
+    .point2 {
+      display: inline-block;
+      height: 2.57vw;
+      width: 3.5vw;
+      background: url("../../images/点位@1x.png");
+      position: absolute;
+      // top: 50%;
+      top: -100px;
+      right: 12%;
+      z-index: 10;
+      background-size: 100% 100%;
+      &::after {
+        content: '';
+        display: inline-block;
+        width: 2.85vw;
+        height: 3.125vw;
+        background: url("../../images/定位 @1x.png");
+        position: relative;
+        top: -1.95vw;
+        left: 0.468vw;
+        background-size: 100% 100%;
+      }
+    }
+    .point2Car {
+      top: 50%;
+    }
+    .line1, .line2, .line3, .line4 {
+      position: absolute;
+      display: inline-block;
+      height: 0.39vw;
+      background-color: #fff;
+    }
+    .line1 {
+      top: 60%;
+      left: 14%;
+      // width: 11%;
+      width: 0;
+      transform: rotate(-38deg);
+      transform-origin: left;
+    }
+    .line1Car {
+      width: 11%;
+    }
+    .line2 {
+      top: 47%;
+      left: 22.5%;
+      // width: 37%;
+      width: 0;
+      transform: rotate(33deg);
+      transform-origin: left;
+    }
+    .line2Car {
+      width: 37%;
+    }
+    .line3 {
+      top: 85.5%;
+      left: 53.5%;
+      // width: 28%;
+      width: 0;
+      transform: rotate(303deg);
+      transform-origin: left;
+    }
+    .line3Car {
+      width: 28%;
+    }
+    .line4 {
+      top: 41%;
+      left: 68.6%;
+      // width: 18%;
+      width: 0;
+      transform: rotate(379deg);
+      transform-origin: left;
+    }
+    .line4Car {
+      width: 18%;
+    }
+  }
+  .banner2 {
+    height: 53vw;
+    background: url("../../images/广告2 底图@1x.png") no-repeat;
+    background-size: 100% 100%;
+    position: relative;
+    .xuanZhuan {
+      display: inline-block;
+      width: 30vw;
+      height: 18.5vw;
+      background: url("../../images/电脑@1x.png") no-repeat;
+      background-size: 100% 100%;
+      position: absolute;
+      top: 42%;
+      left: 56%;
+      span {
+        display: inline-block;
+        width: 75%;
+        height: 76%;
+        background: url("../../images/computer.jpeg") no-repeat;
+        background-size: 100% 100%;
+        position: relative;
+        top: 1.28vw;
+        left: 3.79vw;
+      }
+    }
+    .textBox {
+        padding-right: 38vw;
+        padding-top: 23%;
+      .cont {
+        span {
+          margin-left: 2.5vw;
+        }
+      }
+    }
+  }
+  .bannerRotate {
+    height: 53vw;
+    background: url("../../images/广告2 底图@1x.png") no-repeat;
+    background-size: 100% 100%;
+    position: relative;
+    .xuanZhuan {
+      display: inline-block;
+      width: 30vw;
+      height: 18.5vw;
+      background: url("../../images/电脑@1x.png") no-repeat;
+      background-size: 100% 100%;
+      position: absolute;
+      top: 42%;
+      left: 56%;
+      .dianNaoDi {
+        content: '';
+        display: inline-block;
+        width: 75.3%;
+        height: 77%;
+        background: url("../../images/电脑底@1x.png") no-repeat;
+        background-size: 100% 100%;
+        position: relative;
+        top: 6%;
+        left: 12.5%;
+        .biaoPan {
+          display: inline-block;
+          height: 79%;
+          width: 50%;
+          background: url("../../images/表盘@1x.png") no-repeat;
+          background-size: 100% 100%;
+          position: relative;
+          left: 25%;
+          top: 10%;
+        }
+        .suoDing {
+          display: inline-block;
+          height: 42%;
+          width: 27%;
+          background: url("../../images/锁定@1x.png") no-repeat;
+          background-size: 100% 100%;
+          position: relative;
+          left: -13%;
+          top: -7%;
+        }
+        .zhiZhen {
+          display: inline-block;
+          height: 5vw;
+          width: 5vw;
+          background: url("../../images/shaomiao.jpeg") no-repeat;
+          background-size: 100% 100%;
+          position: relative;
+          left: -46.5%;
+          top: -25%;
+          transition:all 3s;
+          transform-origin: 92% 92%;
+        }
+      }
+    }
+  }
+  .jieFang, .wenDu, .jingZhun {
+    height: 62.5vw;
+    background: url("../../images/1@2x.png") no-repeat;
+    background-size: 100% 100%;
+    .textBox {
+      text-align: center;
+      padding-top: 4%;
+      .title {
+        font-size: 2vw;
+        margin-bottom: 24px;
+        color: #001F63;
+      }
+      .cont {
+        font-size: 0.7vw;
+        margin-bottom: 24px;
+        color: #001F63;
+      }
+    }
+  }
+  .wenDu {
+    .textBox {
+      padding-top: 6%;
+    }
+  }
+  .jingZhun {
+    .textBox {
+      padding-top: 0;
+    }
+    .textBox1 {
+      text-align: center;
+      padding-top: 41%;
+      .title {
+        font-size: 2vw;
+        margin-bottom: 24px;
+        color: #001F63;
+      }
+      .cont {
+        font-size: 0.7vw;
+        margin-bottom: 24px;
+        color: #001F63;
+      }
+    }
+  }
+  .guanJia {
+    height: 75vw;
+    background: url("../../images/2@2x.png") no-repeat;
+    background-size: 100% 100%;
+    .textBox {
+      text-align: left;
+      padding-top: 8%;
+      padding-left: 23%;
+      .title {
+        font-size: 2vw;
+        margin-bottom: 24px;
+        color: #001F63;
+      }
+      .cont {
+        font-size: 0.7vw;
+        margin-bottom: 24px;
+        color: #001F63;
+      }
+      .item {
+        font-size: 0.7vw;
+        color: #999999;
+        margin-bottom: 10px;
+        &:before {
+          content: '';
+          display: inline-block;
+          width: 0.4vw;
+          height: 0.4vw;
+          border-radius: 50%;
+          margin-right: 20px;
+          vertical-align: baseline;
+          background: linear-gradient(to bottom, #10F8C4, #00D4FF);
+          background: -webkit-linear-gradient(to bottom, #10F8C4, #00D4FF);
+          background: -o-linear-gradient(to bottom, #10F8C4, #00D4FF);
+          background: -moz-linear-gradient(to bottom, #10F8C4, #00D4FF);
+        }
+      }
+    }
+    .textBox1 {
+      text-align: right;
+      padding-top: 16%;
+      padding-right: 18%;
+      .title {
+        font-size: 2vw;
+        margin-bottom: 24px;
+        color: #001F63;
+      }
+      .cont {
+        font-size: 0.7vw;
+        margin-bottom: 24px;
+        color: #001F63;
+      }
+      .item {
+        font-size: 0.7vw;
+        color: #999999;
+        margin-bottom: 10px;
+        &:after {
+          content: '';
+          display: inline-block;
+          width: 0.4vw;
+          height: 0.4vw;
+          border-radius: 50%;
+          margin-left: 20px;
+          vertical-align: baseline;
+          background: linear-gradient(to bottom, #10F8C4, #00D4FF);
+          background: -webkit-linear-gradient(to bottom, #10F8C4, #00D4FF);
+          background: -o-linear-gradient(to bottom, #10F8C4, #00D4FF);
+          background: -moz-linear-gradient(to bottom, #10F8C4, #00D4FF);
+        }
+      }
+    }
+  }
+  .wenDu {
+    height: 52.4vw;
+    background: url("../../images/3@2x.png") no-repeat;
+    background-size: 100% 100%;
+  }
+  .jingZhun {
+    height: 102vw;
+    background: url("../../images/4@2x.png") no-repeat;
+    background-size: 100% 100%;
+  }
+  .footer {
+    height: 6.25vw;
+    background: url("../../images/5@2x.png") no-repeat;
+    background-size: 100% 100%;
+    font-size: 0.7vw;
+    color: #fff;
+    padding-left: 29%;
+    padding-right: 20%;
+    padding-top: 1.9vw;
+    position: relative;
+    .email {
+      .ads {
+        float: right;
+      }
+    }
+    .tel {
+      position: absolute;
+      top: 3.7vw;
+      width: 51%;
+      .bianHao {
+        float: right;
+        font-size: 0.6vw;
+      }
+    }
+    .comAdress {
+      position: absolute;
+      top: 3.7vw;
+      left: 18.9vw;
+    }
+  }
+  .ant-carousel {
+    ul {
+      li {
+        button {
+          width: 2vw !important;
+          height: 0.4vw !important;
+          margin-right: 0.5vw;
+        }
+      }
+    }
+    .slick-dots {
+      top: 40%;
+      left: -18%;
+    }
+  }
+  .twoClaByCar {
+    .slick-dots {
+      top: 36%;
+      left: 0%;
+    }
+  }
+}

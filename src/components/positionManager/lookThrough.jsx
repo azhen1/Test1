@@ -35,7 +35,7 @@ let LookThrough = React.createClass({
                                         <span title={`${v.entryBid}元`}>{`${v.entryBid}元`}</span>
                                     </div>
                                     <div className='operate_items' style={{marginLeft: '76px'}}>
-                                        <span className='edit' onClick={(e) => this.itemClickFn(e, `/positionManager/recruitIngEdit?type=edit&id=${v.id}`)}>编辑</span>
+                                        <span className='edit editLookTh' onClick={(e) => this.itemClickFn(e, `/positionManager/recruitIngEdit?type=edit&id=${v.id}`)}>编辑</span>
                                         {/* <span className='down' onClick={() => this.props.onUnder(v.id)}>下架</span> */}
                                     </div>
                                 </div>

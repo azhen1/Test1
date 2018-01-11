@@ -2,6 +2,7 @@ import React from 'react'
 import {getRequest, postRequest} from '../../common/ajax'
 import {message, Pagination} from 'antd'
 import './information.less'
+import util from '../../common/util'
 
 let Information = React.createClass({
     getInitialState () {
@@ -68,7 +69,7 @@ let Information = React.createClass({
                                 <span className='type'>{v.type}</span>
                                 <span className='shuoMing'>
                                     <span>{v.msg}</span>
-                                    <span style={{float: 'right'}}>{v.timestamp}</span>
+                                    <span style={{float: 'right'}}>{util.getDateTimeStr(new Date(parseInt(v.timestamp)))}</span>
                                 </span>
                                 <span className='count'>{v.count}</span>
                             </div>

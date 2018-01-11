@@ -2,8 +2,10 @@ import React from 'react'
 import './chatWindow.less'
 import util from '../../common/util'
 import FriendTabList from './friendTabList'
-import Header from '../layout/Header'
+import {getRequest, postRequest} from '../../common/ajax'
 import RightWindow from './rightWindow'
+import {message} from 'antd'
+import $ from 'jquery'
 
 let ChatWindow = React.createClass({
     getInitialState () {
@@ -30,6 +32,11 @@ let ChatWindow = React.createClass({
             msg: val
         })
     },
+    toIdChangeFn (val) {
+        this.setState({
+            toId: val
+        })
+    },
     toggleChat (index) {
         let {memberId, toId, magList} = this.state
         let showWDuDom = Array.from(document.getElementsByClassName('showWDU'))
@@ -50,6 +57,7 @@ let ChatWindow = React.createClass({
     },
     componentWillMount () {
         window.addEventListener('beforeunload', this.unloadFn, false)
+        // window.localStorage.removeItem('FRIENDLIST_LIST_ITEM')
     },
     // 监听页面刷新
     unloadFn () {
@@ -60,6 +68,7 @@ let ChatWindow = React.createClass({
     },
     componentDidMount () {
         // let sessionUuid = window.localStorage.getItem('sessionUuid')
+        this.reqFriendFn()
         let memberId = window.localStorage.getItem('memberId')
         let hash = window.location.hash
         let {friendList} = this.state
@@ -90,7 +99,6 @@ let ChatWindow = React.createClass({
         } else {
             if (friendList.length > 0) {
                 let idTo = friendList[0].toId
-                console.log(idTo, 'idToidTo')
                 this.setState({
                     toId: idTo,
                     friendList: friendList
@@ -145,7 +153,7 @@ let ChatWindow = React.createClass({
         let {Socket, memberId, toId, magList, msg} = this.state
         if (msg !== '') {
             let date = util.getDateTimeStr(new Date())
-            let data = {from: memberId, to: toId, msg: msg, type: 'online', timestamp: date, identity: '1', msgtype: '0'}
+            let data = {id: `${toId} ${date}`, from: memberId, to: toId, msg: msg, type: 'online', timestamp: date, identity: '1', msgtype: '0'}
             Socket.send(JSON.stringify(data))
             magList.push(data)
             this.setState({
@@ -161,14 +169,14 @@ let ChatWindow = React.createClass({
         }
     },
     onMessageFn (res) {
-        console.log(213123213)
         let {memberId, toId} = this.state
         let {onInfoFn} = this.props
         let hash = window.location.hash
         let showWDuDom = Array.from(document.getElementsByClassName('showWDU'))
         console.log(res, '被动推送')
-        if (res.data !== 'SUCCESS' && res.data !== '') {
-            let data = JSON.parse(`${res.data}`)
+        let resultCopy = JSON.parse(res.data)
+        if (resultCopy.hasOwnProperty('count') || !resultCopy.hasOwnProperty('result')) {
+            let data = resultCopy
             if (data.hasOwnProperty('count') && data.hasOwnProperty('values')) {
                 // 系统推送消息窗口设置
                 this.props.onInfoFn(data)
@@ -217,14 +225,43 @@ let ChatWindow = React.createClass({
             }
         }
     },
+    //  查询用户信息
+    reqFriendFn (id) {
+        let URL = 'member/platformMember/batchQueryMember'
+        let uuid = window.localStorage.getItem('sessionUuid')
+        let result = {}
+        let formData = {}
+        formData.memberIds = 27
+        $.ajax({
+            type: 'GET',
+            async: false,
+            url: URL,
+            data: formData,
+            headers: {
+                Authorization: uuid === null ? '' : `DingYi ${uuid}`
+            },
+            success: function (res) {
+                if (res.code === 0) {
+                    result = {...res.data[0]}
+                }
+            },
+            error: function (err) {
+                message.error(err)
+            }
+        })
+        return result
+    },
     // 判断未读信息数量与类型
     weiDuInfoCount (showWDuDom, data, toId, type) {
+        let {friendList} = this.state
         if (type === 'online') {
             if (data.from !== toId) {
+                let hasItem = false
                 showWDuDom.forEach((v, index) => {
                     let id = v.id.split('_')[2]
                     if (data.from === id) {
                         let curHtml = v.innerHTML
+                        hasItem = true
                         if (parseInt(curHtml) + 1 > 9) {
                             v.innerHTML = '...'
                         } else {
@@ -233,9 +270,33 @@ let ChatWindow = React.createClass({
                         v.style.display = 'inline-block'
                     }
                 })
+                if (!hasItem) {
+                    let friendInfo = this.reqFriendFn(data.from)
+                    let date = Date.parse(new Date())
+                    friendList.push({toId: data.from, count: 1, date: date, name: friendInfo.name, headUrl: friendInfo.headUrl})
+                    this.setState({
+                        friendList: friendList
+                    }, () => {
+                        let showWDuDomNew = Array.from(document.getElementsByClassName('showWDU'))
+                        showWDuDomNew.forEach((v, index) => {
+                            let id = v.id.split('_')[2]
+                            if (data.from === id) {
+                                let curHtml = v.innerHTML
+                                hasItem = true
+                                if (parseInt(curHtml) + 1 > 9) {
+                                    v.innerHTML = '...'
+                                } else {
+                                    v.innerHTML = parseInt(curHtml) + 1
+                                }
+                                v.style.display = 'inline-block'
+                            }
+                        })
+                    })
+                }
             }
         } else {
             let fromId = data.from
+            let friendInfo = this.reqFriendFn(fromId)
             let unReadCache = window.sessionStorage.getItem('UNREADCACHE')
             let date = Date.parse(new Date())
             if (unReadCache !== null) {
@@ -251,11 +312,11 @@ let ChatWindow = React.createClass({
                 if (has) {
                     unReadCache[terIndex].count = ++unReadCache[terIndex].count
                 } else {
-                    unReadCache.push({toId: fromId, count: 1, date: date})
+                    unReadCache.push({toId: fromId, count: 1, date: date, name: friendInfo.name, headUrl: friendInfo.headUrl})
                 }
             } else {
                 unReadCache = []
-                unReadCache.push({toId: fromId, count: 1, date: date})
+                unReadCache.push({toId: fromId, count: 1, date: date, name: friendInfo.name, headUrl: friendInfo.headUrl})
             }
             window.sessionStorage.setItem('UNREADCACHE', JSON.stringify(unReadCache))
         }
@@ -279,13 +340,14 @@ let ChatWindow = React.createClass({
     render () {
         let {memberId, magList, msg, friendList, toId} = this.state
         let {type} = this.props
-        let propertyList = {onSendFn: this.onSendFn, msgChange: this.msgChange, memberId: memberId, magList: magList, msg: msg, toggleChat: this.toggleChat, friendList: friendList, goTop: this.goTop, toId: toId, friendListChangeFn: this.friendListChangeFn}
+        let propertyList = {toIdChangeFn: this.toIdChangeFn, onSendFn: this.onSendFn, msgChange: this.msgChange, memberId: memberId, magList: magList, msg: msg, toggleChat: this.toggleChat, friendList: friendList, goTop: this.goTop, toId: toId, friendListChangeFn: this.friendListChangeFn}
         if (type !== 'init') {
             return (
                 <div className='ChatWindow'>
-                    <div className='content'>
-                        <FriendTabList {...propertyList}/>
-                        <RightWindow {...propertyList}/>
+                    <div className={friendList.length > 0 ? 'content' : 'content contentNull'}>
+                        {friendList.length > 0 ? null : <div className='messageNulltext'>暂无消息</div>}
+                        {friendList.length > 0 ? <FriendTabList {...propertyList}/> : null}
+                        {friendList.length > 0 ? <RightWindow {...propertyList}/> : null}
                     </div>
                 </div>
             )

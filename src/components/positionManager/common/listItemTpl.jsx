@@ -1,10 +1,31 @@
 import React from 'react'
 import './listItemTpl.less'
-import util from '../../../common/util'
+import addressData from '../../../common/area'
 
 let ListItemTpl = React.createClass({
     itemClickFn (router) {
         window.location.hash = router
+    },
+    filterCityFn (province, city) {
+        let result = ''
+        if (province === '110100' || province === '120100' || province === '310100' || province === '500100') {
+            addressData.forEach((v, index) => {
+                if (v.id === province) {
+                    result = v.value
+                }
+            })
+        } else {
+            addressData.forEach((v, index) => {
+                if (v.id === province) {
+                    v.children.forEach((vC, indexC) => {
+                        if (vC.id === city) {
+                            result = vC.value
+                        }
+                    })
+                }
+            })
+        }
+        return result
     },
     render () {
         let {listItemArr, curTab} = this.props
@@ -14,7 +35,7 @@ let ListItemTpl = React.createClass({
                     {listItemArr.title}
                 </div>
                 <div className='baseInfo'>
-                    <span>{listItemArr.city}</span>
+                    <span>{this.filterCityFn(listItemArr.province, listItemArr.city)}</span>
                     <span className='breakUp'> </span>
                     <span>{listItemArr.workExperience}</span>
                     <span className='breakUp'> </span>

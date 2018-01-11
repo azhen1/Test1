@@ -81,7 +81,6 @@ let AgentDetails = React.createClass({
     render () {
         let {recondsList, dataList} = this.state
         let imgsURL = 'http://dingyi.oss-cn-hangzhou.aliyuncs.com/images/'
-        console.log(dataList, '////????')
         return (
             <div className='AgentDetails' style={this.heightAgentDetails() ? {height: 'auto'} : {height: 'calc(100% + 10px)'}}>
                 <div className='content'>
