@@ -1,0 +1,121 @@
+.app_Box {
+  position: relative;
+  .header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5vw;
+    z-index: 11;
+    padding-left: 16%;
+    padding-right: 16%;
+  }
+  .banner {
+    height: 53vw;
+    background: url("../../images/关于我们底图.png") no-repeat;
+    background-size: 100% 100%;
+    position: relative;
+    .bigLogo{
+      text-align: center;
+      padding-top:15%;
+      span{
+        display: inline-block;
+        width:15vw;
+        height:15vw;
+        background:url("../../images/logo大.png") no-repeat center;
+        background-size:100% 100%;
+      }
+    }
+    .textBox {
+      text-align: center;
+      padding-top: 2%;
+      .title {
+        color: #fff;
+        font-size: 2.2vw;
+        margin-bottom: 24px;
+      }
+      .cont {
+        color: #fff;
+        font-size: 0.9vw;
+        margin-bottom: 24px;
+      }
+      .knowMore {
+        display: inline-block;
+        color: #fff;
+        font-size: 0.6vw;
+        border-radius: 4px;
+        padding: 0.2vw 0.6vw;
+        background: linear-gradient(to right, #10F8C4, #00D4FF);
+        background: -webkit-linear-gradient(to right, #10F8C4, #00D4FF);
+        background: -o-linear-gradient(to right, #10F8C4, #00D4FF);
+        background: -moz-linear-gradient(to right, #10F8C4, #00D4FF);
+        cursor: pointer;
+      }
+    }
+    .showMore{
+      width:1.2vw;
+      height:0.6vw;
+      background:url("../../images/Arrow Down Icon@1x.png") no-repeat center;
+      background-size:contain;
+      position:absolute;
+      bottom:5%;
+      left:50%;
+      margin-left:-0.6vw;
+      cursor:pointer;
+    }
+  }
+  .container{
+    padding:0px 20% 6%;
+    .boxIntro{
+      padding-top:4vw;
+      .title{
+        font-size:2.2vw;
+        color:#001F63;
+        margin-bottom:1.6vw;
+      }
+      p{
+        font-size: 0.9vw;
+        color: #001F63;
+      }
+    }
+    .boxClassify{
+      padding-top:5%;
+      overflow:hidden;
+      .classifyList{
+        width:26vw;
+        padding-right:20px;
+        float:left;
+        .img{
+          display: block;
+          width:5vw;
+          height:5vw;
+          background-repeat:no-repeat;
+          background-position:center;
+          background-size:contain;
+        }
+        .img1{
+          background-image:url("../../images/1@1x.png");
+        }
+        .img2{
+          background-image:url("../../images/2@1x.png");
+        }
+        .img3{
+          background-image:url("../../images/2 copy@1x.png");
+        }
+        .img4{
+          background-image:url("../../images/3@1x.png");
+        }
+        .title{
+          padding:12px 0px 10px;
+          font-size:1.4vw;
+          letter-spacing: 1px;
+          color:#001F63;
+        }
+        p{
+          font-size:0.9vw;
+          color:#001F63;
+        }
+      }
+    }
+  }
+}
