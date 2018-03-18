@@ -5,13 +5,17 @@
     font-size: 14px;
     width: 1040px;
     cursor: pointer;
+    .imgBox{
+      padding:20px;
+      display: inline-block;
+      vertical-align: top;
+      font-size:0px;
+    }
     .pic {
       display: inline-block;
-      height: 120px;
-      width: 120px;
-      background-color: #cfedf0;
-      vertical-align: top;
-      border-radius: 4px;
+      width: 80px;
+      height:80px;
+      border-radius: 50%
     }
     .tplCont {
       display: inline-block;
@@ -25,7 +29,7 @@
           width: 870px;
           height: 82px;
           border-bottom: 1px dashed #E0E0E0;
-          margin-left: 30px;
+          margin-left: 10px;
           position: relative;
           .jianJie {
             margin-top: 14px;
@@ -45,10 +49,13 @@
               background-color: #999999;
               margin: 0 5px;
             }
+            span:last-child{
+              display:none;
+            }
           }
           .radios {
             position: absolute;
-            top: 16px;
+            top: 26px;
             right: 20px;
             padding-left: 18px;
             border-left: 1px solid #E0E0E0;
@@ -100,7 +107,7 @@
         }
       }
       .bottom {
-        padding-left: 30px;
+        padding-left: 10px;
         cursor: pointer;
         padding-top: 10px;
         user-select: none;
@@ -118,5 +125,10 @@
         }
       }
     }
+  }
+}
+.LookAgentPage {
+  .radios{
+    display:none;
   }
 }

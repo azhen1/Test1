@@ -12,15 +12,14 @@ let AuditionWating = React.createClass({
     // 完成面试
     finishInterview (id) {
         let _th = this
-        let {curPagination, curTab} = _th.props
         let URL = '/job/platformInterview/finishInterview'
         let formData = {}
         formData.id = id
         postRequest(true, URL, formData).then((res) => {
             let code = res.code
             if (code === 0) {
-                message.success('发送邀请成功!')
-                _th.props.reqDataSouce(curPagination, curTab)
+                message.success('面试已完成!')
+                _th.props.reqDataSouce()
             } else {
                 message.error(res.message)
             }
@@ -30,7 +29,7 @@ let AuditionWating = React.createClass({
         window.location.hash = router
     },
     render () {
-        let {dataSource, pageSizeTotal, curPagination} = this.props
+        let {dataSource, pageSizeTotal, curPagination, pageSizePer} = this.props
         return (
             <div className={dataSource.length === 0 ? 'AuditionWating nullContent' : 'AuditionWating'}>
                 {dataSource.length === 0 ? <div className='zanWU'>暂无数据</div> : null}
@@ -40,7 +39,7 @@ let AuditionWating = React.createClass({
                             <CommonTpl itemData={v}/>
                             <div className='operate'>
                                 <div className='onLine' onClick={() => this.finishInterview(v.id)}>完成面试</div>
-                                <div className='noGood' onClick={() => this.itemClickFn(`chatWindow?id=${v.fromMemberId}&name=${v.hrName}&headUrl=${v.personHeadUrl}`)}>联系推荐人</div>
+                                <div className='noGood' onClick={() => this.itemClickFn(`chatWindow?id=${v.fromMemberId}&name=${v.hrName}&headUrl=${v.personHeadUrl}&positionId=${v.positionId}`)}>联系推荐人</div>
                             </div>
                         </div>
                     )
@@ -49,7 +48,7 @@ let AuditionWating = React.createClass({
                     pageSizeTotal === 0
                         ? null
                         : <div className='my_pagination'>
-                            <Pagination current={curPagination} total={pageSizeTotal} size='large' onChange={this.props.paginationChange}/>
+                            <Pagination current={curPagination} total={pageSizeTotal} pageSize={pageSizePer} size='large' onChange={this.props.paginationChange}/>
                         </div>
                 }
             </div>

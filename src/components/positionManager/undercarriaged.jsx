@@ -11,7 +11,7 @@ let Undercarriaged = React.createClass({
         window.location.hash = router
     },
     render () {
-        let {curTab, dataSouce, paginationTotal, cruPagination} = this.props
+        let {curTab, dataSouce, paginationTotal, cruPagination, pageSize} = this.props
         let styleList = {backgroundColor: '#EBEBEB', color: '#999999'}
         return (
             <div className={dataSouce.length === 0 ? 'undercarriaged nullContent' : 'undercarriaged'}>
@@ -45,7 +45,7 @@ let Undercarriaged = React.createClass({
                     paginationTotal === 0
                         ? null
                         : <div className='my_pagination'>
-                            <Pagination total={paginationTotal} onChange={this.props.cruPaginationChange} pageSize={1} current={parseInt(cruPagination)}/>
+                            <Pagination total={paginationTotal} onChange={this.props.cruPaginationChange} pageSize={pageSize} current={parseInt(cruPagination)}/>
                         </div>
                 }
             </div>

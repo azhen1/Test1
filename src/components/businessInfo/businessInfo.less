@@ -5,14 +5,15 @@
   margin-top: 90px;
   padding-left: 10px;
   padding-top: 10px;
-  height: calc(~"100% + 10px");
+  padding-bottom:10px;
+  min-height: calc(~"100% + 10px");
   .content {
-    width: 1200px;
+    width: 1190px;
     margin-left: 50%;
     transform: translate(-50%, 0);
     border-radius: 4px;
-    min-height: calc(~"100% - 10px");
     background-color: #fff;
+    font-size:0px;
     .showText {
       font-size: 14px;
     }
@@ -51,7 +52,7 @@
           width: 88px;
           height: 88px;
           border-radius: 50%;
-          background-size: 100% 100%;
+          background-size: 100% 100% !important;
         }
         .name {
           vertical-align: bottom;
@@ -73,6 +74,7 @@
             background: #25CCF6;
             border-radius: 4px;
             color: #fff;
+            font-size:12px;
           }
           .des {
             font-size: 14px;
@@ -115,9 +117,10 @@
           cursor: pointer;
           user-select: none;
           margin-bottom: 20px;
+          border-bottom: 1px solid #E0E0E0;
           span {
             display: inline-block;
-            height: 48px;
+            height: 47px;
             margin-right: 60px;
             border-bottom: 2px solid #fff;
             &:hover {
@@ -138,6 +141,11 @@
             color: #999999;
             margin-right: 20px;
             vertical-align: top;
+          }
+          .showText {
+            font-size: 14px;
+            display: inline-block;
+            width:700px;
           }
           .environment {
             .Upload {
@@ -261,6 +269,7 @@
             text-align: center;
             cursor: pointer;
             margin-bottom: 60px;
+            margin-top:20px;
             span {
               display: inline-block;
               width: 130px;
@@ -275,10 +284,11 @@
           }
         }
         .curJobItemCla {
+          padding-bottom:30px;
           .oneItem {
             border-bottom: 1px solid #E0E0E0;
             padding-left: 20px;
-            margin-bottom: 20px;
+            margin-bottom: 26px;
             font-size: 14px;
             .jibType {
               font-size: 20px;
@@ -296,6 +306,9 @@
                 vertical-align: middle;
                 margin: 0 5px;
                 background-color: #999999;
+              }
+              span:last-child{
+                display: none;
               }
             }
             .result {
@@ -315,6 +328,7 @@
       padding-left: 20px;
       display: inline-block;
       vertical-align: top;
+      width:340px;
       .title {
         height: 60px;
         line-height: 60px;
@@ -323,6 +337,7 @@
         width: 310px;
         border-bottom: 1px dashed #E0E0E0;
         margin-bottom: 18px;
+        font-weight: bold;
       }
       .form {
         .lableL {
@@ -333,6 +348,16 @@
         }
         .hangYe, .people, .city, .date {
           margin-bottom: 20px;
+        }
+        .ant-calendar-picker-clear {
+          margin-top:-7px;
+          width:16px;
+          height:16px;
+          right:7px;
+          font-size:14px;
+        }
+        .ant-calendar-picker-icon:after{
+          font-size:15px;
         }
         .BasicInfoSelNullClass .ant-select-selection {
           border-color: red;
@@ -348,6 +373,7 @@
           padding-bottom: 18px;
           border-bottom: 1px dashed #E0E0E0;
           margin-bottom: 18px;
+          font-weight: bold;
         }
       }
       .lightPointList, .lightFuli {
@@ -387,6 +413,9 @@
       }
       .save {
         text-align: right;
+        margin-bottom:60px;
+        margin-top:20px;
+        padding-right:20px;
         span {
           display: inline-block;
           width: 130px;

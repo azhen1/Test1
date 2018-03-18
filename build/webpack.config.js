@@ -15,7 +15,7 @@ var config = {
         vendor: ["react-dom", "react", "react-router"]
     },
     output: {
-        path: ROOT + '/dist',
+        path: ROOT + '/portal',
         filename: _DEV_ ? 'js/[name].js' : 'js/[name].[chunkhash:8].js',
         //按需加载时，对应生成的文件名
         chunkFilename:  _DEV_ ? 'js/[name].js' : 'js/[name].[chunkHash:8].js'
@@ -79,7 +79,7 @@ var config = {
                 })
             },
             {
-                test: /\.(jpe?g|png|gif|svg|ttf)$/i,
+                test: /\.(jpe?g|png|gif|svg|ttf|ico)$/i,
                 //注意，使用url-loader要额外安装file-loader，不然会报错
                 loaders: [
                     'url-loader?limit=8192&name=imgs/[name].[hash:8].[ext]'
@@ -96,6 +96,7 @@ var config = {
         //生成html模板
         new HtmlWebpackPlugin({
             template: './src/entry/index.html',
+            favicon: './src/entry/favicon.ico',
             filename: 'index.html'
         }),
         new webpack.optimize.CommonsChunkPlugin({
@@ -111,7 +112,7 @@ var config = {
         }),
         //css文件打包
         // new ExtractTextPlugin("css/[name].[contenthash:8].css"),
-        new ExtractTextPlugin("css/[name].css"),
+        new ExtractTextPlugin("[name].css"),
         new webpack.LoaderOptionsPlugin({
             options: {
                 //加css3前缀
@@ -121,6 +122,11 @@ var config = {
         //配置全局常量，在业务代码中可以直接使用（比如在homePage.jsx中可以直接访问NODE_ENV这个变量）
         new webpack.DefinePlugin({
             "NODE_ENV": JSON.stringify(process.env.NODE_ENV || 'development')
+        }),
+        new webpack.DefinePlugin({
+            'process.env':{
+                'NODE_ENV': JSON.stringify('production')
+            }
         })
     ]
 };

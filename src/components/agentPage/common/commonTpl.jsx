@@ -2,8 +2,16 @@ import React from 'react'
 import util from '../../../common/util'
 import addressData from '../../../common/area'
 import './commonTpl.less'
+import defaultHeadImg from '../../../images/default_head.png'
+import {getRequest} from '../../../common/ajax'
+import {message} from 'antd/lib/index'
 
 let CommonTpl = React.createClass({
+    getInitialState () {
+        return {
+            educationList: []
+        }
+    },
     itemClickFn (router) {
         window.location.hash = router
     },
@@ -28,9 +36,10 @@ let CommonTpl = React.createClass({
             if (v.id === itemData.province) {
                 v.children.map((vC, indexC) => {
                     if (vC.id === itemData.city) {
+                        res = vC.value
                         vC.children.map((vCC, indexCC) => {
                             if (vCC.id === itemData.district) {
-                                res = vCC.value
+                                res = res + '-' + vCC.value
                             }
                         })
                     }
@@ -39,25 +48,34 @@ let CommonTpl = React.createClass({
         })
         return res
     },
+    // 判断图片地址是否为空
+    hasLogoPic (logoPic) {
+        if (logoPic === undefined || logoPic === null || logoPic === '') {
+            return true
+        } else {
+            return false
+        }
+    },
     render () {
         let {itemData} = this.props
         let imgsURL = 'http://dingyi.oss-cn-hangzhou.aliyuncs.com/images/'
         return (
             <div className='tplClass' onClick={() => this.itemClickFn(`agentDetails?memberId=${itemData.memberId}`)}>
-                <img src={`${imgsURL}${itemData.headUrl}`} alt="" className='pic'/>
+                <div className='imgBox'><img src={this.hasLogoPic(itemData.headUrl) ? defaultHeadImg : `${imgsURL}${itemData.headUrl}`} alt="" className='pic'/></div>
                 <div className='tplCont'>
                     <div className='top'>
                         <div className='showPeople'>
                             <div className='jianJie'>
-                                <span className='name'>{itemData.name}</span>
-                                <span>{`${this.qureyCity(itemData)} - ${this.qureyZoon(itemData)}`}</span>
+                                <span className='name'>{itemData.nick}</span>
+                                <span>{this.qureyZoon(itemData)}</span>
                             </div>
                             <div className='basicInfo'>
-                                <span>{itemData.education}</span>
-                                <span className='shuXian'></span>
-                                <span>{itemData.trade}</span>
-                                <span className='shuXian'></span>
-                                <span>{`Lv${itemData.level}`}</span>
+                                {itemData.education ? <span>{itemData.education}</span> : null}
+                                {itemData.education ? <span className='shuXian'></span> : null}
+                                {itemData.trade ? <span>{itemData.trade}</span> : null}
+                                {itemData.trade ? <span className='shuXian'></span> : null}
+                                {itemData.level ? <span>{`Lv${itemData.level}`}</span> : null}
+                                {itemData.level ? <span className='shuXian'></span> : null}
                             </div>
                             <div className='radios'>
                                 <span>

@@ -5,20 +5,31 @@
   margin-top: 90px;
   padding-left: 10px;
   padding-top: 10px;
+  padding-bottom:10px;
   // min-height: calc(~"100% + 10px");
-  height: calc(~"100% + 10px");
+  min-height: calc(~"100% + 10px");
   .my_pagination {
     padding-right: 20px;
     margin-top: 20px;
   }
   .content {
-    width: 1200px;
+    width: 1190px;
     margin-left: 50%;
     transform: translate(-50%, 0);
     border-radius: 4px;
-    min-height: calc(~"100% - 10px");
     background-color: #fff;
     padding-bottom: 50px;
+    position:relative;
+    .backBox{
+      position:absolute;
+      display: block;
+      width:36px;
+      height:36px;
+      background:url("../../images/返回上一层 1.png") no-repeat center;
+      background-size:contain;
+      top:20px;
+      left:25px;
+    }
     .header {
       height: 120px;
       border-bottom: 1px solid #E0E0E0;
@@ -37,6 +48,9 @@
           color: #25CCF6;
           margin-left: 20px;
         }
+      }
+      .curBalance .warm {
+        line-height: 32px;
       }
       .freezeBalance {
         .freeze_b {
@@ -97,6 +111,13 @@
             font-size: 16px;
             color: #25CCF6;
           }
+        }
+        .ant-calendar-picker-clear{
+          width:16px;
+          height:16px;
+          font-size:14px;
+          background:#E6F5FF;
+          right:6px;
         }
       }
     }

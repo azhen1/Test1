@@ -1,5 +1,5 @@
 import React from 'react'
-import {Input, Button, message, Icon} from 'antd'
+import {Input, Button, message, Icon, Modal} from 'antd'
 import {Link} from 'react-router'
 import {getRequest, postRequest} from '../../common/ajax'
 import './user.less'
@@ -25,11 +25,13 @@ const Register = React.createClass({
             count: 0,
             picBase64: '',
             captchaCode: '',
-            memberId: ''
+            memberId: '',
+            isShowModal: false
         }
     },
     componentDidMount () {
         this.toggleImgFn()
+        this._isMounted = true
     },
     // 电话号码加密处理，先异或，再base64转码
     encryptPhone (phoneStr) {
@@ -86,12 +88,17 @@ const Register = React.createClass({
         }, () => {
             let {formList} = this.state
             let hasNull = false
-            let values = Object.values(formList)
-            values.map((v, index) => {
-                if (v === '') {
+            // let values = Object.values(formList)
+            // values.map((v, index) => {
+            //     if (v === '') {
+            //         hasNull = true
+            //     }
+            // })
+            for (var v in formList) {
+                if (formList[v] === '') {
                     hasNull = true
                 }
-            })
+            }
             if (hasNull) {
                 message.warning('你有信息尚未填写')
                 this.setState({
@@ -114,17 +121,19 @@ const Register = React.createClass({
             let code = res.code
             if (code === 0) {
                 let data = res.data
-                message.success('注册成功，请登录!')
                 _th.setState({
                     hasSubmit: false,
-                    memberId: data.memberId
-                }, () => {
-                    let {memberId} = _th.state
-                    window.location.hash = `certification?memberId=${memberId}`
+                    memberId: data.memberId,
+                    isShowModal: true
                 })
             } else {
                 message.error(res.message)
             }
+        })
+    },
+    handleCancel () {
+        this.setState({
+            isShowModal: false
         })
     },
     // 判断非空
@@ -202,17 +211,21 @@ const Register = React.createClass({
     countDown () {
         let _th = this
         let count = setInterval(function () {
-            if (_th.state.defCount === 0) {
-                clearInterval(count)
-                _th.setState({
-                    countDownToggle: false,
-                    defCount: 60,
-                    again: true
-                })
+            if (_th._isMounted) {
+                if (_th.state.defCount === 0) {
+                    clearInterval(count)
+                    _th.setState({
+                        countDownToggle: false,
+                        defCount: 60,
+                        again: true
+                    })
+                } else {
+                    _th.setState({
+                        defCount: --_th.state.defCount
+                    })
+                }
             } else {
-                _th.setState({
-                    defCount: --_th.state.defCount
-                })
+                clearInterval(count)
             }
         }, 1000)
     },
@@ -240,18 +253,24 @@ const Register = React.createClass({
         let {formList, countDownToggle} = this.state
         return countDownToggle && formList.phone !== '' && formList.imageHtml !== '' ? true : false
     },
+    componentWillUnmount () {
+        this._isMounted = false
+    },
+    itemClickFn (router) {
+        window.location.hash = router
+    },
     render () {
-        let {curKey, formList, defCount, again, picBase64} = this.state
+        let {curKey, formList, defCount, again, picBase64, isShowModal} = this.state
         let nullIcon = <Icon type="exclamation-circle-o" style={{marginRight: '5px', fontSize: '16px'}} />
         return (
             <div className='register'>
                 <div className='register_form'>
                     <div className='formB'>
                         <div className='logoBox'>
-                            <span className='logo_Pic'></span>
-                            <div>
-                                <div className='app_name'>鲸城</div>
-                                <div className='netUrl'>JINGCHENG.COM</div>
+                            <a href='http://www.jingpipei.com/' className='logo_Pic'></a>
+                            <div className='txtLogo'>
+                                <div className='app_name'></div>
+                                <div className='netUrl'>JINGPIPEI.COM</div>
                             </div>
                         </div>
                         <div className='left_box'>
@@ -260,47 +279,46 @@ const Register = React.createClass({
                                 <Input placeholder="请输入手机号码" onChange={(e) => this.formChange(e, 'phone')}
                                        onBlur={this.phoneIntBlur}
                                        key={curKey} value={formList.phone}/>
-                                {this.isNullFn('phone') ? <div className='nullTest'>
-                                    {nullIcon}
-                                    请输入手机号码
-                                </div> : null}
                             </div>
+                            {this.isNullFn('phone') ? <div className='nullTest'>
+                                {nullIcon}
+                                请输入手机号码
+                            </div> : null}
                             <div className='picProving formItem'>
                                 <span className='icon'></span>
                                 <Input placeholder="请输入图片内容" onChange={(e) => this.formChange(e, 'imageHtml')} key={curKey} value={formList.imageHtml}/>
                                 <img src={`data:image/png;base64,${picBase64}`} onClick={this.toggleImgFn}/>
-                                {this.isNullFn('imageHtml') ? <div className='nullTest'>
-                                    {nullIcon}请输入验证码
-                                </div> : null}
                             </div>
+                            {this.isNullFn('imageHtml') ? <div className='nullTest'>
+                                {nullIcon}请输入验证码
+                            </div> : null}
                             {this.hasBorderFn('proving_login') ? <div className='phoneProving formItem'>
                                 <span className='icon'></span>
                                 <Input placeholder="请输入手机验证码" onChange={(e) => this.formChange(e, 'phoneHtml')} key={curKey} value={formList.phoneHtml}/>
                                 <span className={this.isToggleFn() ? 'obtain activeCount' : 'obtain'} onClick={this.obtainFn}>
                                 {this.isToggleFn() ? `已发送(${defCount})秒` : again ? '重新发送' : '获取验证码'}
                             </span>
-                                {this.isNullFn('phoneHtml') ? <div className='nullTest'>
-                                    {nullIcon}请输入手机验证码
-                                </div> : null}
+                            </div> : null}
+                            {this.isNullFn('phoneHtml') ? <div className='nullTest'>
+                                {nullIcon}请输入手机验证码
                             </div> : null}
                             <div className='phoneProving formItem'>
                                 <span className='icon'></span>
                                 <Input placeholder="设置密码" onChange={(e) => this.formChange(e, 'passWord')} key={curKey} value={formList.passWord} />
-                                {this.isNullFn('passWord') ? <div className='nullTest'>
-                                    {nullIcon}密码长度必须大于6位
-                                </div> : null}
                             </div>
+                            {this.isNullFn('passWord') ? <div className='nullTest'>
+                                {nullIcon}密码长度必须大于6位
+                            </div> : null}
                             <div className='forget'></div>
                             <div className='submit'>
                                 <Button onClick={this.onSubmit}>注册</Button>
                             </div>
                         </div>
-                        <div className='cutOffRule' style={{height: this.formBoxHeight('String')}}>
+                        <div className='cutOffRule'>
                             <div className='line_top'></div>
                             <div className='or'>or</div>
-                            <div className="line_bottom"></div>
                         </div>
-                        <div className='toRegister' style={{height: this.formBoxHeight('String'), paddingTop: this.formBoxHeight('Number') * 0.5}}>
+                        <div className='toRegister'>
                             <div className='noUser'>
                                 已有账号：
                             </div>
@@ -330,6 +348,20 @@ const Register = React.createClass({
                         </div>
                     </div>
                 </div>
+                <Modal
+                    visible={isShowModal}
+                    className='modalMain'
+                    title=""
+                    onOk={this.handleOk}
+                    onCancel={this.handleCancel}
+                    footer={[
+                        <Button key="back" onClick={() => this.itemClickFn('')}>网站首页</Button>,
+                        <Button key="submit" type="primary" onClick={() => this.itemClickFn('login')}>
+                            登录
+                        </Button>
+                    ]}>
+                    <p>注册成功！</p>
+                </Modal>
             </div>
         )
     }

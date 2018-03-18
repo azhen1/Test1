@@ -6,14 +6,13 @@ import $ from 'jquery'
 const {RangePicker} = DatePicker
 const Option = Select.Option
 
-let resourceList = {0: '其他', 1: '面试', 2: '入职', 3: '充值', 4: '提现', 5: '提现失败', 6: '房租', 7: '面试冻结', 8: '入职冻结', 9: '面试解冻', 10: '入职冻结'}
+let resourceList = {0: '其他', 1: '面试', 2: '入职', 3: '充值', 4: '提现', 5: '提现失败', 6: '房租', 7: '面试冻结', 8: '入职冻结', 9: '面试解冻', 10: '入职解冻'}
 let BalanceManager = React.createClass({
     getInitialState () {
         return {
             mingxiBalanceList: [],
             curPage: 'manager',
             memberId: '',
-            curPagination: 1,
             searchList: {
                 resourceType: undefined,
                 date: undefined
@@ -22,17 +21,18 @@ let BalanceManager = React.createClass({
             drawbackPay: '',
             drawbackZhanghao: '',
             dataTotleList: {},
-            pageTotal: 0
+            curPagination: 1,   // 当前页
+            pageTotal: 0,   // 总数据
+            pageSize: 20   // 每页显示的数据数
         }
     },
     componentDidMount () {
         let memberId = localStorage.getItem('memberId')
         this.setState({
             memberId: memberId
-        }, () => {
-            this.reqDataFn()
-            this.reqDataTotleList()
         })
+        this.reqDataFn()
+        this.reqDataTotleList()
     },
     onDateChange (date, dateString) {
         let {searchList} = this.state
@@ -53,11 +53,11 @@ let BalanceManager = React.createClass({
             curPage: val
         })
     },
-    // 当前金额；冻结金额；待入职；待面试
+    // 当前用户余额明细
     reqDataTotleList () {
         let URL = 'job/platformInterview/moneyRecordAndCompanyInfo'
         let _th = this
-        let {memberId} = _th.state
+        let memberId = localStorage.getItem('memberId')
         let formData = {}
         formData.companyId = memberId
         getRequest(true, URL, formData).then(function (res) {
@@ -66,24 +66,28 @@ let BalanceManager = React.createClass({
                 _th.setState({
                     dataTotleList: {...res.data}
                 })
-            } else {
-                message.error('系统错误!')
+            } else if (code !== 401) {
+                message.error(res.message)
             }
         })
     },
-    // 当前用户余额明细
-    reqDataFn (search) {
+    // 当前金额；冻结金额；待入职；待面试
+    reqDataFn () {
+        let memberId = localStorage.getItem('memberId')
         let URL = 'member/platformMemberMoneyRecord/queryByPage'
         let _th = this
-        let {memberId, curPagination, searchList} = _th.state
+        let {curPagination, searchList, pageSize} = _th.state
         let formData = {}
-        if (search === 'search') {
-            if (searchList.resourceType !== undefined) {
-                formData.resource = searchList.resourceType
-            }
+        if (searchList.resourceType !== undefined) {
+            formData.resource = searchList.resourceType
+        }
+        if (searchList.date !== undefined) {
+            formData.startTime = searchList.date[0] !== '' ? searchList.date[0] + ' 00:00:00' : ''
+            formData.endTime = searchList.date[1] !== '' ? searchList.date[1] + ' 23:59:59' : ''
         }
         formData.memberId = memberId
         formData.page = curPagination
+        formData.pageSize = pageSize
         getRequest(true, URL, formData).then(function (res) {
             let code = res.code
             if (code === 0) {
@@ -91,20 +95,27 @@ let BalanceManager = React.createClass({
                     mingxiBalanceList: res.data.list,
                     pageTotal: res.data.total
                 })
+            } else if (code === 401) {
+                window.location.hash = '/login'
+                message.warning('您的账号已在其他设备登录，请重新登录!')
             } else {
-                message.error('系统错误!')
+                message.error(res.message)
             }
         })
     },
     // 分页
     ChangePagination (val) {
-        let {memberId} = this.state
-        let formData = {}
-        formData.memberId = memberId
-        formData.page = val
-        this.reqDataFn(formData)
         this.setState({
             curPagination: val
+        }, () => {
+            this.reqDataFn()
+        })
+    },
+    searchFn () {
+        this.setState({
+            curPagination: 1
+        }, () => {
+            this.reqDataFn()
         })
     },
     resourceListFn () {
@@ -124,14 +135,6 @@ let BalanceManager = React.createClass({
         }
         return result
     },
-    onSearch () {
-        let {searchList} = this.state
-        if (searchList.date === undefined && searchList.resourceType === undefined) {
-            this.reqDataFn()
-        } else {
-            this.reqDataFn('search')
-        }
-    },
     // 验证金额是否为空
     onChongZhi () {
         let {chongZhiPay} = this.state
@@ -150,7 +153,7 @@ let BalanceManager = React.createClass({
             })
             return false
         }
-        if (val < 1000) {
+        if (val < 0) {
             message.warning('充值金额必须大于1000!')
             this.setState({
                 chongZhiPay: ''
@@ -197,7 +200,8 @@ let BalanceManager = React.createClass({
     // 退款
     onDrawback () {
         let _th = this
-        let {drawbackZhanghao, drawbackPay, memberId} = _th.state
+        let memberId = localStorage.getItem('memberId')
+        let {drawbackZhanghao, drawbackPay} = _th.state
         let URL = 'member/currentMoney/webWithdrawMoney'
         let formData = {}
         if (drawbackZhanghao === '' || drawbackPay === '') {
@@ -213,34 +217,37 @@ let BalanceManager = React.createClass({
                 message.success('申请成功!')
                 _th.togglePage('manager')
                 _th.reqDataFn()
+                _th.reqDataTotleList()
             } else {
                 message.error(res.message)
             }
         })
     },
-    widthBalanceManager () {
-        let doc = document
-        let [BalanceManager] = doc.getElementsByClassName('BalanceManager')
-        let [content] = doc.getElementsByClassName('content')
-        let result = false
-        if (content !== undefined && BalanceManager !== undefined) {
-            if (content.offsetHeight > BalanceManager.offsetHeight) {
-                result = true
+    // 根据消息类型判断金额显示符号 7面试冻结：冻结30   9面试解冻：解冻30    1面试：-30   8入职冻结：冻结300   10入职解冻：解冻300    2入职：-300
+    showMoney (type, resource, money) {
+        if (resource === 7 || resource === 8) {
+            return `冻结-${money}`
+        } else if (resource === 9 || resource === 10) {
+            return `解冻+${money}`
+        } else {
+            if (type === 0) {
+                return `+${money}`
+            } else if (type === 1) {
+                return `-${money}`
             }
         }
-        return result
     },
     render () {
-        let {mingxiBalanceList, curPage, searchList, chongZhiPay, memberId, dataTotleList, drawbackPay, drawbackZhanghao, pageTotal, curPagination} = this.state
+        let {mingxiBalanceList, curPage, searchList, chongZhiPay, memberId, dataTotleList, drawbackPay, drawbackZhanghao, pageTotal, curPagination, pageSize} = this.state
         return (
-            <div className="BalanceManager" style={this.widthBalanceManager() ? {height: 'auto'} : {height: 'calc(~"100% + 10px")'}}>
+            <div className="BalanceManager">
                 <div className='content'>
                     {curPage === 'manager' ? <div>
                         <div className='header'>
                             <div className='curBalance'>
                                 <div className='val_b'>
                                     当前余额
-                                    <span>{dataTotleList.CompanyCurrentMoney && dataTotleList.CompanyCurrentMoney}</span>
+                                    <span>{dataTotleList.CompanyCurrentMoney ? dataTotleList.CompanyCurrentMoney : 0}</span>
                                 </div>
                                 {dataTotleList.CompanyCurrentMoney && dataTotleList.CompanyCurrentMoney < 325 ? <div className='warm'>
                                     当前余额不多，为保证正常面试及入职，请提前充值
@@ -249,11 +256,11 @@ let BalanceManager = React.createClass({
                             <div className='freezeBalance'>
                                 <div className='freeze_b'>
                                     冻结余额
-                                    <span>{dataTotleList.CompanyFrozenMoney && dataTotleList.CompanyFrozenMoney}</span>
+                                    <span>{dataTotleList.CompanyFrozenMoney ? dataTotleList.CompanyFrozenMoney : 0}</span>
                                 </div>
                                 <div className='tongJiList'>
-                                    <span>待面试<i>{dataTotleList.CompanyInterviewNum && dataTotleList.CompanyInterviewNum}</i>人</span>
-                                    <span>待入职<i>{dataTotleList.CompanyEntryNum && dataTotleList.CompanyEntryNum}</i>人</span>
+                                    <span>待面试<i>{dataTotleList.CompanyInterviewNum ? dataTotleList.CompanyInterviewNum : 0}</i>人</span>
+                                    <span>待入职<i>{dataTotleList.CompanyEntryNum ? dataTotleList.CompanyEntryNum : 0}</i>人</span>
                                     <span style={{marginLeft: '10px'}}>(如候选人爽约余额将解冻)</span>
                                 </div>
                             </div>
@@ -273,7 +280,7 @@ let BalanceManager = React.createClass({
                                         onChange={this.handleSelectChange} size='large'>
                                     {this.resourceListFn()}
                                 </Select>
-                                <span className='btn' onClick={this.onSearch}>
+                                <span className='btn' onClick={this.searchFn}>
                                     <Icon type="search" style={{fontSize: '18px', margin: '0 20px', verticalAlign: 'middle'}}/>
                                     搜索
                                 </span>
@@ -285,9 +292,9 @@ let BalanceManager = React.createClass({
                                     <div className='itemBox' key={index}>
                                         <span className='type'>{this.toggleType(v.resource)}</span>
                                         <span className='shuoMing'>
-                                            {v.resource === 0 || v.resource === 3 || v.resource === 4 || v.resource === 5 ? '' : v.remark}
+                                            {v.remark}
                                         </span>
-                                        <span className='count'>{v.type === 0 ? `+${v.money}` : `-${v.money}`}</span>
+                                        <span className='count'>{this.showMoney(v.type, v.resource, v.money)}</span>
                                     </div>
                                 )
                             })}
@@ -296,7 +303,7 @@ let BalanceManager = React.createClass({
                             mingxiBalanceList.length === 0
                             ? null
                             : <div className='my_pagination' style={{textAlign: 'right'}}>
-                                  <Pagination current={parseInt(curPagination)} total={pageTotal} pageSize={20} onChange={this.ChangePagination}/>
+                                  <Pagination current={parseInt(curPagination)} total={pageTotal} pageSize={pageSize} onChange={this.ChangePagination}/>
                               </div>
                         }
                         <div className='operate'>
@@ -305,11 +312,12 @@ let BalanceManager = React.createClass({
                         </div>
                     </div> : null}
                     {curPage === 'rechargePage' ? <div className='rechargePage'>
+                        <a className='backBox' onClick={() => this.togglePage('manager')}></a>
                         <div className='title'>
                             <span className='c_count'>充值金额</span>
                             <span className='c_type'>目前仅支持支付宝</span>
                         </div>
-                        <form action="http://192.168.0.102/member/ali/webPay" method='post'>
+                        <form action="https://api.jingpipei.com/member/ali/webPay" method='post'>
                             <div className='ipt'>
                                 <Input onBlur={this.onChongZhiBlur} value={chongZhiPay} onChange={this.onChongZhiChange} name='totalMoney' autoComplete='off'/>
                             </div>
@@ -322,15 +330,11 @@ let BalanceManager = React.createClass({
                                 {chongZhiPay === '' ? <span onClick={this.onChongZhi}>确认充值</span> : <input type="submit" value="确认充值" />}
                             </div>
                         </form>
-                        <div className='xieYi'>
-                            <Icon type="check-circle-o" style={{fontSize: '16px', marginRight: '12px'}}/>
-                            充值即表示同意《鲸城网络增值服务协议》
-                        </div>
                     </div> : null}
                     {curPage === 'refundPage' ? <div className='refundPage'>
+                        <a className='backBox' onClick={() => this.togglePage('manager')}></a>
                         <div className='title'>
                             <span className='c_count'>退款金额</span>
-                            <span className='c_type'>目前仅支持支付宝</span>
                         </div>
                         <div className='iptRefund'>
                             <Input onBlur={this.onDrawbackBlur} value={drawbackPay} onChange={this.onDrawbackChange}/>
@@ -341,10 +345,6 @@ let BalanceManager = React.createClass({
                         </div>
                         <div className='confirm'>
                             <span onClick={this.onDrawback}>申请退款</span>
-                        </div>
-                        <div className='xieYi'>
-                            <Icon type="check-circle-o" style={{fontSize: '16px', marginRight: '12px'}}/>
-                            充值即表示同意《鲸城网络增值服务协议》
                         </div>
                     </div> : null}
                 </div>

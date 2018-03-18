@@ -1,7 +1,9 @@
 import React from 'react'
-import {Carousel} from 'antd'
+import {Link} from 'react-router'
+import {Carousel, message} from 'antd'
 import $ from 'jquery'
 import './JCWebsite.less'
+import {postRequest} from '../../common/ajax'
 
 let JCWebsite = React.createClass({
     getInitialState () {
@@ -9,44 +11,87 @@ let JCWebsite = React.createClass({
             curCarousel: '1',
             isCarousel: false,
             showErWeiMa: false,
-            isALShow: false
+            isALShow: false,
+            initCarousel: '1',
+            hasUser: false
         }
     },
     componentDidMount () {
         let _th = this
-        $('.point1').animate({top: '58%'}, 'slow')
-        $('.point2').animate({top: '50%'}, 'slow', function () {
-            $('.line1').animate({width: '11%'}, 500, function () {
-                $('.line2').animate({width: '37%'}, 1000, function () {
-                    $('.line3').animate({width: '28%'}, 1000, function () {
-                        $('.line4').animate({width: '18%'}, 500, function () {
-                            _th.setState({
-                                isALShow: true
-                            }, () => {
-                                setTimeout(function () {
-                                    _th.setState({
-                                        curCarousel: '0'
-                                    }, () => {
-                                        let count = 0
-                                        let timer = setInterval(function () {
-                                            if (count < -1500) {
-                                                clearInterval(timer)
-                                                _th.setState({
-                                                    isCarousel: true
-                                                })
-                                                return false
-                                            }
-                                            $('.zhiZhen').css('transform', `rotate(${count}deg)`)
-                                            count = count - 3
-                                        }, 4)
-                                    })
-                                }, 600)
+        if (!window.sessionStorage.getItem('animate')) {
+            window.sessionStorage.setItem('animate', '1')
+            $('.point1').animate({top: '58%'}, 'slow')
+            $('.point2').animate({top: '50%'}, 'slow', function () {
+                $('.line1').animate({width: '11%'}, 500, function () {
+                    $('.line2').animate({width: '37%'}, 1000, function () {
+                        $('.line3').animate({width: '28%'}, 1000, function () {
+                            $('.line4').animate({width: '18%'}, 500, function () {
+                                _th.setState({
+                                    isALShow: true
+                                }, () => {
+                                    setTimeout(function () {
+                                        _th.setState({
+                                            curCarousel: '0'
+                                        }, () => {
+                                            let count = 0
+                                            let timer = setInterval(function () {
+                                                if (count < -1500) {
+                                                    clearInterval(timer)
+                                                    _th.setState({
+                                                        isCarousel: true
+                                                    })
+                                                    return false
+                                                }
+                                                $('.zhiZhen').css('transform', `rotate(${count}deg)`)
+                                                count = count - 3
+                                            }, 4)
+                                        })
+                                    }, 600)
+                                })
                             })
                         })
                     })
                 })
             })
-        })
+        } else {
+            $('.point1').animate({top: '58%'}, 0)
+            $('.point2').animate({top: '50%'}, 0)
+            $('.line1').animate({width: '11%'}, 0)
+            $('.line2').animate({width: '37%'}, 0)
+            $('.line3').animate({width: '28%'}, 0)
+            $('.line4').animate({width: '18%'}, 0)
+            _th.setState({
+                initCarousel: '0',
+                curCarousel: '0',
+                isCarousel: true
+            })
+        }
+        _th.checkUuid()
+    },
+    checkUuid () {
+        let sessionUuid = window.localStorage.getItem('sessionUuid')
+        let URL = 'member/company/uuidCheck'
+        let formData = {}
+        let _th = this
+        if (sessionUuid === null) {
+            _th.setState({
+                hasUser: false
+            })
+        } else {
+            formData.uuid = sessionUuid
+            postRequest(false, URL, formData).then(function (res) {
+                let code = res.code
+                if (code === 0) {
+                    _th.setState({
+                        hasUser: true
+                    })
+                } else {
+                    _th.setState({
+                        hasUser: false
+                    })
+                }
+            })
+        }
     },
     changeCarousel (from, to) {
         this.setState({
@@ -69,74 +114,123 @@ let JCWebsite = React.createClass({
             })
         }
     },
+    showMore () {
+        var hh = $('.bannerRotate').css('height')
+        $('body,html').animate({scrollTop: hh}, 500)
+    },
     itemClickFn (router) {
         window.location.hash = router
     },
     render () {
-        let {curCarousel, isCarousel, showErWeiMa, isALShow} = this.state
+        let {curCarousel, isCarousel, showErWeiMa, isALShow, initCarousel, hasUser} = this.state
         return (
-            <div className='jcWebsite' onClick={this.appBoxClick}>
-                <div className='header_jc'>
+            <div className='app_Box' onClick={this.appBoxClick}>
+                <div className='header'>
                     <span className='logo'> </span>
                     <div className='operate'>
-                        <a href='javascript:;' className='erWeiMa' onClick={this.showErWeiMaFn}>
+                        <a href='' className='on'>
+                            首页
+                            <span> </span>
+                        </a>
+                        <a href='#' className='erWeiMa' onClick={this.showErWeiMaFn}>
                             APP下载
                             <span> </span>
-                            {showErWeiMa ? <div> </div> : null}
+                            {showErWeiMa ? <div className='erWeiMaMain'>
+                                <div className="code">
+                                    <i>Android下载</i>
+                                </div>
+                                <div className="code IOS">
+                                    <i>iOS下载</i>
+                                </div>
+                            </div> : null}
                         </a>
-                        <a href='javascript:;'>
+                        <Link to="/aboutUs">
                             关于我们
                             <span> </span>
-                        </a>
-                        <a href='javascript:;' onClick={() => this.itemClickFn('register')}>
-                            注 册
+                        </Link>
+                        {hasUser ? <Link to="/positionManager/recruitIng">
+                            进入企业后台
                             <span> </span>
-                        </a>
-                        <a href='javascript:;' className='login_jc' onClick={() => this.itemClickFn('login')}>
-                            登 录
-                        </a>
+                        </Link> : <Link to="/login">
+                            企业登录
+                            <span> </span>
+                            </Link>}
+
                     </div>
                 </div>
                 {
                     isCarousel
-                    ? <Carousel autoplay={true} className={curCarousel === '1' ? 'twoClaByCar' : ''} beforeChange={this.changeCarousel}>
-                            <div className='bannerRotate'>
-                                <div className='banner2'>
-                                    <div className='textBox'>
-                                        <div className='title'>一家有温度的企业综合服务商</div>
-                                        <div className='cont'>
-                                            <span>鲸AL</span>
-                                            <span>鲸服务</span>
-                                            <span>鲸智付</span>
-                                            <span>鲸信用</span>
+                    ? <div>
+                            {initCarousel === '1' ? <Carousel autoplay={false} className={curCarousel === '1' ? 'twoClaByCar' : ''} beforeChange={this.changeCarousel}>
+                                <div className='bannerRotate'>
+                                    <div className='banner2'>
+                                        <div className='textBox'>
+                                            <div className='title'>一家有温度的企业综合服务商</div>
+                                            <div className='cont'>
+                                                <span>鲸AI</span>
+                                                <span>鲸服务</span>
+                                                <span>鲸智付</span>
+                                                <span>鲸信用</span>
+                                            </div>
+                                            <div className='knowMore' onClick={this.showMore}>了解更多</div>
                                         </div>
-                                        <div className='knowMore'>了解更多</div>
-                                    </div>
-                                    <span className='xuanZhuan'>
+                                        <span className='xuanZhuan'>
                                         <span></span>
                                     </span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div className='banner1'>
-                                <div className='textBox'>
-                                    <div className='title'>首创鲸AL运算系统</div>
-                                    <div className='cont'>配合有温度的百万小鲸经纪人优质服务</div>
-                                    <div className='knowMore'>了解更多</div>
+                                <div className='banner1'>
+                                    <div className='textBox'>
+                                        <div className='title'>首创鲸AI运算系统</div>
+                                        <div className='cont'>配合有温度的百万小鲸经纪人优质服务</div>
+                                        <div className='knowMore' onClick={this.showMore}>了解更多</div>
+                                    </div>
+                                    <span className='point1 point1Car'> </span>
+                                    <span className='point2 point2Car'> </span>
+                                    <div className='line1 line1Car'> </div>
+                                    <div className='line2 line2Car'> </div>
+                                    <div className='line3 line3Car'> </div>
+                                    <div className='line4 line4Car'> </div>
                                 </div>
-                                <span className='point1 point1Car'> </span>
-                                <span className='point2 point2Car'> </span>
-                                <div className='line1 line1Car'> </div>
-                                <div className='line2 line2Car'> </div>
-                                <div className='line3 line3Car'> </div>
-                                <div className='line4 line4Car'> </div>
-                            </div>
-                        </Carousel>
+                            </Carousel> : <Carousel autoplay={false} className={curCarousel === '0' ? 'twoClaByCar' : ''} beforeChange={this.changeCarousel}>
+                                <div className='banner1'>
+                                    <div className='textBox'>
+                                        <div className='title'>首创鲸AI运算系统</div>
+                                        <div className='cont'>配合有温度的百万小鲸经纪人优质服务</div>
+                                        <div className='knowMore' onClick={this.showMore}>了解更多</div>
+                                    </div>
+                                    <span className='point1 point1Car'> </span>
+                                    <span className='point2 point2Car'> </span>
+                                    <div className='line1 line1Car'> </div>
+                                    <div className='line2 line2Car'> </div>
+                                    <div className='line3 line3Car'> </div>
+                                    <div className='line4 line4Car'> </div>
+                                </div>
+                                <div className='bannerRotate'>
+                                    <div className='banner2'>
+                                        <div className='textBox'>
+                                            <div className='title'>一家有温度的企业综合服务商</div>
+                                            <div className='cont'>
+                                                <span>鲸AI</span>
+                                                <span>鲸服务</span>
+                                                <span>鲸智付</span>
+                                                <span>鲸信用</span>
+                                            </div>
+                                            <div className='knowMore' onClick={this.showMore}>了解更多</div>
+                                        </div>
+                                        <span className='xuanZhuan'>
+                                        <span></span>
+                                    </span>
+                                    </div>
+                                </div>
+                            </Carousel>}
+                        </div>
                         : <div>
                             {curCarousel === '1' ? <div className='banner1'>
                                 {isALShow ? <div className='textBox'>
-                                    <div className='title'>首创鲸AL运算系统</div>
+                                    <div className='title'>首创鲸AI运算系统</div>
                                     <div className='cont'>配合有温度的百万小鲸经纪人优质服务</div>
-                                    <div className='knowMore'>了解更多</div>
+                                    <div className='knowMore' onClick={this.showMore}>了解更多</div>
                                 </div> : null}
                                 <span className='point1'> </span>
                                 <span className='point2'> </span>
@@ -193,21 +287,25 @@ let JCWebsite = React.createClass({
                         <div className='title'>精准的“服务”</div>
                         <div className='cont'>鲸AI服务对象</div>
                     </div>
-                    <div className='textBox1'>
-                        <div className='title'>优质合作企业</div>
-                        <div className='cont'>用心服务  共赢辉煌</div>
-                    </div>
                 </div>
                 <div className='footer'>
+                    <div className='weixinCode'>
+                        <span></span>
+                        <h6>关注公众号，加入HR成长社群</h6>
+                    </div>
                     <div className='email'>
-                        <span className='com'>Email: hello@digital.com</span>
-                        <span className='ads'>Address: Gaffney St, Melbourne</span>
+                        <span className='com'>Email: whalecity@jingpipei.com</span>
+                        <span className='ads'>Address: 浙江省杭州市江干区东宁路553号东溪德必易园</span>
+
                     </div>
-                    <div className='tel'>
-                        <span className='phone'>Tel: +460 472 888 012</span>
-                        <span className='bianHao'>©Copyright 2016. Design by Xquter</span>
+                    <div className='email'>
+                        <span className='com'>客服：kf@jingpipei.com</span>
+                        <span className='ads'>©Copyright 2018  浙ICP备18002286号</span>
                     </div>
-                    <span className='comAdress'>JINGCHENG.COM</span>
+                    <div className="email">
+                        <span className='com'>战略、市场、销售合作：market@jingpipei.com</span>
+                    </div>
+                    <span className='comAdress'>jingpipei.com</span>
                 </div>
             </div>
         )

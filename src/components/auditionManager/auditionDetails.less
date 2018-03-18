@@ -1,4 +1,4 @@
-.AnditionDetails {
+.AuditionDetails {
   width: calc(~"100% - 200px");
   background-color: #E6F5FF;
   margin-left: 200px;
@@ -6,6 +6,7 @@
   padding-left: 10px;
   padding-top: 10px;
   padding-bottom: 10px;
+  height:calc(100% + 10px);
   // min-height: 100%;
   .content {
     width: 1200px;
@@ -14,17 +15,28 @@
     border-radius: 4px;
     min-height: 100%;
     background-color: #fff;
-    padding-top: 20px;
+    padding-top: 72px;
     padding-left: 115px;
-    position: relative;
     padding-right: 20px;
+    padding-bottom:40px;
+    position:relative;
+    .backBox{
+      position:absolute;
+      display: block;
+      width:36px;
+      height:36px;
+      background:url("../../images/返回上一层 1.png") no-repeat center;
+      background-size:contain;
+      top:20px;
+      left:25px;
+    }
     .icon_pic {
       display: inline-block;
       width: 64px;
       height: 64px;
       background-color: #cfedf0;
       position: absolute;
-      top: 20px;
+      top: 72px;
       left: 25px;
     }
     .basic {
@@ -39,8 +51,22 @@
           color: #333333;
           margin-right: 10px;
         }
+        .trade {
+          display: inline-block;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          vertical-align: text-bottom;
+          span{
+            padding:0px 5px;
+          }
+          span:last-child{
+            display: none;
+          }
+        }
       }
       .info {
+        min-height:20px;
         .shuXian {
           margin: 0 5px;
           display: inline-block;
@@ -48,6 +74,25 @@
           height: 14px;
           background-color: #999999;
           vertical-align: middle;
+        }
+        .basicInfoBox {
+          span:last-child{
+            display: none;
+          }
+        }
+        .jobStates {
+          display: inline-block;
+          width: 40px;
+          height: 20px;
+          line-height: 20px;
+          text-align: center;
+          margin-left: 10px;
+          background: #25CCF6;
+          border-radius: 4px;
+          color: #fff;
+          font-size: 14px;
+          vertical-align: text-bottom;
+          float: right;
         }
       }
     }

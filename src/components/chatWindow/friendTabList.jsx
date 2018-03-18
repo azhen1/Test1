@@ -1,5 +1,6 @@
 import React from 'react'
 import './chatWindow.less'
+import defaultHeadImg from '../../images/default_head.png'
 
 let FriendTabList = React.createClass({
     getInitialState () {
@@ -12,54 +13,67 @@ let FriendTabList = React.createClass({
             activeItem: index
         })
     },
+    goTop (toId, index) {
+        this.props.goTop(toId, index)
+        this.activeFriendItem(0)
+    },
+    deleteFriend (e, id, index) {
+        let {friendList, topId, toId} = this.props
+        friendList.splice(index, 1)
+        if (id === toId) {
+            toId = friendList[0].toId
+            this.activeFriendItem(0)
+        }
+        if (id === topId) {
+            topId = ''
+        }
+        this.props.deleteFriend(friendList, toId, topId)
+        e.stopPropagation()
+    },
+    componentDidMount () {
+        let {friendList, toId} = this.props
+        friendList.forEach((v, index) => {
+            if (v.toId === toId) {
+                this.activeFriendItem(index)
+            }
+        })
+    },
+    componentWillReceiveProps (nextProps) {
+        let {friendList, toId} = nextProps
+        friendList.forEach((v, index) => {
+            if (v.toId === toId) {
+                this.activeFriendItem(index)
+            }
+        })
+    },
     componentDidUpdate () {
-        let {friendList} = this.props
+        let memberId = window.localStorage.getItem('memberId')
         // 检测是否有未读信息，并做好未读标记
-        let unReadCache = window.sessionStorage.getItem('UNREADCACHE')
+        let unReadCache = window.localStorage.getItem(`UNREADCACHE_${memberId}`)
+        unReadCache = JSON.parse(unReadCache)
         let showWDUDom = Array.from(document.getElementsByClassName('showWDU'))
         if (unReadCache !== null) {
-            // 未读信息按照时间顺序排序
-            let copyReadCache = JSON.parse(unReadCache)
-            copyReadCache.sort(function (a, b) {
-                return a.date - b.date
-            })
-            copyReadCache.forEach((v, index) => {
-                let has = false
-                let tarIndex = 0
-                let value = {...v}
-                friendList.forEach((vF, indexF) => {
-                    if (v.toId === vF.toId) {
-                        // let target = friendList.splice(indexF, 1)
-                        // friendList.unshift(target[0])
-                        has = true
-                        tarIndex = indexF
-                        value = {...vF}
-                    }
-                })
-                if (has) {
-                    friendList.splice(tarIndex, 1)
-                    friendList.unshift(value)
-                } else {
-                    friendList.unshift(value)
-                }
-            })
-            // console.log(friendList, ';;;;;')
-            this.props.friendListChangeFn(friendList)
-            this.props.toIdChangeFn(friendList[0].toId)
-            JSON.parse(unReadCache).forEach((vU, indexU) => {
+            unReadCache.forEach((vU, indexU) => {
                 showWDUDom.forEach((vS, indexS) => {
                     let idS = vS.id.split('_')[2]
-                    if (parseInt(vU.fromId) === parseInt(idS)) {
+                    if (parseInt(vU.toId) === parseInt(idS)) {
                         vS.innerHTML = vU.count
                         vS.style.display = 'inline-block'
                     }
                 })
             })
         }
-        window.sessionStorage.removeItem('UNREADCACHE')
+    },
+    // 判断图片地址是否为空
+    hasLogoPic (logoPic) {
+        if (logoPic === undefined || logoPic === null || logoPic === '') {
+            return true
+        } else {
+            return false
+        }
     },
     render () {
-        let {friendList} = this.props
+        let {friendList, toId, topId} = this.props
         let {activeItem} = this.state
         let imgsURL = 'http://dingyi.oss-cn-hangzhou.aliyuncs.com/images/'
         return (
@@ -71,12 +85,19 @@ let FriendTabList = React.createClass({
                             <div className='box' onClick={() => this.activeFriendItem(index)}>
                                 <span className='imgC_Box'>
                                     <span className='showWDU' id={`SHOW_WDU_${v.toId}`}>0</span>
-                                    <img src={`${imgsURL}${v.headUrl}`} alt="" className='pic'/>
+                                    <img src={this.hasLogoPic(v.headUrl) ? defaultHeadImg : `${imgsURL}${v.headUrl}`} alt="" className='pic'/>
                                 </span>
                                 <span className='name' title={v.name}>
                                     {v.name}
                                 </span>
-                                <span className='zhiDing' onClick={() => this.props.goTop(index)}>置顶</span>
+
+                            </div>
+                            <div className={topId === v.toId ? 'yiZhiDing' : 'weiZhiDing' }>
+                                <div className='operation'>
+                                    <div className='goZhiDing' onClick={() => this.goTop(v.toId, index)}>置顶</div>
+                                    <div className='delete' onClick={(e) => this.deleteFriend(e, v.toId, index)}>删除</div>
+                                </div>
+                                <div className='fixedZhiDing'>已置顶</div>
                             </div>
                         </div>
                     )

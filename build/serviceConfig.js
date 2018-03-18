@@ -10,7 +10,7 @@ for (var dev in ifaces) {
     });
 }
 var serviceList = {
-    port: 8080,
+    port: 8081,
     host: '0.0.0.0'
 }
 

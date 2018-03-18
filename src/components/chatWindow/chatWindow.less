@@ -30,12 +30,17 @@
         &:hover .zheZhao{
           display: inline-block;
         }
+        &:hover .operation{
+          display: block !important;
+        }
+        &:hover .fixedZhiDing{
+          display: none;
+        }
         .pic {
           display: inline-block;
           height: 38px;
           width: 38px;
           border-radius: 50%;
-          background-color: #7265e6;
           vertical-align: middle;
         }
         .name {
@@ -48,12 +53,6 @@
           text-overflow:ellipsis;
           white-space: nowrap;
           position: relative;
-        }
-        .zhiDing {
-          vertical-align: sub;
-          display: inline-block;
-          font-size: 14px;
-          width: 30px;
         }
         .zheZhao {
           width: 200px;
@@ -85,6 +84,44 @@
             }
           }
         }
+        .weiZhiDing {
+          .fixedZhiDing{
+            display: none;
+          }
+        }
+        .yiZhiDing{
+          .goZhiDing {
+            display: none;
+          }
+        }
+        .operation{
+          position:absolute;
+          top:50%;
+          -webkit-transform: translateY(-50%);
+          -moz-transform: translateY(-50%);
+          -ms-transform: translateY(-50%);
+          -o-transform: translateY(-50%);
+          transform: translateY(-50%);
+          right:20px;
+          width:48px;
+          text-align: right;
+          font-size:14px;
+          display: none;
+        }
+        .fixedZhiDing {
+          position:absolute;
+          position:absolute;
+          top:50%;
+          -webkit-transform: translateY(-50%);
+          -moz-transform: translateY(-50%);
+          -ms-transform: translateY(-50%);
+          -o-transform: translateY(-50%);
+          transform: translateY(-50%);
+          right:20px;
+          width:48px;
+          text-align: right;
+          font-size:14px;
+        }
       }
       .friendItem_active {
         .zheZhao {
@@ -100,8 +137,7 @@
       margin-top: 10px;
       margin-left: 10px;
       border-radius: 5px;
-      padding: 20px;
-      padding-top: 10px;
+      padding: 10px 20px 20px;
       .showHeader {
         font-size: 14px;
         text-align: center;
@@ -111,7 +147,7 @@
       .showChat {
         height: 77%;
         overflow-y: auto;
-        padding: 10px 0;
+        padding: 20px 0;
         .from, .to {
           font-size: 18px;
           color: #9BA2AD;
@@ -133,6 +169,7 @@
             border: 1px solid #E6F5FF;
             padding: 8px 20px;
             position: relative;
+            color:#444;
             .date {
               display: inline-block;
               font-size: 14px;
@@ -140,6 +177,84 @@
               position: absolute;
               bottom: -40px;
             }
+          }
+          .img{
+            display: inline-block;
+            max-width: 320px;
+            min-width: 160px;
+            border-radius: 10px;
+            position:relative;
+            img{
+              width:100%;
+              display: block;
+              border: 1px solid #e6f5ff;
+              border-radius: 10px;
+            }
+            .date {
+              display: inline-block;
+              font-size: 14px;
+              color: #9BA2AD;
+              position: absolute;
+              bottom: -40px;
+            }
+          }
+          .audio{
+            display: inline-block;
+            position: relative;
+            .unread{
+              width:8px;
+              height:8px;
+              background:red;
+              border-radius:10px;
+              position:absolute;
+              top:50%;
+              margin-top:-4px;
+              right:-20px;
+            }
+            .audioElem{
+              display: inline-block;
+              max-width: 570px;
+              min-width: 160px;
+              background-color: rgba(230,245,255,0.32);
+              border-radius: 25px;
+              border: 1px solid #E6F5FF;
+              padding: 8px 20px;
+              cursor:pointer;
+              position:relative;
+              padding-left:50px;
+              i{
+                position:absolute;
+                top:8px;
+                left:20px;
+                display:block;
+                width:16px;
+                height:29px;
+                background-image:url("../../images/音频 copy.png");
+                background-repeat:no-repeat;
+                background-position:center;
+                background-size:contain;
+              }
+            }
+            .date {
+              display: inline-block;
+              font-size: 14px;
+              color: #9BA2AD;
+              position: absolute;
+              bottom: -40px;
+            }
+          }
+
+        }
+        .fromImg {
+          margin-top:30px;
+          .headerPic {
+            vertical-align: top;
+          }
+        }
+        .toImg {
+          margin-top:30px;
+          .headerPic {
+            vertical-align: top;
           }
         }
         .from {
@@ -150,6 +265,15 @@
             vertical-align: text-bottom;
             .date {
               right: 0;
+            }
+          }
+          .audio {
+            vertical-align: text-bottom;
+            .audioElem{
+              background:#fff;
+            }
+            .date{
+              right:0px;
             }
           }
         }
@@ -166,12 +290,143 @@
               left: 0;
             }
           }
+          .img{
+            .date{
+              left:0px;
+            }
+          }
+          .positionDetailsMain{
+            text-align:right;
+            width:480px;
+            margin:0px auto;
+            padding-top:16px;
+            .positionBox{
+              min-height:98px;
+              text-align: left;
+              border:1px solid rgba(151,151,151,.2);
+              border-radius:3px;
+              padding:10px 20px 10px;
+              position: relative;
+              &.receive{
+                border:1px solid #e6f5ff;
+              }
+              &.send{
+                border:1px solid #e6f5ff;
+                background-color:rgba(230,245,255,.32)
+              }
+              .title{
+                color:#333;
+                font-size:20px;
+                width:320px;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+              }
+              .salary{
+                color:#F56767;
+                font-size:14px;
+                position:absolute;
+                top:10px;
+                right:20px;
+                line-height: 30px;
+              }
+              .basicInfo {
+                line-height: 18px;
+                padding:3px 0px;
+                .details{
+                  font-size:14px;
+                }
+                .shuXian {
+                  display: inline-block;
+                  width: 1px;
+                  height: 14px;
+                  vertical-align: middle;
+                  background-color: #999999;
+                  margin: 0 5px;
+                }
+                :last-child{
+                  display: none;
+                }
+              }
+              .updateTime{
+                border-top: 1px dashed rgba(151,151,151,.2);
+                margin-top: 8px;
+                padding-top: 6px;
+                font-size: 14px;
+              }
+              .address{
+                font-size:14px;
+                position: relative;
+                i{
+                  height:21px;
+                  width:16px;
+                  position:absolute;
+                  top:0px;
+                  right:0px;
+                  background:url("../../images/定位 @1x.png") no-repeat center;
+                  background-size:contain;
+                }
+              }
+            }
+            .positionCard{
+              min-height:84px;
+              text-align: left;
+              border-radius:3px;
+              padding:10px 20px 10px;
+              position: relative;
+              width:260px;
+              margin:0px auto;
+              img{
+                float:left;
+                width: 64px;
+                height: 64px;
+                background-color: #cfefdf;
+                border-radius: 50%;
+                vertical-align: middle;
+                margin-right:10px;
+              }
+              .fromName{
+                padding-top:4px;
+                color:#333;
+                font-size:20px;
+              }
+              .fromType{
+                font-size:14px;
+                color:#999;
+              }
+              .checkDetails{
+                position:absolute;
+                background:#25ccf6;
+                border-radius:100px;
+                width:80px;
+                line-height: 30px;
+                text-align: center;
+                color:#fff;
+                right:10px;
+                top:50%;
+                font-size:14px;
+                margin-top:-15px;
+                cursor:pointer;
+              }
+              &.receive{
+                border:1px solid #e6f5ff;
+              }
+            }
+            .date{
+              font-size:14px;
+            }
+          }
+
+        }
+        .positionTo{
+          margin-bottom:10px;
         }
       }
       .ipt_box {
         height: 18%;
         position: relative;
         .ant-input {
+          padding:8px 150px 8px 8px;
           font-size: 18px;
           &::-webkit-input-placeholder {
             font-size: 18px;
@@ -194,23 +449,53 @@
             box-shadow: none;
           }
         }
-        .expression {
+        .uploadImg{
           display: inline-block;
-          height: 27.5%;
+          width:30px;
+          height:30px;
           cursor: pointer;
-          border-radius: 50%;
-          background: url("../../images/biaoQing.png") no-repeat;
-          background-size: 100% 100%;
+          background: url("../../images/图片.png") no-repeat center center;
+          background-size: contain;
           position: absolute;
           right: 20px;
           top: 12.5%;
+          .ant-upload-list-picture-card{
+            display: none;
+          }
+          .ant-upload.ant-upload-select-picture-card{
+            width:40px;
+            height:32px;
+            opacity: 0;
+          }
+        }
+        .position {
+          width:30px;
+          height: 30px;
+          cursor: pointer;
+          background: url("../../images/position.png") no-repeat center center;
+          background-size: contain;
+          position: absolute;
+          right: 60px;
+          top: 12.5%;
+        }
+        .expression {
+          width:40px;
+          height: 40px;
+          cursor: pointer;
+          border-radius: 50%;
+          background: url("../../images/biaoQing.png") no-repeat center;
+          background-size: contain;
+          position: absolute;
+          right: 20px;
+          top: 12.5%;
+          display: none;
         }
         .doSend {
-          display: inline-block;
-          height: 25%;
+          width:32px;
+          height: 32px;
           cursor: pointer;
-          background: url("../../images/send.png") no-repeat;
-          background-size: 100% 100%;
+          background: url("../../images/send.png") no-repeat center;
+          background-size: contain;
           position: absolute;
           right: 20px;
           top: 62.5%;
@@ -229,5 +514,58 @@
       color: #001F63;
       padding-top: 14%;
     }
+  }
+}
+.chatPositionModal{
+  width:800px !important;
+  .ant-modal-body{
+    padding:0px;
+  }
+  .curJobItemCla {
+    padding:0px 0px 30px;
+    height:500px;
+    overflow-y: scroll;
+    .oneItem {
+      padding:30px 50px 0px;
+      font-size: 14px;
+      cursor:pointer;
+      &:hover{
+        background:#e6f5ff;
+      }
+      .jibType {
+        font-size: 20px;
+        color: #333333;
+      }
+      .info {
+        margin-bottom: 16px;
+        span {
+          color: #999999;
+        }
+        .shuXian {
+          display: inline-block;
+          width: 1px;
+          height: 14px;
+          vertical-align: middle;
+          margin: 0 5px;
+          background-color: #999999;
+        }
+        span:last-child{
+          display: none;
+        }
+      }
+      .result {
+        height: 38px;
+        line-height: 38px;
+        border-top: 1px dashed #E0E0E0;
+        border-bottom: 1px solid #E0E0E0;
+        color: #999999;
+        span {
+          margin-right: 20px;
+        }
+      }
+    }
+  }
+  .my_pagination{
+    padding:30px 30px 10px;
   }
 }

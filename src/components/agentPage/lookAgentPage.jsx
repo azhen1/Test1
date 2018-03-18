@@ -99,13 +99,17 @@ let LookAgentPage = React.createClass({
         getRequest(true, URL, formData).then(function (res) {
             let code = res.code
             if (code === 0) {
+                console.log(res)
                 let data = res.data
                 _th.setState({
                     dataSource: data.list,
                     pageTotal: data.total
                 })
+            } else if (code === 401) {
+                window.location.hash = '/login'
+                message.warning('您的账号已在其他设备登录，请重新登录!')
             } else {
-                message.error('系统错误!')
+                message.error(res.message)
             }
         })
     },
@@ -134,8 +138,8 @@ let LookAgentPage = React.createClass({
                 _th.setState({
                     tradeList: tradeList
                 })
-            } else {
-                message.error('系统错误!')
+            } else if (code !== 401) {
+                message.error(res.message)
             }
         })
     },
@@ -155,10 +159,11 @@ let LookAgentPage = React.createClass({
         } else if (!isZhiXiaShi && searchList.city !== undefined) {
             formData.city = searchList.city
         }
+        console.log(formData)
         this.reqDataFn(formData)
     },
     onPleaceTui (id, name, headUrl) {
-        window.location.hash = `chatWindow?id=${id}&name=${name}&headUrl=${headUrl}`
+        window.location.hash = `chatWindow?id=${id}`
     },
     clickDuanZhu (toId, state) {
         if (state === 0 || state === null) {
@@ -176,7 +181,7 @@ let LookAgentPage = React.createClass({
                     formDataQ.page = curPage
                     _th.reqDataFn(formDataQ)
                 } else {
-                    message.error('系统错误!')
+                    message.error(res.message)
                 }
             })
         }
@@ -214,7 +219,7 @@ let LookAgentPage = React.createClass({
                                 allowClear={true}
                                 onChange={(val) => this.handleChange(val, 'hangYe')} size='large'>
                             {tradeList.length > 0 ? tradeList.map((v, index) => {
-                                return <Option value={v.code} key={index}>{v.content}</Option>
+                                return <Option value={v.content} key={index}>{v.content}</Option>
                             }) : null}
                         </Select>
                         <Select placeholder="等级" style={selectStyle} value={searchList.leval}
@@ -235,7 +240,7 @@ let LookAgentPage = React.createClass({
                             <div className='item' key={index}>
                                 <CommonTpl itemData={v}/>
                                 <div className='operate'>
-                                    <div className='onLine' onClick={() => this.onPleaceTui(v.memberId, v.name, v.headUrl)}>请他推荐</div>
+                                    <div className='onLine' onClick={() => this.onPleaceTui(v.memberId)}>请他推荐</div>
                                     <div className='noGood' onClick={() => this.clickDuanZhu(v.memberId, v.followRelationNum)}
                                          style={v.followRelationNum === 0 || v.followRelationNum === null ? {} : {cursor: 'not-allowed'}}>
                                         <span className={v.followRelationNum === 0 || v.followRelationNum === null ? 'weiGuanZhuPic' : 'yiGuanZhuPic'}></span>

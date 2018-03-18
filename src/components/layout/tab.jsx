@@ -72,16 +72,11 @@ const Tab = React.createClass({
             curKey: curKey
         })
     },
-    iconHasSelectFn (key, url) {
-        let {curKey} = this.state
-        url = `src/images/${url}.png`
-        return curKey === key ? {background: `url("${url}") no-repeat`, backgroundSize: '100% 100%'} : {}
-    },
     render () {
         let {collapsed, curKey} = this.state
         let key3Title = (
             <span className='tab_item_box5'>
-                <span className='iconBox_Tab iconBox_Tab5' style={this.iconHasSelectFn('3', 'qiYeXinXiSel')}> </span>
+                <span className='iconBox_Tab iconBox_Tab5'> </span>
                 <span className='tab_item'>
                     经纪人
                 </span>
@@ -91,6 +86,7 @@ const Tab = React.createClass({
             <div className="app_tab">
                 <Menu
                     defaultSelectedKeys={[curKey]}
+                    selectedKeys={[curKey]}
                     mode="inline"
                     theme="light"
                     onSelect={this.onTabSelect}
@@ -99,13 +95,13 @@ const Tab = React.createClass({
                 >
                     <Menu.Item key="1">
                         <div onClick={() => this.itemClickFn('positionManager')} className='tab_item_box1'>
-                            <span className='iconBox_Tab iconBox_Tab1' style={this.iconHasSelectFn('1', 'zhiWeiGuanliSle')}></span>
+                            <span className='iconBox_Tab iconBox_Tab1'></span>
                             <span className='tab_item'>职位管理</span>
                         </div>
                     </Menu.Item>
                     <Menu.Item key="2">
                         <div onClick={() => this.itemClickFn('auditionManager')} className='tab_item_box2'>
-                            <span className='iconBox_Tab iconBox_Tab2' style={this.iconHasSelectFn('2', 'mianshiGLSel')}></span>
+                            <span className='iconBox_Tab iconBox_Tab2'></span>
                             <span className='tab_item'>面试管理</span>
                         </div>
                     </Menu.Item>
@@ -123,13 +119,13 @@ const Tab = React.createClass({
                     </SubMenu>
                     <Menu.Item key="5">
                         <div onClick={() => this.itemClickFn('businessInfo')} className='tab_item_box3'>
-                            <span className='iconBox_Tab iconBox_Tab3' style={this.iconHasSelectFn('5', 'qiYeXinXiSel')}></span>
+                            <span className='iconBox_Tab iconBox_Tab3'></span>
                             <span className='tab_item'>企业信息</span>
                         </div>
                     </Menu.Item>
                     <Menu.Item key="6">
                         <div onClick={() => this.itemClickFn('balanceManager')} className='tab_item_box4'>
-                            <span className='iconBox_Tab iconBox_Tab4' style={this.iconHasSelectFn('6', 'yuEGuanLiSel')}></span>
+                            <span className='iconBox_Tab iconBox_Tab4'></span>
                             <span className='tab_item'>余额管理</span>
                         </div>
                     </Menu.Item>

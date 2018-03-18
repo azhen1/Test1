@@ -59,6 +59,7 @@ const util = {
         return list.hasOwnProperty(key) ? list[key] : err
     },
     timeDifference (start) {
+        start = start.replace(/-/g, '/')
         start = new Date(start)
         let end = new Date()
         let result = end.getTime() - start.getTime()

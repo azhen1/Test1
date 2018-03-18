@@ -10,22 +10,21 @@ let EntryWating = React.createClass({
     // 已办理入职
     finishEntry (id) {
         let _th = this
-        let {curPagination, curTab} = _th.props
         let URL = '/job/platformInterview/finishEntry'
         let formData = {}
         formData.id = id
         postRequest(true, URL, formData).then((res) => {
             let code = res.code
             if (code === 0) {
-                message.success('状态修改成功 !')
-                _th.props.reqDataSouce(curPagination, curTab)
+                message.success('状态修改成功!')
+                _th.props.reqDataSouce()
             } else {
                 message.error(res.message)
             }
         })
     },
     render () {
-        let {dataSource, pageSizeTotal, curPagination} = this.props
+        let {dataSource, pageSizeTotal, curPagination, pageSizePer, curTab} = this.props
         return (
             <div className={dataSource.length === 0 ? 'EntryWating nullContent' : 'EntryWating'}>
                 {dataSource.length === 0 ? <div className='zanWU'>暂无数据</div> : null}
@@ -46,7 +45,7 @@ let EntryWating = React.createClass({
                     pageSizeTotal === 0
                         ? null
                         : <div className='my_pagination'>
-                            <Pagination current={curPagination} total={pageSizeTotal} size='large' onChange={this.props.paginationChange}/>
+                            <Pagination current={curPagination} total={pageSizeTotal} pageSize={pageSizePer} size='large' onChange={this.props.paginationChange}/>
                         </div>
                 }
             </div>

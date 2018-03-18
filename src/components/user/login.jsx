@@ -67,13 +67,6 @@ const Login = React.createClass({
     formChange (e, type) {
         let val = e.target.value
         let {formList} = this.state
-        // if (type === 'passWord') {
-            // val = val.split('')
-            // val.forEach((v, index) => {
-                // val[index] = '*'
-            // })
-            // val = val.join('')
-        // }
         formList[type] = val
         this.setState({
             formList: {...formList}
@@ -81,6 +74,7 @@ const Login = React.createClass({
     },
     componentDidMount () {
         this.toggleImgFn()
+        this._isMounted = true
     },
     // 获取图片验证码
     toggleImgFn () {
@@ -132,12 +126,17 @@ const Login = React.createClass({
             } else {
                 delete formList.passWord
             }
-            let values = Object.values(formList)
-            values.map((v, index) => {
-                if (v === '') {
+            // let values = Object.values(formList)
+            // values.map((v, index) => {
+            //     if (v === '') {
+            //         hasNull = true
+            //     }
+            // })
+            for (var v in formList) {
+                if (formList[v] === '') {
                     hasNull = true
                 }
-            })
+            }
             if (hasNull) {
                 message.warning('你有信息尚未填写')
                 this.setState({
@@ -171,9 +170,12 @@ const Login = React.createClass({
             let code = res.code
             if (code === 0) {
                 let data = res.data
-                let state = data.state
+                let state = res.data.state
+                let uuid = data.uuid
+                window.localStorage.setItem('sessionUuid', uuid)
                 if (state === 0) {
-                    message.error('您的手机号未注册，请现注册再登录!')
+                    message.error('您的账号还未提交企业认证，请提交审核！')
+                    window.location.hash = `certification?memberId=${data.memberId}`
                     return false
                 } else if (state === 1) {
                     message.success('您的账号还在审核中，请耐心等待!')
@@ -184,7 +186,6 @@ const Login = React.createClass({
                     return false
                 } else if (state === 3) {
                     message.success('登录成功!')
-                    let uuid = data.uuid
                     let userName = data.userName
                     let companyName = data.name
                     let logoPic = data.logoPic
@@ -203,7 +204,7 @@ const Login = React.createClass({
                     }, () => {
                         // let {memberId} = _th.state
                         // let hash = `memberId=${memberId}&companyName=${companyName}&userName=${userName}&userPosition=${userPosition}&logoPic=${logoPic}`
-                        window.location.hash = `／`
+                        window.location.hash = `app`
                     })
                 }
             } else {
@@ -269,17 +270,21 @@ const Login = React.createClass({
     countDown () {
         let _th = this
         let count = setInterval(function () {
-            if (_th.state.defCount === 0) {
-                clearInterval(count)
-                _th.setState({
-                    countDownToggle: false,
-                    defCount: 60,
-                    again: true
-                })
+            if (_th._isMounted) {
+                if (_th.state.defCount === 0) {
+                    clearInterval(count)
+                    _th.setState({
+                        countDownToggle: false,
+                        defCount: 60,
+                        again: true
+                    })
+                } else {
+                    _th.setState({
+                        defCount: --_th.state.defCount
+                    })
+                }
             } else {
-                _th.setState({
-                    defCount: --_th.state.defCount
-                })
+                clearInterval(count)
             }
         }, 1000)
     },
@@ -302,6 +307,12 @@ const Login = React.createClass({
             }
         }
     },
+    changeType (e) {
+        e.type = 'password'
+    },
+    componentWillUnmount () {
+        this._isMounted = false
+    },
     render () {
         let {curKey, formList, countDownToggle, defCount, again, picBase64} = this.state
         let nullIcon = <Icon type="exclamation-circle-o" style={{marginRight: '5px', fontSize: '16px'}} />
@@ -310,10 +321,10 @@ const Login = React.createClass({
                 <div className='login_form'>
                     <div className='formB'>
                         <div className='logoBox'>
-                            <span className='logo_Pic'></span>
-                            <div>
-                                <div className='app_name'>鲸城</div>
-                                <div className='netUrl'>JINGCHENG.COM</div>
+                            <a href='http://www.jingpipei.com/' className='logo_Pic'></a>
+                            <div className='txtLogo'>
+                                <div className='app_name'></div>
+                                <div className='netUrl'>JINGPIPEI.COM</div>
                             </div>
                         </div>
                         <div className='left_box'>
@@ -329,48 +340,51 @@ const Login = React.createClass({
                             </div>
                             <div className='phone formItem'>
                                 <span className='icon'></span>
-                                <Input placeholder="请输入手机号码" onChange={(e) => this.formChange(e, 'phone')} key={curKey} value={formList.phone} onBlur={this.phoneIntBlur}/>
-                                {this.isNullFn('phone') ? <div className='nullTest'>
-                                    {nullIcon}
-                                    请输入手机号码
-                                </div> : null}
+                                <Input placeholder="请输入手机号码" name="username" onChange={(e) => this.formChange(e, 'phone')} key={curKey} value={formList.phone} onBlur={this.phoneIntBlur}/>
                             </div>
+                            {this.isNullFn('phone') ? <div className='nullTest'>
+                                {nullIcon}
+                                请输入手机号码
+                            </div> : null}
                             <div className='picProving formItem'>
                                 <span className='icon'></span>
                                 <Input placeholder="请输入图片内容" onChange={(e) => this.formChange(e, 'imageHtml')} key={curKey} value={formList.imageHtml}/>
                                 <img src={`data:image/png;base64,${picBase64}`} onClick={this.toggleImgFn}/>
-                                {this.isNullFn('imageHtml') ? <div className='nullTest'>
-                                    {nullIcon}请输入验证码
-                                </div> : null}
                             </div>
-                            {this.hasBorderFn('proving_login') ? <div className='phoneProving formItem'>
-                                <span className='icon'></span>
-                                <Input placeholder="请输入手机验证码" onChange={(e) => this.formChange(e, 'phoneHtml')} key={curKey} value={formList.phoneHtml}/>
-                                <span className={countDownToggle ? 'obtain activeCount' : 'obtain'} onClick={this.obtainFn}>
-                                {countDownToggle ? `已发送(${defCount})秒` : again ? '重新发送' : '获取验证码'}
-                            </span>
-                                {this.isNullFn('phoneHtml') ? <div className='nullTest'>
-                                    {nullIcon}请输入手机验证码
-                                </div> : null}
+                            {this.isNullFn('imageHtml') ? <div className='nullTest'>
+                                {nullIcon}请输入验证码
                             </div> : null}
-                            {this.hasBorderFn('password_login') ? <div className='phoneProving formItem'>
-                                <span className='icon'></span>
-                                <Input placeholder="输入密码" onChange={(e) => this.formChange(e, 'passWord')} key={curKey} value={formList.passWord} />
+                            {this.hasBorderFn('proving_login') ? <div>
+                                <div className='phoneProving formItem'>
+                                    <span className='icon'></span>
+                                    <Input placeholder="请输入手机验证码" onChange={(e) => this.formChange(e, 'phoneHtml')} key={curKey} value={formList.phoneHtml}/>
+                                    <span className={countDownToggle ? 'obtain activeCount' : 'obtain'} onClick={this.obtainFn}>
+                                    {countDownToggle ? `已发送(${defCount})秒` : again ? '重新发送' : '获取验证码'}
+                                </span>
+                                </div>
+                                    {this.isNullFn('phoneHtml') ? <div className='nullTest'>
+                                    {nullIcon}请输入手机验证码
+                                    </div> : null}
+                            </div> : null}
+                            {this.hasBorderFn('password_login') ? <div>
+                                <div className='phoneProving formItem'>
+                                    <span className='icon'></span>
+                                    <Input placeholder="输入密码" type="password" onChange={(e) => this.formChange(e, 'passWord')} key={curKey} value={formList.passWord} autoComplete="new-password" />
+                                </div>
                                 {this.isNullFn('passWord') ? <div className='nullTest'>
                                     {nullIcon}密码长度必须大于6位
-                                </div> : null}
+                                    </div> : null}
                             </div> : null}
                             <div className='forget'><Link to="/forget">{this.hasBorderFn('password_login') ? '忘记密码？' : ''}</Link></div>
                             <div className='submit'>
                                 <Button onClick={this.onSubmit}>登录</Button>
                             </div>
                         </div>
-                        <div className='cutOffRule' style={{height: this.formBoxHeight('String')}}>
+                        <div className='cutOffRule'>
                             <div className='line_top'></div>
                             <div className='or'>or</div>
-                            <div className="line_bottom"></div>
                         </div>
-                        <div className='toRegister' style={{height: this.formBoxHeight('String'), paddingTop: this.formBoxHeight('Number') * 0.5}}>
+                        <div className='toRegister'>
                             <div className='noUser'>
                                 没有账号：
                             </div>

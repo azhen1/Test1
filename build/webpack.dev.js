@@ -31,13 +31,21 @@ var server = new WebpackDevServer(compiler, {
     historyApiFallback: true,
     proxy: {
         '/job': {
-            target: 'http://192.168.0.102',
+            target: 'http://116.62.136.23',
             changeOrigin: true
         },
         '/member': {
-            target: 'http://192.168.0.102',
+            target: 'http://116.62.136.23',
             changeOrigin: true
         },
+        // '/job': {
+        //     target: 'https://api.jingpipei.com',
+        //     changeOrigin: true
+        // },
+        // '/member': {
+        //     target: 'https://api.jingpipei.com',
+        //     changeOrigin: true
+        // },
         '/images': {
             target: 'http://dingyi.oss-cn-hangzhou.aliyuncs.com',
             changeOrigin: true,

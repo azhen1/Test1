@@ -1,29 +1,60 @@
 import React from 'react'
 import {Dropdown, Menu, message} from 'antd'
 import './layout.less'
+import defaultHeadImg from '../../images/default_head.png'
+import {getRequest} from '../../common/ajax'
 
 const Header = React.createClass({
     getInitialState () {
         return {
-            dataList: {}
+            dataList: {},
+            memberId: ''
         }
     },
     componentDidMount () {
         let sessionUuid = window.localStorage.getItem('sessionUuid')
         let memberId = window.localStorage.getItem('memberId')
-        let {dataList} = this.state
+        this.setState({
+            memberId: memberId
+        }, () => {
+            this.reqBusinssInfoAllInfo()
+        })
         let weiDuInfo = document.getElementsByClassName('weiDu_info')[0]
         if (weiDuInfo.innerHTML === '0') {
             weiDuInfo.style.display = 'none'
         } else {
             weiDuInfo.style.display = 'inline-block'
         }
-        dataList.userName = window.localStorage.getItem('userName')
-        dataList.companyName = window.localStorage.getItem('companyName')
-        dataList.logoPic = window.localStorage.getItem('logoPic')
-        this.setState({
-            dataList: dataList
+        let weiDuHint = document.getElementsByClassName('weiDu_hint')[0]
+        if (weiDuHint.innerHTML === '0') {
+            weiDuHint.style.display = 'none'
+        } else {
+            weiDuHint.style.display = 'inline-block'
+        }
+    },
+    // 查询公司所有信息
+    reqBusinssInfoAllInfo () {
+        let URL = 'member/company/getView'
+        let _th = this
+        let formData = {}
+        let {dataList} = this.state
+        formData.memberId = this.state.memberId
+        getRequest(true, URL, formData).then(function (res) {
+            let code = res.code
+            if (code === 0) {
+                dataList.userName = res.data.userName
+                dataList.companyName = res.data.name
+                dataList.logoPic = res.data.logoPic
+                _th.setState({
+                    dataList: dataList
+                })
+            } else {
+                message.error(res.message)
+            }
         })
+    },
+    componentWillReceiveProps () {
+        // console.log('componentWillReceiveProps')
     },
     itemClickFn (router) {
         if (router === 'chatWindow') {
@@ -33,14 +64,30 @@ const Header = React.createClass({
         }
         window.location.hash = router
     },
+    // 判断dataList是否为空，或者属性为空
+    userInformation (type) {
+        let {dataList} = this.state
+        if (dataList !== {} && dataList[type] !== '' && dataList[type] !== undefined) {
+            return true
+        } else {
+            return false
+        }
+    },
     onQuitFn () {
         window.localStorage.removeItem('sessionUuid')
         message.success('退出成功，请重新登录!')
         window.location.hash = 'login'
     },
+    // 判断图片地址是否为空
+    hasLogoPic (logoPic) {
+        if (logoPic === undefined || logoPic === null || logoPic === '') {
+            return true
+        } else {
+            return false
+        }
+    },
     render () {
         let {dataList} = this.state
-        let len = Object.values(dataList).length
         let imgsURL = 'http://dingyi.oss-cn-hangzhou.aliyuncs.com/images/'
         const menu = (
             <Menu>
@@ -56,10 +103,10 @@ const Header = React.createClass({
             <div className='app_header'>
                 <div className='left'>
                     <span className='app_logo'></span>
-                    <span className='name'>鲸城</span>
+                    <span className='name'>鲸匹配</span>
                     <div className='operate'>
                         <span className='hint' onClick={() => this.itemClickFn('information')}>
-                             <span className='weiDu_hint'>...</span>
+                             <span className='weiDu_hint'>0</span>
                         </span>
                         <span className='info' onClick={() => this.itemClickFn('chatWindow')}>
                             <span className='weiDu_info'>0</span>
@@ -69,13 +116,13 @@ const Header = React.createClass({
                 <div className="right">
                     <span className='company'>
                         <div className='HR'>
-                            {len > 0 && dataList.userName}
+                            {this.userInformation('userName') ? dataList.userName : '未命名'}
                         </div>
                         <div className='ascription'>
-                            {len > 0 && dataList.companyName}
+                            {this.userInformation('companyName') ? dataList.companyName : '未命名'}
                         </div>
                     </span>
-                    <img src={`${imgsURL}${dataList.logoPic}`} alt="" className='head_pic'/>
+                    <img src={this.hasLogoPic(dataList.logoPic) ? defaultHeadImg : `${imgsURL}${dataList.logoPic}`} alt="" className='head_pic'/>
                     <Dropdown overlay={menu} placement="bottomLeft" trigger={['hover']}>
                         <span className='operate_item'></span>
                     </Dropdown>

@@ -18,14 +18,16 @@ let ChatWindow = React.createClass({
             magList: [],
             count: 0,
             friendList: [],
-            toName: ''
+            toObj: {},
+            fromObj: {},
+            topId: ''
         }
     },
-    friendListChangeFn (val) {
-        this.setState({
-            friendList: [...val]
-        })
-    },
+    // friendListChangeFn (val) {
+    //     this.setState({
+    //         friendList: [...val]
+    //     })
+    // },
     msgChange (e) {
         let val = e.target.value
         this.setState({
@@ -38,10 +40,11 @@ let ChatWindow = React.createClass({
         })
     },
     toggleChat (index) {
-        let {memberId, toId, magList} = this.state
+        let {memberId, toId, magList, friendList, toObj} = this.state
         let showWDuDom = Array.from(document.getElementsByClassName('showWDU'))
         // 先储存上一个人的聊天信息
-        window.sessionStorage.setItem(`${memberId}_${toId}_MSG`, JSON.stringify(magList))
+        window.localStorage.setItem(`${memberId}_${toId}_MSG`, JSON.stringify(magList))
+        let unReadCache = window.localStorage.getItem(`UNREADCACHE_${memberId}`)
         // 清除未读信息标记
         showWDuDom.forEach((v, indexFor) => {
             if (parseInt(v.id.split('_')[2]) === parseInt(index)) {
@@ -49,61 +52,80 @@ let ChatWindow = React.createClass({
                 v.style.display = 'none'
             }
         })
+        if (unReadCache !== null) {
+            unReadCache = JSON.parse(unReadCache)
+            unReadCache.forEach((vUnread, indexUnread) => {
+                if (vUnread.toId === index) {
+                    unReadCache.splice(indexUnread, 1)
+                    window.localStorage.setItem(`UNREADCACHE_${memberId}`, JSON.stringify(unReadCache))
+                }
+            })
+        }
+        friendList.map((v, idx) => {
+            if (v.toId === index) {
+                toObj.toId = v.toId
+                toObj.name = v.name
+                toObj.headUrl = v.headUrl
+            }
+        })
         this.setState({
-            toId: index
+            toId: index,
+            toObj: toObj
         }, () => {
             this.historyChatRecod()
         })
     },
     componentWillMount () {
         window.addEventListener('beforeunload', this.unloadFn, false)
-        // window.localStorage.removeItem('FRIENDLIST_LIST_ITEM')
     },
     // 监听页面刷新
     unloadFn () {
-        let {memberId, toId, magList, friendList} = this.state
+        let {memberId, toId, magList, friendList, topId} = this.state
         // 缓存好友列表和对话历史记录
-        window.sessionStorage.setItem(`${memberId}_${toId}_MSG`, JSON.stringify(magList))
-        window.localStorage.setItem(`FRIENDLIST_LIST_ITEM`, JSON.stringify(friendList))
+        window.alert(friendList)
+        window.localStorage.setItem(`${memberId}_${toId}_MSG`, JSON.stringify(magList))
+        window.localStorage.setItem(`FRIENDLIST_LIST_ITEM_${memberId}`, JSON.stringify(friendList))
+        window.localStorage.setItem(`TOP_ID_${memberId}`, JSON.stringify(topId))
     },
     componentDidMount () {
-        // let sessionUuid = window.localStorage.getItem('sessionUuid')
-        this.reqFriendFn()
+        // this.props.reqFriendFn()
         let memberId = window.localStorage.getItem('memberId')
+        let name = window.localStorage.getItem('companyName')
+        let headUrl = window.localStorage.getItem('logoPic')
+        let fromObj = {
+            memberId: memberId,
+            name: name,
+            headUrl: headUrl
+        }
+        this.setState({
+            fromObj: fromObj
+        })
         let hash = window.location.hash
+        // 取缓存的好友列表
         let {friendList} = this.state
-        // 取缓存的对话好友列表
-        let copyFriendList = window.localStorage.getItem('FRIENDLIST_LIST_ITEM')
-        if (copyFriendList !== null && copyFriendList.length > 0) {
+        let copyFriendList = window.localStorage.getItem(`FRIENDLIST_LIST_ITEM_${memberId}`)
+        let topId = JSON.parse(window.localStorage.getItem(`TOP_ID_${memberId}`))
+        if (copyFriendList !== null && copyFriendList !== 'undefined' && copyFriendList.length > 0) {
             friendList = [...JSON.parse(copyFriendList)]
+        }
+        if (friendList.length > 0) {
+            let idTo = friendList[0].toId
+            let toObj = {}
+            toObj.toId = idTo
+            toObj.name = friendList[0].name
+            toObj.headUrl = friendList[0].headUrl
             this.setState({
-                friendList: friendList
+                toId: idTo,
+                toObj: toObj,
+                friendList: friendList,
+                topId: topId
             })
         }
-        // 如果是新的好友，那就添加
+        // 是否添加好友
         if (hash.indexOf('id') !== -1) {
             let hashArr = decodeURI(hash).split('?')[1].split('&')
             let idTo = hashArr[0].split('=')[1]
-            let has = false
-            friendList.forEach((v, index) => {
-                if (v.toId === hashArr[0].split('=')[1]) {
-                    has = true
-                }
-            })
-            let target = {toId: hashArr[0].split('=')[1], name: hashArr[1].split('=')[1], headUrl: hashArr[2].split('=')[1], date: Date.parse(new Date())}
-            !has && friendList.unshift(target)
-            this.setState({
-                toId: idTo,
-                friendList: friendList
-            })
-        } else {
-            if (friendList.length > 0) {
-                let idTo = friendList[0].toId
-                this.setState({
-                    toId: idTo,
-                    friendList: friendList
-                })
-            }
+            this.getInformationHR(idTo)
         }
         this.setState({
             Socket: window.Socket,
@@ -111,25 +133,98 @@ let ChatWindow = React.createClass({
         }, () => {
             this.historyChatRecod()
         })
-        // 192.168.0.125; 47.97.115.140
-        // let Socket = new WebSocket(`ws://192.168.0.125:8090/chat/websocket?token=${sessionUuid}`)
-        // Socket.onopen = function () {
-            // let dateOff = util.getDateTimeStr(new Date())
-            // let data = {from: '', to: '32', msg: '', type: 'offline', timestamp: '', identity: '', filepath: ''}
-            // Socket.send(JSON.stringify(data))
-            // _th.setState({
-                // Socket: Socket,
-                // memberId: memberId
-            // }, () => {
-                // _th.historyChatRecod()
-            // })
-        // }
-        window.Socket.onmessage = this.onMessageFn
+        if (hash.indexOf('positionId') !== -1) {
+            let hashArr = decodeURI(hash).split('?')[1].split('&')
+            let positionId = hashArr[1].split('=')[1]
+            this.getPositionDetails(positionId)
+        }
+    },
+    // 获取一个HR的消息--头像
+    getInformationHR (idTo) {
+        let URL = '/member/platformMember/get'
+        let _th = this
+        let formData = {}
+        formData.memberId = idTo
+        getRequest(true, URL, formData).then((res) => {
+            if (res.code === 0) {
+                let memberId = window.localStorage.getItem('memberId')
+                let copyFriendList = window.localStorage.getItem(`FRIENDLIST_LIST_ITEM_${memberId}`)
+                let {friendList} = _th.state
+                let topId = JSON.parse(window.localStorage.getItem(`TOP_ID_${memberId}`))
+                if (copyFriendList !== null && copyFriendList !== 'undefined' && copyFriendList.length > 0) {
+                    friendList = [...JSON.parse(copyFriendList)]
+                }
+                let data = res.data
+                let name = data.nick
+                let headUrl = data.headUrl
+                let has = false
+                friendList.forEach((v, index) => {
+                    if (v.toId === idTo) {
+                        v.name = name
+                        v.headUrl = headUrl
+                        has = true
+                        return false
+                    }
+                })
+                let target = {toId: idTo, name: name, headUrl: headUrl, date: new Date().getTime()}
+                if (topId) {
+                    !has && friendList.splice(1, 0, target)
+                } else {
+                    !has && friendList.unshift(target)
+                }
+                let toObj = {}
+                toObj.toId = idTo
+                toObj.name = name
+                toObj.headUrl = headUrl
+                window.localStorage.setItem(`FRIENDLIST_LIST_ITEM_${memberId}`, JSON.stringify(friendList))
+                console.log(toObj)
+                _th.setState({
+                    toId: idTo,
+                    toObj: toObj,
+                    friendList: friendList,
+                    topId: topId
+                }, () => {
+                    _th.historyChatRecod()
+                })
+            } else {
+                message.error(res.message)
+            }
+        })
+    },
+    // 获取职位详情
+    getPositionDetails (id) {
+        let URL = '/job/platformPosition/webGet'
+        let formData = {}
+        let _th = this
+        formData.id = id
+        getRequest(true, URL, formData).then((res) => {
+            if (res.code === 0) {
+                _th.sendPosition(res.data)
+            } else {
+                message.error(res.message)
+            }
+        })
+    },
+    // 生成职位消息msg 并发送一条消息
+    sendPosition (data) {
+        let positionMsg = {}
+        let _th = this
+        positionMsg.positionId = data.id
+        positionMsg.companyName = data.companyName
+        positionMsg.title = data.title
+        positionMsg.position = data.title
+        positionMsg.salary = data.salary
+        positionMsg.address = data.workLocation.replace(/-/g, '') + data.workAddress
+        _th.setState({
+            msg: positionMsg
+        }, () => {
+            _th.onSendFn('5')
+        })
     },
     // 取历史对话记录
     historyChatRecod () {
         let {memberId, toId, magList} = this.state
-        let cache = window.sessionStorage.getItem(`${memberId}_${toId}_MSG`)
+        let cache = window.localStorage.getItem(`${memberId}_${toId}_MSG`)
         if (cache !== null) {
             magList = [...JSON.parse(cache)]
             this.setState({
@@ -149,198 +244,108 @@ let ChatWindow = React.createClass({
             })
         }
     },
-    onSendFn () {
-        let {Socket, memberId, toId, magList, msg} = this.state
-        if (msg !== '') {
-            let date = util.getDateTimeStr(new Date())
-            let data = {id: `${toId} ${date}`, from: memberId, to: toId, msg: msg, type: 'online', timestamp: date, identity: '1', msgtype: '0'}
-            Socket.send(JSON.stringify(data))
-            magList.push(data)
+    onSendFn (mtype, imgUrl) {
+        let {Socket, memberId, toId, magList, msg, toObj, fromObj} = this.state
+        let date = util.getDateTimeStr(new Date())
+        let magNew = {}
+        let has = true
+        let msgtype = mtype
+        if (msgtype === '1') {
+            let filepath = imgUrl
+            magNew = {id: `${toId} ${date}`, from: memberId, to: toId, msg: msg, filepath: filepath, type: 'online', timestamp: date, identity: '1', msgtype: msgtype, fromname: fromObj.name, fromportrait: fromObj.headUrl, toname: toObj.name, toportrait: toObj.headUrl}
+            // console.log(magNew)
+            Socket.send(JSON.stringify(magNew))
+            magList.push(magNew)
             this.setState({
-                magList: magList,
-                msg: ''
+                magList: magList
             }, () => {
+                window.localStorage.setItem(`${memberId}_${toId}_MSG`, JSON.stringify(magList))
                 let showChatDom = document.getElementById('showChatId')
                 showChatDom.scrollTop = showChatDom.scrollHeight
                 this.setState({
                     count: ++this.state.count
                 })
             })
-        }
-    },
-    onMessageFn (res) {
-        let {memberId, toId} = this.state
-        let {onInfoFn} = this.props
-        let hash = window.location.hash
-        let showWDuDom = Array.from(document.getElementsByClassName('showWDU'))
-        console.log(res, '被动推送')
-        let resultCopy = JSON.parse(res.data)
-        if (resultCopy.hasOwnProperty('count') || !resultCopy.hasOwnProperty('result')) {
-            let data = resultCopy
-            if (data.hasOwnProperty('count') && data.hasOwnProperty('values')) {
-                // 系统推送消息窗口设置
-                this.props.onInfoFn(data)
-            } else {
-                // 消息窗口设置
-                if (data.constructor === Array) {
-                    data.forEach((v, index) => {
-                        let target = JSON.parse(window.sessionStorage.getItem(`${memberId}_${v.from}_MSG`))
-                        if (target !== null) {
-                            target.push(v)
-                            window.sessionStorage.setItem(`${memberId}_${v.from}_MSG`, JSON.stringify(target))
-                        } else {
-                            window.sessionStorage.setItem(`${memberId}_${v.from}_MSG`, JSON.stringify(v))
-                        }
-                        if (hash.indexOf('chatWindow') !== -1) {
-                            this.weiDuInfoCount(showWDuDom, v, toId, 'online')
-                        } else {
-                            this.weiDuInfoCount(showWDuDom, data, toId, 'offline')
-                        }
-                    })
-                } else {
-                    let target = JSON.parse(window.sessionStorage.getItem(`${memberId}_${data.from}_MSG`))
-                    if (target !== null) {
-                        target.push(data)
-                        window.sessionStorage.setItem(`${memberId}_${data.from}_MSG`, JSON.stringify(target))
-                    } else {
-                        window.sessionStorage.setItem(`${memberId}_${data.from}_MSG`, JSON.stringify([data]))
-                    }
-                    // 判断消息是否是当前联系人，如果不是，置为未读
-                    if (hash.indexOf('chatWindow') !== -1) {
-                        this.weiDuInfoCount(showWDuDom, data, toId, 'online')
-                    } else {
-                        this.weiDuInfoCount(showWDuDom, data, toId, 'offline')
-                    }
-                }
-                if (hash.indexOf('chatWindow') !== -1) {
-                    this.historyChatRecod()
-                }
-                if (hash.indexOf('chatWindow') === -1) {
-                    let weiDuInfo = document.getElementsByClassName('weiDu_info')[0]
-                    let value = parseInt(weiDuInfo.innerHTML)
-                    value = ++value
-                    weiDuInfo.innerHTML = value + ''
-                    weiDuInfo.style.display = 'inline-block'
-                }
-            }
-        }
-    },
-    //  查询用户信息
-    reqFriendFn (id) {
-        let URL = 'member/platformMember/batchQueryMember'
-        let uuid = window.localStorage.getItem('sessionUuid')
-        let result = {}
-        let formData = {}
-        formData.memberIds = 27
-        $.ajax({
-            type: 'GET',
-            async: false,
-            url: URL,
-            data: formData,
-            headers: {
-                Authorization: uuid === null ? '' : `DingYi ${uuid}`
-            },
-            success: function (res) {
-                if (res.code === 0) {
-                    result = {...res.data[0]}
-                }
-            },
-            error: function (err) {
-                message.error(err)
-            }
-        })
-        return result
-    },
-    // 判断未读信息数量与类型
-    weiDuInfoCount (showWDuDom, data, toId, type) {
-        let {friendList} = this.state
-        if (type === 'online') {
-            if (data.from !== toId) {
-                let hasItem = false
-                showWDuDom.forEach((v, index) => {
-                    let id = v.id.split('_')[2]
-                    if (data.from === id) {
-                        let curHtml = v.innerHTML
-                        hasItem = true
-                        if (parseInt(curHtml) + 1 > 9) {
-                            v.innerHTML = '...'
-                        } else {
-                            v.innerHTML = parseInt(curHtml) + 1
-                        }
-                        v.style.display = 'inline-block'
-                    }
-                })
-                if (!hasItem) {
-                    let friendInfo = this.reqFriendFn(data.from)
-                    let date = Date.parse(new Date())
-                    friendList.push({toId: data.from, count: 1, date: date, name: friendInfo.name, headUrl: friendInfo.headUrl})
+        } else {
+            if (msg !== '') {
+                if (has) {
+                    magNew = {from: memberId, to: toId, msg: msg, type: 'online', timestamp: date, identity: '1', msgtype: msgtype, fromname: fromObj.name, fromportrait: fromObj.headUrl, toname: toObj.name, toportrait: toObj.headUrl}
+                    // console.log(magNew)
+                    Socket.send(JSON.stringify(magNew))
+                    magList.push(magNew)
                     this.setState({
-                        friendList: friendList
+                        magList: magList,
+                        msg: ''
                     }, () => {
-                        let showWDuDomNew = Array.from(document.getElementsByClassName('showWDU'))
-                        showWDuDomNew.forEach((v, index) => {
-                            let id = v.id.split('_')[2]
-                            if (data.from === id) {
-                                let curHtml = v.innerHTML
-                                hasItem = true
-                                if (parseInt(curHtml) + 1 > 9) {
-                                    v.innerHTML = '...'
-                                } else {
-                                    v.innerHTML = parseInt(curHtml) + 1
-                                }
-                                v.style.display = 'inline-block'
-                            }
+                        window.localStorage.setItem(`${memberId}_${toId}_MSG`, JSON.stringify(magList))
+                        let showChatDom = document.getElementById('showChatId')
+                        showChatDom.scrollTop = showChatDom.scrollHeight
+                        this.setState({
+                            count: ++this.state.count
                         })
                     })
-                }
-            }
-        } else {
-            let fromId = data.from
-            let friendInfo = this.reqFriendFn(fromId)
-            let unReadCache = window.sessionStorage.getItem('UNREADCACHE')
-            let date = Date.parse(new Date())
-            if (unReadCache !== null) {
-                let has = false
-                let terIndex = 0
-                unReadCache = JSON.parse(unReadCache)
-                unReadCache.forEach((v, index) => {
-                    if (fromId === v.fromId) {
-                        has = true
-                        terIndex = index
-                    }
-                })
-                if (has) {
-                    unReadCache[terIndex].count = ++unReadCache[terIndex].count
                 } else {
-                    unReadCache.push({toId: fromId, count: 1, date: date, name: friendInfo.name, headUrl: friendInfo.headUrl})
+                    this.setState({
+                        msg: ''
+                    })
                 }
-            } else {
-                unReadCache = []
-                unReadCache.push({toId: fromId, count: 1, date: date, name: friendInfo.name, headUrl: friendInfo.headUrl})
             }
-            window.sessionStorage.setItem('UNREADCACHE', JSON.stringify(unReadCache))
+        }
+    },
+    componentWillReceiveProps (nextProps) {
+        let data = nextProps.historyChat
+        let friendList = nextProps.friendList
+        this.weiDuInfoCount2(data, friendList)
+    },
+    weiDuInfoCount2 (data, friendListProps) {
+        let {toId} = this.state
+        let fromId = data.from
+        if (data.type === 'online') {
+            // 发消息的好友ID !== 当前窗口好友ID
+            if (fromId !== toId) {
+                this.setState({
+                    friendList: friendListProps
+                })
+            } else {
+                this.historyChatRecod()
+            }
         }
     },
     componentWillUnmount () {
-        let {memberId, toId, magList, friendList} = this.state
+        let {memberId, toId, magList, friendList, topId} = this.state
         window.removeEventListener('beforeunload', this.unloadFn, false)
         // 缓存好友列表和对话历史记录
-        window.sessionStorage.setItem(`${memberId}_${toId}_MSG`, JSON.stringify(magList))
-        window.localStorage.setItem(`FRIENDLIST_LIST_ITEM`, JSON.stringify(friendList))
+        window.localStorage.setItem(`${memberId}_${toId}_MSG`, JSON.stringify(magList))
+        window.localStorage.setItem(`FRIENDLIST_LIST_ITEM_${memberId}`, JSON.stringify(friendList))
+        window.localStorage.setItem(`TOP_ID_${memberId}`, JSON.stringify(topId))
     },
     // 置顶
-    goTop (index) {
-        let {friendList} = this.state
+    goTop (id, index) {
+        let {friendList, memberId} = this.state
         let target = friendList.splice(index, 1)
         friendList.unshift(target[0])
+        window.localStorage.setItem(`FRIENDLIST_LIST_ITEM_${memberId}`, JSON.stringify(friendList))
         this.setState({
-            friendList: friendList
+            friendList: friendList,
+            topId: id
+        })
+    },
+    // 删除
+    deleteFriend (friendList, toId, topId) {
+        let {memberId} = this.state
+        window.localStorage.setItem(`FRIENDLIST_LIST_ITEM_${memberId}`, JSON.stringify(friendList))
+        this.setState({
+            friendList: friendList,
+            toId: toId,
+            topId: topId
+        }, () => {
+            this.historyChatRecod()
         })
     },
     render () {
-        let {memberId, magList, msg, friendList, toId} = this.state
+        let {memberId, magList, msg, friendList, toId, topId} = this.state
         let {type} = this.props
-        let propertyList = {toIdChangeFn: this.toIdChangeFn, onSendFn: this.onSendFn, msgChange: this.msgChange, memberId: memberId, magList: magList, msg: msg, toggleChat: this.toggleChat, friendList: friendList, goTop: this.goTop, toId: toId, friendListChangeFn: this.friendListChangeFn}
+        let propertyList = {toIdChangeFn: this.toIdChangeFn, onSendFn: this.onSendFn, sendPosition: this.sendPosition, msgChange: this.msgChange, memberId: memberId, magList: magList, msg: msg, toggleChat: this.toggleChat, friendList: friendList, goTop: this.goTop, deleteFriend: this.deleteFriend, toId: toId, topId: topId}
         if (type !== 'init') {
             return (
                 <div className='ChatWindow'>

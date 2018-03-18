@@ -10,7 +10,6 @@ let AlreadyView = React.createClass({
     // 发送入职邀请
     finishInterview (id) {
         let _th = this
-        let {curPagination, curTab} = _th.props
         let URL = '/job/platformInterview/entryInvitation'
         let formData = {}
         formData.id = id
@@ -18,7 +17,7 @@ let AlreadyView = React.createClass({
             let code = res.code
             if (code === 0) {
                 message.success('发送邀请成功!')
-                _th.props.reqDataSouce(curPagination, curTab)
+                _th.props.reqDataSouce()
             } else {
                 message.error(res.message)
             }
@@ -27,22 +26,21 @@ let AlreadyView = React.createClass({
     // 不合适
     improper (id) {
         let _th = this
-        let {curPagination, curTab} = _th.props
         let URL = '/job/platformInterview/improper'
         let formData = {}
         formData.id = id
         postRequest(true, URL, formData).then((res) => {
             let code = res.code
             if (code === 0) {
-                message.success('取消成功!')
-                _th.props.reqDataSouce(curPagination, curTab)
+                message.success('面试不合适!')
+                _th.props.reqDataSouce()
             } else {
                 message.error(res.message)
             }
         })
     },
     render () {
-        let {dataSource, pageSizeTotal, curPagination} = this.props
+        let {dataSource, pageSizeTotal, curPagination, pageSizePer} = this.props
         return (
             <div className={dataSource.length === 0 ? 'AlreadyView nullContent' : 'AlreadyView'}>
                 {dataSource.length === 0 ? <div className='zanWU'>暂无数据</div> : null}
@@ -61,7 +59,7 @@ let AlreadyView = React.createClass({
                     pageSizeTotal === 0
                         ? null
                         : <div className='my_pagination'>
-                            <Pagination current={curPagination} total={pageSizeTotal} size='large' onChange={this.props.paginationChange}/>
+                            <Pagination current={curPagination} total={pageSizeTotal} pageSize={pageSizePer} size='large' onChange={this.props.paginationChange}/>
                         </div>
                 }
             </div>

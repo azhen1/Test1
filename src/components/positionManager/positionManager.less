@@ -1,11 +1,12 @@
 .PositionManager {
-  width: calc(~"100% - 160px");
+  width: calc(~"100% - 200px");
   background-color: #E6F5FF;
-  margin-left: 160px;
+  margin-left: 200px;
   margin-top: 90px;
   padding-top: 10px;
   min-height: calc(~"100% + 10px");
   padding-bottom: 10px;
+  padding-left:10px;
   .ant-tabs {
     overflow: visible;
   }
@@ -17,8 +18,7 @@
     border-radius: 3px;
     margin-bottom: 1px;
     background-color: #fff;
-    display: inline-block;
-    width: 1200px;
+    width: 1190px;
     margin-left: 50%;
     transform: translate(-50%, 0);
     position: relative;
@@ -78,7 +78,6 @@
       border-radius: 3px;
       padding-left: 20px;
       position: relative;
-      cursor: pointer;
       .line {
         height: 1px;
         border-top: 1px dashed #999999;
@@ -88,7 +87,8 @@
         opacity: .3;
       }
       .curStateShow {
-        display: inline-block;
+        position:absolute;
+        right:190px;
         width: 130px;
         height: 50px;
         line-height: 50px;
@@ -96,12 +96,22 @@
         text-align: center;
         background-color: #25CCF6;
         border-radius: 25px;
-        margin-left: 300px;
         color: #fff;
+      }
+      .curStateFail {
+        position:absolute;
+        right:190px;
+        width: 130px;
+        height: 50px;
+        line-height: 50px;
+        font-size: 20px;
+        text-align: center;
+        background-color: #EBEBEB;
+        border-radius: 25px;
+        color: #999999;
       }
       .operate_right {
         float: right;
-        height: 120px;
         width: 180px;
         margin-right: 20px;
         .mianShi {
@@ -161,6 +171,7 @@
           span {
             color: #25CCF6;
             margin-right: 48px;
+            cursor:pointer;
           }
           .down {
             margin-right: 0;

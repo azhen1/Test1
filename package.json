@@ -9,6 +9,27 @@
     "build": "cross-env NODE_ENV=produce node build/webpack.produce.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "proxy": {
+    "/job": {
+      "target": "https://api.jingpipei.com",
+      "changeOrigin": true
+    },
+    "/member": {
+      "target": "https://api.jingpipei.com",
+      "changeOrigin": true
+    },
+    "/images": {
+      "target": "http://dingyi.oss-cn-hangzhou.aliyuncs.com",
+      "changeOrigin": true,
+      "pathRewrite": {
+        "^/images": "/images"
+      }
+    },
+    "/company": {
+      "target": "http://192.168.0.103:8012",
+      "changeOrigin": true
+    }
+  },
   "author": "",
   "license": "ISC",
   "devDependencies": {
@@ -50,6 +71,7 @@
     "axios": "^0.16.2",
     "echarts": "^3.6.2",
     "jquery": "^3.2.1",
+    "moment": "^2.20.1",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-redux": "^4.4.0",

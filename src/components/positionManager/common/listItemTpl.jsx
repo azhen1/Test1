@@ -35,15 +35,16 @@ let ListItemTpl = React.createClass({
                     {listItemArr.title}
                 </div>
                 <div className='baseInfo'>
-                    <span>{this.filterCityFn(listItemArr.province, listItemArr.city)}</span>
-                    <span className='breakUp'> </span>
-                    <span>{listItemArr.workExperience}</span>
-                    <span className='breakUp'> </span>
-                    <span>{listItemArr.education}</span>
-                    <span className='breakUp'> </span>
-                    <span>{listItemArr.positionNature}</span>
-                    <span className='breakUp'> </span>
-                    <span>{listItemArr.salary}</span>
+                    {this.filterCityFn(listItemArr.province, listItemArr.city) ? <span>{this.filterCityFn(listItemArr.province, listItemArr.city)}</span> : null}
+                    {this.filterCityFn(listItemArr.province, listItemArr.city) ? <span className='breakUp'></span> : null}
+                    {listItemArr.workExperience ? <span>{listItemArr.workExperience}</span> : null}
+                    {listItemArr.workExperience ? <span className='breakUp'></span> : null}
+                    {listItemArr.education ? <span>{listItemArr.education}</span> : null}
+                    {listItemArr.education ? <span className='breakUp'></span> : null}
+                    {listItemArr.positionNature ? <span>{listItemArr.positionNature}</span> : null}
+                    {listItemArr.positionNature ? <span className='breakUp'></span> : null}
+                    {listItemArr.salary ? <span>{listItemArr.salary}</span> : null}
+                    {listItemArr.salary ? <span className='breakUp'></span> : null}
                 </div>
                 <div className='auditionResult'>
                     <span>{`${listItemArr.updateTime}更新`}</span>

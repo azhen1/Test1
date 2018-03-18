@@ -94,10 +94,11 @@
       display: inline-block;
       height: 64px;
       width: 64px;
-      background-color: red;
       margin-top: 13px;
       vertical-align: top;
       cursor: pointer;
+      border-radius:50%;
+      background:#f5f5f5;
     }
     .operate_item {
       display: inline-block;
@@ -119,6 +120,38 @@
   background-color: #fff;
   height: calc(~"100% - 90px");
   z-index: 9;
+  .ant-menu-item-selected{
+    .tab_item_box1 {
+      .iconBox_Tab1 {
+        background: url("../../images/zhiWeiGuanliSle.png") no-repeat;
+        background-size: 100% 100%;
+      }
+    }
+    .tab_item_box2 {
+      .iconBox_Tab2 {
+        background: url("../../images/mianshiGLSel.png") no-repeat;
+        background-size: 100% 100%;
+      }
+    }
+    .tab_item_box3 {
+      .iconBox_Tab3 {
+        background: url("../../images/qiYeXinXiSel.png") no-repeat;
+        background-size: 100% 100%;
+      }
+    }
+    .tab_item_box4 {
+      .iconBox_Tab4 {
+        background: url("../../images/yuEGuanLiSel.png") no-repeat;
+        background-size: 100% 100%;
+      }
+    }
+    .tab_item_box5 {
+      .iconBox_Tab5 {
+        background: url("../../images/jingJiRenSel.png") no-repeat;
+        background-size: 100% 100%;
+      }
+    }
+  }
   .tab_item_box1 {
     &:hover .iconBox_Tab1 {
       background: url("../../images/zhiWeiGuanliSle.png") no-repeat;

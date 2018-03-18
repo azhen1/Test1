@@ -5,7 +5,7 @@
 * {
   margin: 0;
   padding: 0;
-  font-family: PingFangSC-Regular;
+  font-family: PingFangSC-Light;
 }
 .login, .register, .Forget {
   height: 100%;
@@ -26,11 +26,13 @@
     min-height: auto;
     padding-bottom: 58px;
     .formB {
+      width:720px;
       display: inline-block;
       background-color: #fff;
       padding-bottom: 58px;
       box-shadow: 0 2px 4px 0;
       position: relative;
+      text-align:left;
       .logoBox {
         margin-bottom: 30px;
         position: absolute;
@@ -39,13 +41,18 @@
         span, div {
           display: inline-block;
         }
+        .txtLogo{
+          vertical-align: top;
+          margin-top:3px;
+        }
         .app_name, .netUrl {
           display: block;
         }
         .app_name {
-          font-size: 32px;
-          color: #FFFFFF;
-          text-align: left;
+          background:url("../../images/jingpipei.png") no-repeat center;
+          width:100px;
+          height:40px;
+          background-size:contain;
         }
         .netUrl {
           font-size: 14px;
@@ -55,9 +62,10 @@
         .logo_Pic {
           width: 64px;
           height: 64px;
-          background: url("../../images/logo.png");
+          background: url("../../images/logo2.png");
           background-size: 100% 100%;
           margin-right: 20px;
+          display: inline-block;
         }
       }
     }
@@ -98,9 +106,15 @@
         height: 56px;
         line-height: 56px;
         border-bottom: 1px solid #25CCF6;
+        font-size:0px;
+        padding-top:14px;
+        position:relative;
         .ant-input {
           border: 0;
           width: 174px;
+          display: block;
+          float:left;
+          padding:2px 7px 0px;
           &:focus {
             border: 0;
             box-shadow: none;
@@ -116,20 +130,24 @@
           width: 14px;
         }
         .obtain {
-          display: inline-block;
-          width: 92px;
-          height: 14px;
+          width: 102px;
+          line-height:20px;
           font-size: 14px;
           color: #25CCF6;
           cursor: pointer;
-          &::before {
-            content: '';
-            display: inline-block;
-            width: 1px;
-            height: 14px;
-            background-color: #999999;
-            margin-right: 8px;
-          }
+          position:absolute;
+          bottom:16px;
+          right:0px;
+          border-left:1px solid #ccc;
+          padding-left:5px;
+          //&::before {
+          //  content: '';
+          //  display: inline-block;
+          //  width: 1px;
+          //  height: 14px;
+          //  background-color: #999999;
+          //  margin-right: 8px;
+          //}
         }
         .activeCount {
           color: #999999;
@@ -143,41 +161,47 @@
       }
       .phone {
         .icon {
-          width: 21px;
-          height: 18px;
-          background: url("../../images/phone.png") no-repeat;
-          background-size: 100% 100%;
+          width: 22px;
+          height: 28px;
+          background: url("../../images/phone.png") no-repeat center;
+          background-size:16px 20px;
+          float:left;
         }
       }
       .picProving {
         .icon {
-          width: 21px;
-          height: 17px;
-          background: url("../../images/picProving.png") no-repeat;
-          background-size: 100% 100%;
+          width: 22px;
+          height: 28px;
+          background: url("../../images/picProving.png") no-repeat center;
+          background-size:22px 18px;
+          float:left;
         }
         img {
-          display: inline-block;
+          display: block;
           width: 105px;
           height: 45px;
           cursor: pointer;
-          vertical-align: middle;
+          position:absolute;
+          right:0px;
+          bottom:4px;
         }
       }
       .phoneProving {
         .icon {
-          width: 21px;
-          height: 20px;
-          background: url("../../images/phoneProving.png") no-repeat;
-          background-size: 100% 100%;
+          width: 22px;
+          height: 28px;
+          background: url("../../images/phoneProving.png") no-repeat center;
+          background-size: 18px 20px;
+          float:left;
         }
       }
       .rePassWord {
         .icon {
-          width: 21px;
-          height: 20px;
-          background: url("../../images/rePassword.png") no-repeat;
-          background-size: 100% 100%;
+          width: 22px;
+          height: 28px;
+          background: url("../../images/rePassword.png") no-repeat center;
+          background-size: 19px 20px;
+          float:left;
         }
       }
       .forget {
@@ -207,30 +231,46 @@
       padding-left: 8px;
       opacity: 0.25;
       vertical-align: top;
-      padding-top: 62px;
+      height:320px;
+      position:absolute;
+      top:50%;
+      margin-top:-160px;
+      right:270px;
       .or {
         font-size: 16px;
         color: #030303;
-        margin: 5px 0;
+        position:absolute;
+        width:30px;
+        line-height: 20px;
+        padding:4px 0px 6px;
+        background:#fff;
+        text-align:center;
+        top:50%;
+        margin-top:-15px;
+        left:0px;
       }
       .line_top {
-        height: 48%;
+        height: 100%;
         width: 1px;
         margin-left: 7px;
-        background: linear-gradient(to top, #000000 , #FFFFFF);
+        background: linear-gradient(to top, #FFFFFF, #000000 , #FFFFFF);
       }
-      .line_bottom {
-        margin-left: 7px;
-        height: 48%;
-        width: 1px;
-        background: linear-gradient(to bottom, #000000 , #FFFFFF);
-      }
+      //.line_bottom {
+      //  margin-left: 7px;
+      //  height: 40%;
+      //  width: 1px;
+      //  background: linear-gradient(to bottom, #000000 , #FFFFFF);
+      //}
     }
     .toRegister {
       display: inline-block;
       font-size: 14px;
       padding-left: 40px;
       padding-right: 55px;
+      position:absolute;
+      top:50%;
+      transform:translateY(-50%);
+      right:0px;
       .noUser {
         color: #999999;
         margin-bottom: 8px;
@@ -291,10 +331,23 @@
   }
   .nullTest {
     color: red;
-    font-size: 14px;
+    font-size: 12px;
     line-height: 16px;
-    margin-top: 10px;
+    margin-top: 4px;
     opacity: 0.7;
-    margin-left: 25px;
+    margin-left: 2px;
+  }
+}
+.modalMain {
+  .ant-modal-close{
+    display: none;
+  }
+  .ant-modal-footer{
+    border-top:none;
+  }
+  .ant-modal-body{
+    font-size:18px;
+    text-align:center;
+    padding-top:40px;
   }
 }

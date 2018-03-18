@@ -11,7 +11,7 @@ let RecruitIng = React.createClass({
         window.location.hash = router
     },
     render () {
-        let {curTab, dataSouce, paginationTotal, cruPagination} = this.props
+        let {curTab, dataSouce, paginationTotal, cruPagination, pageSize} = this.props
         return (
             <div className={dataSouce.length === 0 ? 'recruitIng nullContent' : 'recruitIng'}>
                 {dataSouce.length === 0 ? <div className='zanWU'>暂无数据</div> : null}
@@ -31,7 +31,7 @@ let RecruitIng = React.createClass({
                                         <span title={`${v.entryBid}元`}>{`${v.entryBid}元`}</span>
                                     </div>
                                     <div className='operate_items'>
-                                        <span className='upDate'>刷新</span>
+                                        <span className='upDate' onClick={() => this.props.onRefresh(v.id)}>刷新</span>
                                         <span className='edit' onClick={(e) => this.itemClickFn(e, `/positionManager/recruitIngEdit?type=edit&id=${v.id}`)}>编辑</span>
                                         <span className='down' onClick={() => this.props.onUnder(v.id)}>下架</span>
                                     </div>
@@ -45,7 +45,7 @@ let RecruitIng = React.createClass({
                     paginationTotal === 0
                         ? null
                         : <div className='my_pagination'>
-                            <Pagination total={paginationTotal} onChange={this.props.cruPaginationChange} pageSize={20} current={parseInt(cruPagination)}/>
+                            <Pagination total={paginationTotal} onChange={this.props.cruPaginationChange} pageSize={pageSize} current={parseInt(cruPagination)}/>
                         </div>
                 }
             </div>

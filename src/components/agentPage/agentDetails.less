@@ -14,18 +14,30 @@
     border-radius: 4px;
     min-height: 100%;
     background-color: #fff;
-    padding-top: 20px;
-    padding-left: 115px;
     position: relative;
     padding-right: 26px;
+    padding-top: 72px;
+    padding-left: 115px;
+    padding-right: 20px;
+    padding-bottom:40px;
+    .backBox{
+      position:absolute;
+      display: block;
+      width:36px;
+      height:36px;
+      background:url("../../images/返回上一层 1.png") no-repeat center;
+      background-size:contain;
+      top:20px;
+      left:25px;
+    }
     .icon_pic {
       display: inline-block;
       width: 64px;
       height: 64px;
-      background-color: #cfedf0;
       position: absolute;
-      top: 20px;
+      top: 72px;
       left: 25px;
+      border-radius:50px;
     }
     .basic {
       padding-bottom: 20px;
@@ -49,6 +61,9 @@
           height: 14px;
           background-color: #999999;
           vertical-align: middle;
+        }
+        span:last-child{
+          display: none;
         }
       }
       .total {
@@ -104,19 +119,33 @@
         margin-top: 20px;
         margin-bottom: 20px;
       }
+      .companyBox{
+        position:relative;
+        .time {
+          position:absolute;
+          top:0px;
+          right:0px;
+          font-size: 14px;
+          color: #999999;
+        }
+      }
       .company {
         .name {
           font-size: 14px;
           color: #666666;
           margin-right: 20px;
         }
-        .buMen, .time {
+        .buMen, .line {
           font-size: 14px;
           color: #999999;
         }
-        .time {
-          float: right;
+        .line{
+          padding:0px 5px;
+          &:last-child{
+            display: none;
+          }
         }
+
       }
       .jobNeiRong {
         margin-bottom: 20px;
@@ -138,6 +167,14 @@
       span {
         font-size: 14px;
         color: #999999;
+      }
+      .line{
+        padding:0px 5px;
+        font-size: 14px;
+        color: #999999;
+        &:last-child{
+          display: none;
+        }
       }
       .daXue {
         color: #3F3F3F;

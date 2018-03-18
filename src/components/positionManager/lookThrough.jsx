@@ -14,7 +14,7 @@ let LookThrough = React.createClass({
 
     },
     render () {
-        let {curTab, dataSouce, paginationTotal, cruPagination} = this.props
+        let {curTab, dataSouce, paginationTotal, cruPagination, pageSize} = this.props
         return (
             <div className={dataSouce.length === 0 ? 'lookThrough nullContent' : 'lookThrough'}>
                 {dataSouce.length === 0 ? <div className='zanWU'>暂无数据</div> : null}
@@ -24,7 +24,7 @@ let LookThrough = React.createClass({
                             <div className='listBox'>
                                 <ListItemTpl listItemArr={v} curTab={curTab}/>
                                 <div className='line'></div>
-                                <div className='curStateShow'>审核中</div>
+                                  {v.state === 0 ? <div className='curStateShow'>审核中</div> : <div className='curStateFail'>审核失败 </div>}
                                 <div className='operate_right'>
                                     <div className='mianShi'>
                                         <i style={{backgroundColor: '#25CCF6'}}>面试</i>
@@ -48,7 +48,7 @@ let LookThrough = React.createClass({
                     paginationTotal === 0
                         ? null
                         : <div className='my_pagination'>
-                            <Pagination total={paginationTotal} onChange={this.props.cruPaginationChange} pageSize={20} current={parseInt(cruPagination)}/>
+                            <Pagination total={paginationTotal} onChange={this.props.cruPaginationChange} pageSize={pageSize} current={parseInt(cruPagination)}/>
                           </div>
                 }
             </div>

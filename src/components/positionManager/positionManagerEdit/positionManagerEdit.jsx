@@ -4,73 +4,73 @@ import './positionManagerEdit.less'
 import addressData from '../../../common/area'
 import positionTypeList from '../../../common/multilevelPosition'
 import {getRequest, postRequest} from '../../../common/ajax'
+import $ from 'jquery'
 
 const {TextArea} = Input
 const Option = Select.Option
 
 let mianShiList = ['25', '50']
 let entryList = ['300', '500', '800', '1500']
-let lableList = ['五险一金', '带薪年假', '周末双休']
-let ageList = ['20', '25', '30', '35', '40', '45', '50', '55', '60']
+let labelList = ['五险一金', '带薪年假', '周末双休']
+let ageList = ['16', '20', '25', '30', '35', '40', '45', '50', '55', '60', '65', '70', '75', '80', '85', '90', '95', '99']
 let PositionManagerEdit = React.createClass({
     getInitialState () {
         return {
+            citySelectList: [],                 // 城市列表
+            countySelectList: [],               // 市区列表
+            roadSelectList: [],                 // 街道列表
+            municipality: false,                // 判断是否是直辖市
             publishPosition: {
-                province: undefined,           // 省---发布位置
-                city: undefined,               // 市---发布位置
-                county: undefined             // 区---发布位置
-                // road: '测试',               // 街道---发布位置
-                // building: undefined            // 详细地址---发布位置
+                province: undefined,            // 省---发布位置  直辖-市
+                city: undefined,                // 市---发布位置  直辖-区
+                county: undefined               // 区---发布位置
             },
-            jobTil: '',                 // 职位标题
+            jobTil: '',                         // 职位标题
             filterItem: {
-                jobType: undefined,            // 职位类别
-                educational: undefined,        // 学历
-                experience: undefined,         // 经验
-                ageForm: undefined,
-                ageTo: undefined,
-                pay: undefined,                // 月薪
-                jobNature: undefined          // 工作性质
+                jobType: undefined,             // 职位类别
+                educational: undefined,         // 学历
+                experience: undefined,          // 经验
+                ageForm: undefined,             // 年龄-开始
+                ageTo: undefined,               // 年龄-结束
+                pay: undefined,                 // 月薪
+                jobNature: undefined            // 工作性质
             },
-            mianShiList: mianShiList,   // 奖赏金额---面试
-            entryList: entryList,       // 奖赏金额---入职
-            lableList: lableList,       // 福利标签
-            jobDes: undefined,                 // 职位描述
+            ageMeiJuListL: ageList,             // 年龄列表
+            meiJuList: {                        // 各种下拉列表枚举列表
+                jobType: positionTypeList,      // 职位类别
+                pay: [],                        // 月薪
+                experience: [],                 // 经验
+                educational: [],                // 学历
+                jobXingZhi: []                  // 工作性质
+            },
+            mianShiList: mianShiList,           // 奖赏金额---面试费列表
+            entryList: entryList,               // 奖赏金额---入职费列表
+            curMainshiChoiceIn: 0,              // 面试费
+            curEntryChoiceIn: 0,                // 入职费
+            labelList: labelList,               // 福利标签
+            jobDes: undefined,                  // 职位描述
+            citySelectListPlace: [],            // 城市列表
+            countySelectListPlace: [],          // 市区列表
+            roadSelectListPlace: [],            // 街道列表
+            municipalityPlace: false,           // 判断是否是直辖市
             jobPlace: {
-                province: undefined,           // 省---工作地点
-                city: undefined,               // 市---工作地点
-                county: undefined,             // 区---工作地点
-                road: undefined,               // 街道---工作地点
-                building: undefined            // 详细地址---工作地点
+                province: undefined,            // 省---工作地点   直辖-市
+                city: undefined,                // 市---工作地点   直辖-区
+                county: undefined,              // 区---工作地点   直辖-街道
+                road: undefined,                // 街道---工作地点   直辖-空
+                building: undefined             // 详细地址---工作地点   直辖-详细地址
             },
-            textAreaCount: 0,
-            jobTilCount: 0,
-            isPublish: false,                  // 是否发布
-            curEntryChoiceIn: 0,
-            curMainshiChoiceIn: 0,
-            citySelectList: [],
-            countySelectList: [],
-            roadSelectList: [],
-            municipality: false,               // 判断是否是直辖市
-            citySelectListPlace: [],
-            countySelectListPlace: [],
-            roadSelectListPlace: [],
-            municipalityPlace: false,          // 判断是否是直辖市
-            meiJuList: {           // 各种下拉列表枚举列表
-                jobType: positionTypeList,     // 职位类别
-                pay: [],                       // 月薪
-                experience: [],                // 经验
-                educational: [],               // 学历
-                jobXingZhi: []                 // 工作性
-            },
+            textAreaCount: 0,                   // 职位描述字数
+            jobTilCount: 0,                     // 职位标题字数
+            isPublish: false,                   // 是否发布  控制点击发布时是否有未填写的信息
+            hasPublish: false,                  // 是否发布  控制点击发布时信息是否已经提交
             isAttestation: false,
-            ageMeiJuListL: ageList,
             publishLongitude: {},               // 发布位置经纬度
-            placeLongitude: {},                // 工作地点经纬度
+            placeLongitude: {},                 // 工作地点经纬度
             shangQuanList: {},                  // 商圈枚举列表
-            memberId: '',
-            positionId: '',
-            pageType: ''
+            memberId: '',                       // 公司ID
+            positionId: '',                     // 职位ID
+            pageType: ''                        // 职位编辑类型
         }
     },
     componentDidMount () {
@@ -122,6 +122,8 @@ let PositionManagerEdit = React.createClass({
                     }
                 })
                 mianShiList.forEach((v, index) => {
+                    // console.log(v)
+                    // console.log(data.interviewBid)
                     if (data.interviewBid === parseInt(v)) {
                         curMainshiChoiceIn = index
                     }
@@ -157,12 +159,12 @@ let PositionManagerEdit = React.createClass({
                         jobDes: data.description
                     })
                 }
-                if (data.lableList !== null) {
+                if (data.welfare !== null) {
                     _th.setState({
-                        lableList: data.welfare.split(';')
+                        labelList: data.welfare.split(';')
                     })
                 }
-                if (data.province === '') {
+                if (data.province === data.city) {
                     municipality = true
                     publishPosition.province = data.city
                     if (data.district === '') {
@@ -171,6 +173,7 @@ let PositionManagerEdit = React.createClass({
                         publishPosition.city = data.district
                     }
                 } else {
+                    municipality = false
                     publishPosition.province = data.province
                     if (data.city === '') {
                         publishPosition.city = 'ALL_BUXIAN'
@@ -183,7 +186,7 @@ let PositionManagerEdit = React.createClass({
                         publishPosition.county = data.district
                     }
                 }
-                if (data.workProvince === '') {
+                if (data.workProvince === data.workCity) {
                     municipalityPlace = true
                     jobPlace.province = data.workCity
                     if (data.workDistrict === '') {
@@ -196,8 +199,9 @@ let PositionManagerEdit = React.createClass({
                     } else {
                         jobPlace.road = data.workStreet
                     }
-                    jobPlace.building = data.workLocation.split('-').pop()
+                    jobPlace.building = data.workAddress
                 } else {
+                    municipalityPlace = false
                     jobPlace.province = data.workProvince
                     if (data.workCity === '') {
                         jobPlace.city = 'ALL_BUXIAN'
@@ -214,8 +218,7 @@ let PositionManagerEdit = React.createClass({
                     } else {
                         jobPlace.road = data.workStreet
                     }
-
-                    jobPlace.building = data.workLocation.split('-').pop()
+                    jobPlace.building = data.workAddress
                 }
                 placeLongitude.lng = data.longitude
                 placeLongitude.lat = data.latitude
@@ -223,30 +226,31 @@ let PositionManagerEdit = React.createClass({
                     curEntryChoiceIn: curEntryChoiceIn,
                     curMainshiChoiceIn: curMainshiChoiceIn,
                     filterItem: filterItem,
+                    municipality: municipality,
                     municipalityPlace: municipalityPlace,
                     publishPosition: publishPosition,
                     jobPlace: jobPlace,
                     placeLongitude: placeLongitude
                 }, () => {
-                    let {jobPlace, municipalityPlace} = _th.state
-                    _th.filterEditCityList(publishPosition, 'publish')
-                    _th.filterEditCityList(jobPlace, 'place')
+                    let {publishPosition, municipality, jobPlace, municipalityPlace} = _th.state
+                    _th.filterEditCityList(publishPosition, 'publish', municipality)
+                    _th.filterEditCityList(jobPlace, 'place', municipalityPlace)
                     if (municipalityPlace) {
                         _th.shangQuanListFn(jobPlace.city)
                     } else {
                         _th.shangQuanListFn(jobPlace.county)
                     }
                 })
-            } else {
+            } else if (code !== 401) {
                 message.error('系统错误!')
             }
         })
     },
-    // 筛选编辑页面省市
-    filterEditCityList (position, type) {
+    // 省市区列表更新--筛选编辑页面省市
+    filterEditCityList (position, type, isMunicipality) {
         if (type === 'publish') {
             let result = []
-            if (position.province === '110100' || position.province === '120100' || position.province === '310100' || position.province === '500100') {
+            if (isMunicipality) {
                 addressData.map((v, index) => {
                     if (v.id === position.province) {
                         result = [...v.children]
@@ -278,7 +282,7 @@ let PositionManagerEdit = React.createClass({
             }
         } else {
             let result = []
-            if (position.province === '110100' || position.province === '120100' || position.province === '310100' || position.province === '500100') {
+            if (isMunicipality) {
                 addressData.map((v, index) => {
                     if (v.id === position.province) {
                         result = [...v.children]
@@ -316,31 +320,112 @@ let PositionManagerEdit = React.createClass({
         let _th = this
         let {meiJuList} = _th.state
         let formData = {}
-        formData.types = '1;2;5;27'
+        formData.types = '1;2;26;27'
         getRequest(true, URL, formData).then(function (res) {
             let code = res.code
             if (code === 0) {
                 let data = res.data
                 meiJuList.pay = [...data['2']]
-                meiJuList.experience = [...data['5']]
+                meiJuList.experience = [...data['26']]
                 meiJuList.educational = [...data['1']]
                 meiJuList.jobXingZhi = [...data['27']]
                 _th.setState({
                     meiJuList: meiJuList
                 })
+            } else if (code === 401) {
+                window.location.hash = '/login'
+                message.warning('您的账号已在其他设备登录，请重新登录')
             } else {
                 message.error('系统错误!')
             }
         })
     },
+    // 获取公司地址
+    getCompanyAdress () {
+        let URL = 'member/companyAddress/getAddresses'
+        let _th = this
+        let formData = {}
+        let {publishPosition, jobPlace, placeLongitude} = _th.state
+        let municipalityPlace = false
+        let municipality = false
+        formData.memberId = window.localStorage.getItem('memberId')
+        getRequest(true, URL, formData).then(function (res) {
+            if (res.code === 0) {
+                let data = res.data[0]
+                if (data.province === data.city) {
+                    municipality = true
+                    municipalityPlace = true
+                    publishPosition.province = data.city
+                    jobPlace.province = data.city
+                    if (data.district === '') {
+                        publishPosition.city = 'ALL_BUXIAN'
+                        jobPlace.city = 'ALL_BUXIAN'
+                    } else {
+                        publishPosition.city = data.district
+                        jobPlace.city = data.district
+                    }
+                    if (data.street === '' || data.street === null) {
+                        jobPlace.county = 'ALL_BUXIAN'
+                    } else {
+                        jobPlace.county = 'ALL_BUXIAN'
+                    }
+                } else {
+                    municipality = false
+                    municipalityPlace = false
+                    publishPosition.province = data.province
+                    jobPlace.province = data.province
+                    if (data.city === '' || data.city === null) {
+                        publishPosition.city = 'ALL_BUXIAN'
+                        jobPlace.city = 'ALL_BUXIAN'
+                    } else {
+                        publishPosition.city = data.city
+                        jobPlace.city = data.city
+                    }
+                    if (data.district === '' || data.district === null) {
+                        publishPosition.county = 'ALL_BUXIAN'
+                        jobPlace.county = 'ALL_BUXIAN'
+                    } else {
+                        publishPosition.county = data.district
+                        jobPlace.county = data.district
+                    }
+                    if (data.street === '' || data.street === null) {
+                        jobPlace.road = 'ALL_BUXIAN'
+                    } else {
+                        jobPlace.road = data.street
+                    }
+                    jobPlace.building = data.address
+                }
+                placeLongitude.lng = data.longitude
+                placeLongitude.lat = data.latitude
+                _th.setState({
+                    municipality: municipality,
+                    municipalityPlace: municipalityPlace,
+                    publishPosition: publishPosition,
+                    jobPlace: jobPlace,
+                    placeLongitude: placeLongitude
+                }, () => {
+                    let {publishPosition, municipality, jobPlace, municipalityPlace} = _th.state
+                    _th.filterEditCityList(publishPosition, 'publish', municipality)
+                    _th.filterEditCityList(jobPlace, 'place', municipalityPlace)
+                    if (municipalityPlace) {
+                        _th.shangQuanListFn(jobPlace.city)
+                    } else {
+                        _th.shangQuanListFn(jobPlace.county)
+                    }
+                })
+            }
+        })
+    },
     // 商圈枚举接口
     shangQuanListFn (id) {
-        let URL = `images/town${id}.json`
+        let URL = `http://dingyi.oss-cn-hangzhou.aliyuncs.com/images/town${id}.json`
+        // let URL = `images/town${id}.json`
         let _th = this
         let {jobPlace} = _th.state
         getRequest(true, URL, {}).then(function (res) {
             let data = JSON.parse(res)
-            if (jobPlace.road !== 'ALL_BUXIAN') {
+            let roadIdList = Object.keys(data)
+            if (jobPlace.road === 'ALL_BUXIAN' || roadIdList.indexOf(jobPlace.road) === -1) {
                 jobPlace.road = Object.keys(data)[0]
             }
             _th.setState({
@@ -367,7 +452,7 @@ let PositionManagerEdit = React.createClass({
                     if (data.state === 3) {
                         if (welfares !== null && welfares.length > 0) {
                             _th.setState({
-                                lableList: [...welfares]
+                                labelList: [...welfares]
                             })
                         }
                         if (interviewBIds !== null && interviewBIds.length > 0) {
@@ -382,6 +467,8 @@ let PositionManagerEdit = React.createClass({
                         }
                         _th.setState({
                             isAttestation: true
+                        }, () => {
+                            _th.getCompanyAdress()
                         })
                     } else {
                         message.error('还未认证成功，暂时还不能发布职位!')
@@ -390,7 +477,7 @@ let PositionManagerEdit = React.createClass({
                 } else {
                     if (welfares !== null && welfares.length > 0) {
                         _th.setState({
-                            lableList: [...welfares]
+                            labelList: [...welfares]
                         })
                     }
                     if (interviewBIds !== null && interviewBIds.length > 0) {
@@ -409,17 +496,17 @@ let PositionManagerEdit = React.createClass({
                         _th.reqTotalPosition()
                     })
                 }
-            } else {
-                message.error('系统错误!')
+            } else if (code !== 401) {
+                message.error(res.message)
             }
         })
     },
     welfareLableDelete (index, type) {
-        let {lableList, mianShiList, entryList} = this.state
-        if (type === 'lableList') {
-            lableList.splice(index, 1)
+        let {labelList, mianShiList, entryList} = this.state
+        if (type === 'labelList') {
+            labelList.splice(index, 1)
             this.setState({
-                lableList: lableList
+                labelList: labelList
             })
         } else if (type === 'mianShiList') {
             mianShiList.splice(index, 1)
@@ -434,11 +521,11 @@ let PositionManagerEdit = React.createClass({
         }
     },
     welfareLableAdd (type) {
-        let {lableList, mianShiList, entryList} = this.state
-        if (type === 'lableList') {
-            lableList.push('init')
+        let {labelList, mianShiList, entryList} = this.state
+        if (type === 'labelList') {
+            labelList.push('init')
             this.setState({
-                lableList: lableList
+                labelList: labelList
             }, () => {
                 this.textInput.focus()
             })
@@ -459,12 +546,12 @@ let PositionManagerEdit = React.createClass({
         }
     },
     addLableFn (e, index, type) {
-        let {lableList, mianShiList, entryList} = this.state
+        let {labelList, mianShiList, entryList} = this.state
         let val = e.target.value
-        if (type === 'lableList') {
-            lableList[index] = val
+        if (type === 'labelList') {
+            labelList[index] = val
             this.setState({
-                lableList: lableList
+                labelList: labelList
             })
         } else if (type === 'mianShiList') {
             if (!/^[0-9]*$/.test(val) || val < 25) {
@@ -582,6 +669,7 @@ let PositionManagerEdit = React.createClass({
                     publishPosition: publishPosition
                 })
             } else {
+                console.log(point)
                 _th.setState({
                     publishLongitude: {...point}
                 })
@@ -612,21 +700,14 @@ let PositionManagerEdit = React.createClass({
             this.queryLongitudePublish(val, this.queryCodeCity(publishPosition.city, publishPosition))
         }
     },
-    // 省市县三级列表筛选---工作地点
+    // 省市区街道四级列表筛选---工作地点
     areaFilterPlaceFn (val, type) {
-        let {citySelectListPlace, jobPlace} = this.state
-        if (type === 'province') {
-            if (val === '110100' || val === '120100' || val === '310100' || val === '500100') {
-                this.setState({
-                    municipalityPlace: true
-                })
-            } else {
-                this.setState({
-                    municipalityPlace: false
-                })
-            }
-        }
-        if (this.isZhiXizCityFn(jobPlace)) {
+        let {citySelectListPlace, municipalityPlace, jobPlace} = this.state
+        municipalityPlace = this.isZhiXizCityFn(jobPlace)
+        this.setState({
+            municipalityPlace: municipalityPlace
+        })
+        if (municipalityPlace) {
             if (type === 'province') {
                 addressData.map((v, index) => {
                     if (v.id === val) {
@@ -719,9 +800,9 @@ let PositionManagerEdit = React.createClass({
             }
         }, city)
     },
-    // 工作地点
+    // 省市区街道四级变动筛选---工作地点
     filterItemFnPlace (val, type) {
-        let {jobPlace, countySelectListPlace, roadSelectListPlace, shangQuanList} = this.state
+        let {jobPlace, countySelectListPlace, shangQuanList} = this.state
         if (type === 'building') {
             val = val.target.value
         }
@@ -730,18 +811,15 @@ let PositionManagerEdit = React.createClass({
             jobPlace.county = 'ALL_BUXIAN'
             jobPlace.road = 'ALL_BUXIAN'
             countySelectListPlace = [{id: 'ALL_BUXIAN', value: '不限'}]
-            roadSelectListPlace = [{id: 'ALL_BUXIAN', value: '不限'}]
             shangQuanList = {}
         }
         if (type === 'county' && val === 'ALL_BUXIAN') {
             jobPlace.road = 'ALL_BUXIAN'
-            roadSelectListPlace = [{id: 'ALL_BUXIAN', value: '不限'}]
             shangQuanList = {}
         }
         this.setState({
             jobPlace: jobPlace,
             countySelectListPlace: countySelectListPlace,
-            roadSelectListPlace: roadSelectListPlace,
             shangQuanList: shangQuanList
         }, () => {
             if (type === 'province' || type === 'city' || type === 'county') {
@@ -803,11 +881,11 @@ let PositionManagerEdit = React.createClass({
         if (province === '110100' || province === '120100' || province === '310100' || province === '500100') {
             delete dataCopy.county
         }
-        Object.values(dataCopy).forEach((v, index) => {
-            if (v === '' || v === undefined) {
+        for (var v in dataCopy) {
+            if (dataCopy[v] === '' || dataCopy[v] === undefined) {
                 result = true
             }
-        })
+        }
         return result
     },
     // 根据城市列表code查询具体城市名
@@ -891,7 +969,7 @@ let PositionManagerEdit = React.createClass({
         this.setState({
             isPublish: true
         }, () => {
-            let {publishPosition, jobPlace, filterItem, placeLongitude, jobTil, mianShiList, entryList, lableList, curMainshiChoiceIn, curEntryChoiceIn, jobDes, memberId} = this.state
+            let {publishPosition, jobPlace, filterItem, placeLongitude, jobTil, mianShiList, entryList, labelList, curMainshiChoiceIn, curEntryChoiceIn, jobDes, memberId} = this.state
             let hasNull = false
             let formDate = {}
 
@@ -907,7 +985,11 @@ let PositionManagerEdit = React.createClass({
                 message.warning('您有未添信息，请完善信息！')
                 return false
             } else {
+                this.setState({
+                    hasPublish: true
+                })
                 if (this.isZhiXizCityFn(publishPosition)) {
+                    formDate.province = publishPosition.province
                     formDate.city = publishPosition.province
                     if (publishPosition.city !== 'ALL_BUXIAN') {
                         formDate.district = publishPosition.city
@@ -928,6 +1010,7 @@ let PositionManagerEdit = React.createClass({
                     }
                 }
                 if (this.isZhiXizCityFn(jobPlace)) {
+                    formDate.workProvince = jobPlace.province
                     formDate.workCity = jobPlace.province
                     if (jobPlace.city !== 'ALL_BUXIAN') {
                         formDate.workDistrict = jobPlace.city
@@ -971,11 +1054,11 @@ let PositionManagerEdit = React.createClass({
                 }
                 formDate.salary = filterItem.pay      // 薪资
                 formDate.positionNature = filterItem.jobNature      // 性质
-                formDate.welfare = lableList.join(';')      // 福利标签
+                formDate.welfare = labelList.join(';')      // 福利标签
                 formDate.description = jobDes      // 描述
                 formDate.interviewBid = mianShiList[curMainshiChoiceIn]      // 面试费选中
                 formDate.entryBid = entryList[curEntryChoiceIn]      // 入职费选中
-                formDate.interviewBids = entryList.join(';')     // 面试费list
+                formDate.interviewBids = mianShiList.join(';')     // 面试费list
                 formDate.entryBids = entryList.join(';')     // 入职费list
                 formDate.longitude = placeLongitude.lng      // 经度
                 formDate.latitude = placeLongitude.lat      // 纬度
@@ -1078,7 +1161,7 @@ let PositionManagerEdit = React.createClass({
         return result
     },
     render () {
-        let {mianShiList, entryList, lableList, textAreaCount, jobTilCount, jobDes, jobTil, jobPlace, filterItem, publishPosition, isPublish, curMainshiChoiceIn, curEntryChoiceIn, citySelectList, countySelectList, roadSelectList, municipality, citySelectListPlace, countySelectListPlace, roadSelectListPlace, municipalityPlace, meiJuList, ageMeiJuListL} = this.state
+        let {mianShiList, entryList, labelList, textAreaCount, jobTilCount, jobDes, jobTil, jobPlace, filterItem, publishPosition, isPublish, hasPublish, curMainshiChoiceIn, curEntryChoiceIn, citySelectList, countySelectList, roadSelectList, municipality, citySelectListPlace, countySelectListPlace, municipalityPlace, meiJuList, ageMeiJuListL} = this.state
         let selectStyle = {marginRight: '10px', width: '128px'}
         let inputStyle = {width: '500px', backgroundColor: '#E6F5FF'}
         if (!this.hasBuXianFn(citySelectList) && municipalityPlace) {
@@ -1130,22 +1213,6 @@ let PositionManagerEdit = React.createClass({
                                 })
                             }
                         </Select> : null}
-                        {/* <Select placeholder="不限" style={selectStyle} size='large'
-                                value={publishPosition.road}
-                                notFoundContent='请选择区县'
-                                className={isPublish && publishPosition.road === undefined ? 'selectNullClass' : ''}
-                                onChange={(val) => this.filterItemPublish(val, 'road')}>
-                            {
-                                roadSelectList.map((v, index) => {
-                                    return <Option value={v.id} key={v.id}>{v.value}</Option>
-                                })
-                            }
-                        </Select>
-                        <div className='juTi'>
-                            <Input placeholder="请输入地址" style={isPublish && publishPosition.building === undefined ? {...inputStyle, marginLeft: '76px', borderColor: 'red'} : {...inputStyle, marginLeft: '76px'}}
-                                    value={publishPosition.building} onBlur={this.adressPublishBlur}
-                                    size='large' onChange={(val) => this.filterItemPublish(val, 'building')}/>
-                        </div> */}
                     </div>
                     <div className='jobTitle'>
                         <lable className="lab">职位标题</lable>
@@ -1175,6 +1242,8 @@ let PositionManagerEdit = React.createClass({
                                 )
                             })}
                         </Select>
+                    </div>
+                    <div className='screen'>
                         <Select placeholder="年龄" style={selectStyle} value={filterItem.ageForm}
                                 size='large' onChange={(val) => this.filterItemFn(val, 'ageForm')}>
                             {ageMeiJuListL.map((v, index) => {
@@ -1213,26 +1282,26 @@ let PositionManagerEdit = React.createClass({
                     <div className='welfareLable'>
                         <lable className="lab">福利标签</lable>
                         <div className='itemBox'>
-                            {lableList.map((v, index) => {
+                            {labelList.map((v, index) => {
                                 if (v !== 'init' && v !== '') {
                                     return (
                                         <span className='val' key={index}>
                                             {v}
-                                            <span className='close' onClick={() => this.welfareLableDelete(index, 'lableList')}>×</span>
+                                            <span className='close' onClick={() => this.welfareLableDelete(index, 'labelList')}>×</span>
                                         </span>
                                     )
                                 } else if (v === 'init' && v !== '') {
                                     return (
                                         <span className='val' key={index} style={{padding: '0'}}>
-                                            <Input size='large' onBlur={(e) => this.addLableFn(e, index, 'lableList')}
+                                            <Input size='large' onBlur={(e) => this.addLableFn(e, index, 'labelList')}
                                                    ref={(input) => { this.textInput = input }}
                                                    style={{width: '90px', border: '0', height: '20px', boxShadow: 'none'}}/>
-                                            <span className='close' onClick={() => this.welfareLableDelete(index, 'lableList')}>×</span>
+                                            <span className='close' onClick={() => this.welfareLableDelete(index, 'labelList')}>×</span>
                                         </span>
                                     )
                                 }
                             })}
-                            <span className='custom' onClick={() => this.welfareLableAdd('lableList')}>
+                            <span className='custom' onClick={() => this.welfareLableAdd('labelList')}>
                                 <Icon type="plus" style={{fontSize: '20px', verticalAlign: 'sub', marginRight: '5px'}}/>
                                 自定义
                         </span>
@@ -1278,7 +1347,7 @@ let PositionManagerEdit = React.createClass({
                             {this.createRoadSelect()}
                         </Select>
                         <div className='juTi'>
-                            <Input placeholder="请输入工作地点" value={jobPlace.building} onBlur={this.adressPlaceBlur}
+                            <Input placeholder="例：东宁路553号东溪德必易园C366" value={jobPlace.building} onBlur={this.adressPlaceBlur}
                                     onChange={(val) => this.filterItemFnPlace(val, 'building')}
                                     style={isPublish && jobPlace.building === undefined ? {...inputStyle, marginLeft: '76px', borderColor: 'red'} : {...inputStyle, marginLeft: '76px'}} size='large'/>
                         </div>
@@ -1347,7 +1416,7 @@ let PositionManagerEdit = React.createClass({
                         </div>
                     </div>
                     <div className='confirm'>
-                        <span className='btn' onClick={this.onPublish}>确认发布</span>
+                        {hasPublish ? <span className='btn onBtn'>确认发布</span> : <span className='btn' onClick={this.onPublish}>确认发布</span>}
                     </div>
                 </div>
             </div>

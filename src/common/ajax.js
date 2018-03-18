@@ -1,7 +1,9 @@
 import $ from 'jquery'
 
 let uuid = window.localStorage.getItem('sessionUuid')
+
 let getRequest = (async, url, data) => {
+    uuid = window.localStorage.getItem('sessionUuid')
     return new Promise(function (resolve, reject) {
         $.ajax({
             type: 'GET',
@@ -21,6 +23,7 @@ let getRequest = (async, url, data) => {
     })
 }
 let deleteRequest = (async, url, data) => {
+    uuid = window.localStorage.getItem('sessionUuid')
     return new Promise(function (resolve, reject) {
         $.ajax({
             type: 'POST',
@@ -40,6 +43,7 @@ let deleteRequest = (async, url, data) => {
     })
 }
 let postRequest = (async, url, data, contentType) => {
+    uuid = window.localStorage.getItem('sessionUuid')
     return new Promise(function (resolve, reject) {
         if (contentType === true) {
             $.ajax({

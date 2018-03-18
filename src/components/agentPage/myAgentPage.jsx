@@ -32,7 +32,7 @@ let MyAgentPage = React.createClass({
         })
     },
     onPleaceTui (id, name, headUrl) {
-        window.location.hash = `chatWindow?id=${id}&name=${name}&headUrl=${headUrl}`
+        window.location.hash = `chatWindow?id=${id}`
     },
     componentDidMount () {
         let memberId = localStorage.getItem('memberId')
@@ -59,6 +59,9 @@ let MyAgentPage = React.createClass({
                     dataSource: data.list,
                     pageTotal: data.total
                 })
+            } else if (code === 401) {
+                window.location.hash = '/login'
+                message.warning('您的账号已在其他设备登录，请重新登录!')
             } else {
                 message.error('系统错误!')
             }
@@ -73,7 +76,8 @@ let MyAgentPage = React.createClass({
             if (code === 0) {
                 let data = res.data
                 _th.setState({
-                    dataSource: data.list
+                    dataSource: data.list,
+                    pageTotal: data.total
                 })
             } else {
                 message.error('系统错误!')
@@ -150,14 +154,14 @@ let MyAgentPage = React.createClass({
                                 {
                                     curFollow === 'followByMy'
                                         ? <div className='operate'>
-                                            <div className='onLine' onClick={() => this.onPleaceTui(v.memberId, v.name, v.headUrl)}>请他推荐</div>
+                                            <div className='onLine' onClick={() => this.onPleaceTui(v.memberId)}>请他推荐</div>
                                             <div className='noGood' onClick={() => this.onNoGood(v.memberId)}>
                                                 <span className='yiGuanZhuPic'></span>
                                                 取消
                                             </div>
                                         </div>
                                         : <div className='operate' style={{paddingTop: '34px'}}>
-                                            <div className='onLine' onClick={() => this.onPleaceTui(v.memberId, v.name, v.headUrl)}>请他推荐</div>
+                                            <div className='onLine' onClick={() => this.onPleaceTui(v.memberId)}>请他推荐</div>
                                         </div>
                                 }
                             </div>
