@@ -5,16 +5,20 @@ import { Router, Route, hashHistory, browserHistory, Redirect } from 'react-rout
 
 import App from '../components/app/app'
 import Login from '../components/user/login'
+import defaultLogin from '../components/user/defaultLogin'
 import Register from '../components/user/register'
 import ForgetPassword from '../components/user/forgetPassword'
 import PositionManager from '../components/positionManager/positionManager'
 import PositionManagerEdit from '../components/positionManager/positionManagerEdit/positionManagerEdit'
 import AuditionManager from '../components/auditionManager/auditionManager'
+import AllCandidate from '../components/candidate/allCandidate'
+import DownloadCandidate from '../components/candidate/downloadCandidate'
 import MyAgentPage from '../components/agentPage/myAgentPage'
 import LookAgentPage from '../components/agentPage/lookAgentPage'
 import BusinessInfo from '../components/businessInfo/businessInfo'
 import BalanceManager from '../components/balanceManager/balanceManager'
 import Information from '../components/information/information'
+import ModifiedInfo from '../components/modified/modifiedInfo'
 import PositionDetails from '../components/positionManager/Details'
 import AuditionDetails from '../components/auditionManager/auditionDetails'
 import AgentDetails from '../components/agentPage/agentDetails'
@@ -25,6 +29,7 @@ import AboutUs from '../components/JCWebsite/aboutUs'
 
 render(<Router history={hashHistory}>
         <Route path="login" component={Login}/>
+        <Route path="defaultLogin" component={defaultLogin}/>
         <Route path="register" component={Register}/>
         <Route path="forget" component={ForgetPassword}/>
         <Route path="certification" component={Certification}/>
@@ -42,8 +47,11 @@ render(<Router history={hashHistory}>
             <Route path="auditionManager">
                 <Route path="auditionManagerPar" component={AuditionManager}/>
             </Route>
+            <Route path="allCandidate" component={AllCandidate}/>
+            <Route path="downloadCandidate" component={DownloadCandidate}/>
             <Route path="myAgentPage" component={MyAgentPage}/>
             <Route path="information" component={Information}/>
+            <Route path="modifiedInfo" component={ModifiedInfo}/>
             <Route path="businessInfo" component={BusinessInfo}/>
             <Route path="agentDetails" component={AgentDetails}/>
             <Route path="chatWindow" component={ChatWindow}/>

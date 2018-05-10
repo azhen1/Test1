@@ -75,7 +75,6 @@ let AuditionManager = React.createClass({
         getRequest(true, URL, formData).then((res) => {
             let code = res.code
             if (code === 0) {
-                console.log(res)
                 let data = res.data
                 let list = data.list
                 _th.setState({

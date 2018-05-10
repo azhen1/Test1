@@ -23,6 +23,7 @@
         background-color: #fff;
         .showPeople, .line, .place {
           display: inline-block;
+          vertical-align: top;
         }
         .showPeople {
           width: 280px;
@@ -35,16 +36,15 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            width:260px;
             .name {
               font-size: 20px;
               color: #333333;
               margin-right: 10px;
+              display: inline-block;
             }
             .trade {
               display: inline-block;
-              overflow: hidden;
-              text-overflow: ellipsis;
-              white-space: nowrap;
               vertical-align: text-bottom;
               span{
                 padding:0px 5px;
@@ -64,6 +64,11 @@
               margin: 0 5px;
             }
             .basicInfoBox {
+              display: inline-block;
+              width:220px;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
               span:last-child{
                 display: none;
               }
@@ -100,8 +105,27 @@
             margin-bottom: 5px;
             font-size: 20px;
             color: #333333;
+            position:relative;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            i{
+              position:absolute;
+              color:#fff;
+              padding:0px 8px;
+              text-align: center;
+              border-radius:4px;
+              background:#F5A623;
+              right:0px;
+              top:5px;
+              font-size:14px;
+              font-style:normal;
+            }
           }
           .basicInfo {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
             .shuXian {
               display: inline-block;
               width: 1px;
@@ -122,6 +146,7 @@
         padding-top: 10px;
         user-select: none;
         color: #25CCF6;
+        position:relative;
         .lianXi {
           margin-left: 304px;
           .icon {
@@ -135,6 +160,12 @@
             position:relative;
             top:-1px;
           }
+        }
+        .entryTimeSpan{
+          position:absolute;
+          top:10px;
+          right:0px;
+          color:#999;
         }
       }
     }

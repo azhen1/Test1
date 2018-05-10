@@ -26,15 +26,20 @@ let LookThrough = React.createClass({
                                 <div className='line'></div>
                                   {v.state === 0 ? <div className='curStateShow'>审核中</div> : <div className='curStateFail'>审核失败 </div>}
                                 <div className='operate_right'>
-                                    <div className='mianShi'>
-                                        <i style={{backgroundColor: '#25CCF6'}}>面试</i>
-                                        <span title={`${v.interviewBid}元`}>{`${v.interviewBid}元`}</span>
+                                    {v.free === true ? <div className='freeTag'>
+                                        <i style={{backgroundColor: '#F5A623'}}>免费职位</i>
+                                    </div> : <div>
+                                        <div className='mianShi'>
+                                            <i style={{backgroundColor: '#25CCF6'}}>面试</i>
+                                            <span title={`${v.interviewBid}元`}>{`${v.interviewBid}元`}</span>
+                                        </div>
+                                        <div className='entry'>
+                                            <i style={{backgroundColor: '#48D2A0 '}}>入职</i>
+                                            <span title={`${v.entryBid}元`}>{`${v.entryBid}元`}</span>
+                                        </div>
                                     </div>
-                                    <div className='entry'>
-                                        <i style={{backgroundColor: '#48D2A0 '}}>入职</i>
-                                        <span title={`${v.entryBid}元`}>{`${v.entryBid}元`}</span>
-                                    </div>
-                                    <div className='operate_items' style={{marginLeft: '76px'}}>
+                                    }
+                                    <div className='operate_items'>
                                         <span className='edit editLookTh' onClick={(e) => this.itemClickFn(e, `/positionManager/recruitIngEdit?type=edit&id=${v.id}`)}>编辑</span>
                                         {/* <span className='down' onClick={() => this.props.onUnder(v.id)}>下架</span> */}
                                     </div>

@@ -8,6 +8,7 @@
   padding-bottom:10px;
   // min-height: calc(~"100% + 10px");
   min-height: calc(~"100% + 10px");
+  overflow: hidden;
   .my_pagination {
     padding-right: 20px;
     margin-top: 20px;
@@ -20,15 +21,19 @@
     background-color: #fff;
     padding-bottom: 50px;
     position:relative;
-    .backBox{
-      position:absolute;
-      display: block;
-      width:36px;
-      height:36px;
-      background:url("../../images/返回上一层 1.png") no-repeat center;
-      background-size:contain;
-      top:20px;
-      left:25px;
+    .backpageMain{
+      height:50px;
+      border-bottom:1px solid #eee;
+      .backBox{
+        position:absolute;
+        display: block;
+        width:12px;
+        height:34px;
+        background:url("../../images/leftArrow.png") no-repeat center;
+        background-size:contain;
+        top:8px;
+        left:25px;
+      }
     }
     .header {
       height: 120px;
@@ -164,7 +169,12 @@
       }
     }
     .rechargePage, .refundPage {
-      padding: 100px 410px 0 410px;
+      .rechargePageMain {
+        padding: 100px 410px 0 410px;
+      }
+      .refundPageMain {
+        padding: 100px 410px 0 410px;
+      }
       .title {
         .c_count {
           font-size: 20px;

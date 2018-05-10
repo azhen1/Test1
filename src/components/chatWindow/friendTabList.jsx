@@ -20,9 +20,13 @@ let FriendTabList = React.createClass({
     deleteFriend (e, id, index) {
         let {friendList, topId, toId} = this.props
         friendList.splice(index, 1)
-        if (id === toId) {
-            toId = friendList[0].toId
-            this.activeFriendItem(0)
+        if (friendList.length > 0) {
+            if (id === toId) {
+                toId = friendList[0].toId
+                this.activeFriendItem(0)
+            }
+        } else {
+            toId = ''
         }
         if (id === topId) {
             topId = ''
@@ -90,7 +94,6 @@ let FriendTabList = React.createClass({
                                 <span className='name' title={v.name}>
                                     {v.name}
                                 </span>
-
                             </div>
                             <div className={topId === v.toId ? 'yiZhiDing' : 'weiZhiDing' }>
                                 <div className='operation'>

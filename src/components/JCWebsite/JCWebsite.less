@@ -1,5 +1,21 @@
 .app_Box {
   position: relative;
+  &.mobile_app_Box{
+    padding-bottom:120px;
+  }
+  .companyLoginBtn {
+    width:100%;
+    line-height: 120px;
+    background:#16afee;
+    color:#fff;
+    text-align:center;
+    position:fixed;
+    left:0px;
+    bottom:0px;
+    font-size:54px;
+    z-index: 1;
+    display: none;
+  }
   .header {
     position: absolute;
     top: 0;
@@ -23,7 +39,7 @@
       a {
         text-decoration: none;
         position: relative;
-        font-size: 0.8vw;
+        font-size: 18px;
         color: #fff;
         margin-right: 1.8vw;
         display: inline-block;
@@ -32,14 +48,14 @@
         span {
           content: '';
           display: none;
-          height: 0.118vw;
+          height: 2px;
           width: 100%;
           background: linear-gradient(to right, #10F8C4, #00D4FF);
           background: -webkit-linear-gradient(to right, #10F8C4, #00D4FF);
           background: -o-linear-gradient(to right, #10F8C4, #00D4FF);
           background: -moz-linear-gradient(to right, #10F8C4, #00D4FF);
           position: absolute;
-          bottom: -0.3vw;
+          bottom: -10px;
           left: 0;
         }
         &:hover span {
@@ -96,7 +112,7 @@
   }
   .banner1, .banner2 {
     height: 53vw;
-    background: url("../../images/广告1 底图@1x.png") no-repeat;
+    background: url("../../images/广告1 底图@1x.jpg") no-repeat;
     background-size: 100% 100%;
     position: relative;
     .textBox {
@@ -230,7 +246,7 @@
   }
   .banner2 {
     height: 53vw;
-    background: url("../../images/广告2 底图@1x.png") no-repeat;
+    background: url("../../images/广告2 底图@1x.jpg") no-repeat;
     background-size: 100% 100%;
     position: relative;
     .xuanZhuan {
@@ -265,7 +281,7 @@
   }
   .bannerRotate {
     height: 53vw;
-    background: url("../../images/广告2 底图@1x.png") no-repeat;
+    background: url("../../images/广告2 底图@1x.jpg") no-repeat;
     background-size: 100% 100%;
     position: relative;
     .xuanZhuan {

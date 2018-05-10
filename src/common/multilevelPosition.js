@@ -1477,474 +1477,6 @@ let positionTypeList = [
     ]
   },
   {
-    "id": 380,
-    "value": "3",
-    "label": "项目 质量 高级管理",
-    "parentId": 0,
-    "level": 1,
-    "children": [
-      {
-        "id": 406,
-        "value": "3-2",
-        "label": "质量管理/安全防护",
-        "parentId": 380,
-        "level": 2,
-        "children": [
-          {
-            "id": 407,
-            "value": "3-2-1",
-            "label": "质量管理/测试经理",
-            "parentId": 406,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 408,
-            "value": "3-2-2",
-            "label": "质量管理/测试主管",
-            "parentId": 406,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 409,
-            "value": "3-2-3",
-            "label": "质量管理/测试工程师",
-            "parentId": 406,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 410,
-            "value": "3-2-4",
-            "label": "质量检验员/测试员",
-            "parentId": 406,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 411,
-            "value": "3-2-5",
-            "label": "化验/检验",
-            "parentId": 406,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 412,
-            "value": "3-2-6",
-            "label": "认证/体系工程师/审核员",
-            "parentId": 406,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 413,
-            "value": "3-2-7",
-            "label": "环境/健康/安全经理/主管",
-            "parentId": 406,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 414,
-            "value": "3-2-8",
-            "label": "环境/健康/安全工程师",
-            "parentId": 406,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 415,
-            "value": "3-2-9",
-            "label": "供应商/采购质量管理",
-            "parentId": 406,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 416,
-            "value": "3-2-10",
-            "label": "安全管理",
-            "parentId": 406,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 417,
-            "value": "3-2-11",
-            "label": "安全消防可靠度工程师",
-            "parentId": 406,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 418,
-            "value": "3-2-12",
-            "label": "故障分析工程师",
-            "parentId": 406,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 419,
-            "value": "3-2-13",
-            "label": "采购材料/设备管理",
-            "parentId": 406,
-            "level": 3,
-            "children": null
-          }
-        ]
-      },
-      {
-        "id": 420,
-        "value": "3-3",
-        "label": "高级管理",
-        "parentId": 380,
-        "level": 2,
-        "children": [
-          {
-            "id": 421,
-            "value": "3-3-1",
-            "label": "首席执行官CEO/总裁/总经理",
-            "parentId": 420,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 422,
-            "value": "3-3-2",
-            "label": "首席运营官COO",
-            "parentId": 420,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 423,
-            "value": "3-3-3",
-            "label": "首席财务官CFO",
-            "parentId": 420,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 424,
-            "value": "3-3-4",
-            "label": "CTO/CIO副总裁/副总经理",
-            "parentId": 420,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 425,
-            "value": "3-3-5",
-            "label": "分公司/代表处负责人",
-            "parentId": 420,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 426,
-            "value": "3-3-6",
-            "label": "部门/事业部管理",
-            "parentId": 420,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 427,
-            "value": "3-3-7",
-            "label": "总裁助理/总经理助理",
-            "parentId": 420,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 428,
-            "value": "3-3-8",
-            "label": "总编/副总编",
-            "parentId": 420,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 429,
-            "value": "3-3-9",
-            "label": "行长/副行长",
-            "parentId": 420,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 430,
-            "value": "3-3-10",
-            "label": "工厂厂长/副厂长",
-            "parentId": 420,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 431,
-            "value": "3-3-11",
-            "label": "校长/副校长",
-            "parentId": 420,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 432,
-            "value": "3-3-12",
-            "label": "合伙人办",
-            "parentId": 420,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 433,
-            "value": "3-3-13",
-            "label": "事处首席代表",
-            "parentId": 420,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 434,
-            "value": "3-3-14",
-            "label": "投资者关系",
-            "parentId": 420,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 435,
-            "value": "3-3-15",
-            "label": "企业秘书/董事会秘书",
-            "parentId": 420,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 436,
-            "value": "3-3-16",
-            "label": "策略发展总监",
-            "parentId": 420,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 437,
-            "value": "3-3-17",
-            "label": "运营总监",
-            "parentId": 420,
-            "level": 3,
-            "children": null
-          }
-        ]
-      },
-      {
-        "id": 381,
-        "value": "3-1",
-        "label": "项目管理/项目协调",
-        "parentId": 380,
-        "level": 2,
-        "children": [
-          {
-            "id": 382,
-            "value": "3-1-1",
-            "label": "项目总监",
-            "parentId": 381,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 383,
-            "value": "3-1-2",
-            "label": "项目经理/项目主管",
-            "parentId": 381,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 384,
-            "value": "3-1-3",
-            "label": "项目专员/助理",
-            "parentId": 381,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 385,
-            "value": "3-1-4",
-            "label": "广告/会展项目管理",
-            "parentId": 381,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 386,
-            "value": "3-1-5",
-            "label": "IT项目总监",
-            "parentId": 381,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 387,
-            "value": "3-1-6",
-            "label": "IT项目经理/主管",
-            "parentId": 381,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 388,
-            "value": "3-1-7",
-            "label": "IT项目执行/协调人员",
-            "parentId": 381,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 389,
-            "value": "3-1-8",
-            "label": "通信项目管理",
-            "parentId": 381,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 390,
-            "value": "3-1-9",
-            "label": "房地产项目配套工程师",
-            "parentId": 381,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 391,
-            "value": "3-1-10",
-            "label": "房地产项目管理",
-            "parentId": 381,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 392,
-            "value": "3-1-11",
-            "label": "证券/投资项目管理",
-            "parentId": 381,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 393,
-            "value": "3-1-12",
-            "label": "保险项目经理/主管",
-            "parentId": 381,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 394,
-            "value": "3-1-13",
-            "label": "生产项目经理/主管",
-            "parentId": 381,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 395,
-            "value": "3-1-14",
-            "label": "生产项目工程师",
-            "parentId": 381,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 396,
-            "value": "3-1-15",
-            "label": "汽车工程项目管理",
-            "parentId": 381,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 397,
-            "value": "3-1-16",
-            "label": "电子/电器项目管理",
-            "parentId": 381,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 398,
-            "value": "3-1-17",
-            "label": "服装/纺织/皮革项目管理",
-            "parentId": 381,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 399,
-            "value": "3-1-18",
-            "label": "医药项目管理",
-            "parentId": 381,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 400,
-            "value": "3-1-19",
-            "label": "化工项目管理",
-            "parentId": 381,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 401,
-            "value": "3-1-20",
-            "label": "物流/仓储项目管理",
-            "parentId": 381,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 402,
-            "value": "3-1-21",
-            "label": "咨询项目管理",
-            "parentId": 381,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 403,
-            "value": "3-1-22",
-            "label": "能源/矿产项目管理",
-            "parentId": 381,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 404,
-            "value": "3-1-23",
-            "label": "项目计划合约专员",
-            "parentId": 381,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 405,
-            "value": "3-1-24",
-            "label": "项目招投标",
-            "parentId": 381,
-            "level": 3,
-            "children": null
-          }
-        ]
-      }
-    ]
-  },
-  {
     "id": 438,
     "value": "4",
     "label": "IT 互联网 通信",
@@ -5744,6 +5276,1127 @@ let positionTypeList = [
       }
     ]
   },
+    {
+        "id": 1299,
+        "value": "11",
+        "label": "服务业",
+        "parentId": 0,
+        "level": 1,
+        "children": [
+            {
+                "id": 1423,
+                "value": "11-8",
+                "label": "家政安保",
+                "parentId": 1299,
+                "level": 2,
+                "children": [
+                    {
+                        "id": 1424,
+                        "value": "11-8-1",
+                        "label": "保洁/清洁工",
+                        "parentId": 1423,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1425,
+                        "value": "11-8-2",
+                        "label": "保安",
+                        "parentId": 1423,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1426,
+                        "value": "11-8-3",
+                        "label": "保安经理",
+                        "parentId": 1423,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1427,
+                        "value": "11-8-4",
+                        "label": "家政人员",
+                        "parentId": 1423,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1428,
+                        "value": "11-8-5",
+                        "label": "保姆/护工",
+                        "parentId": 1423,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1429,
+                        "value": "11-8-6",
+                        "label": "月嫂/母婴护理",
+                        "parentId": 1423,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1430,
+                        "value": "11-8-7",
+                        "label": "小时工/钟点工",
+                        "parentId": 1423,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1431,
+                        "value": "11-8-8",
+                        "label": "保洁",
+                        "parentId": 1423,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1432,
+                        "value": "11-8-9",
+                        "label": "洗衣工",
+                        "parentId": 1423,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1433,
+                        "value": "11-8-10",
+                        "label": "婚礼/庆典策划服务",
+                        "parentId": 1423,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1434,
+                        "value": "11-8-11",
+                        "label": "家电维修",
+                        "parentId": 1423,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1435,
+                        "value": "11-8-12",
+                        "label": "搬运工",
+                        "parentId": 1423,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1436,
+                        "value": "11-8-13",
+                        "label": "手机维修电脑维修",
+                        "parentId": 1423,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1437,
+                        "value": "11-8-14",
+                        "label": "寻呼员/话务员",
+                        "parentId": 1423,
+                        "level": 3,
+                        "children": null
+                    }
+                ]
+            },
+            {
+                "id": 1300,
+                "value": "11-1",
+                "label": "商超/酒店/娱乐/服务",
+                "parentId": 1299,
+                "level": 2,
+                "children": [
+                    {
+                        "id": 1301,
+                        "value": "11-1-1",
+                        "label": "店长/卖场管理",
+                        "parentId": 1300,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1302,
+                        "value": "11-1-2",
+                        "label": "楼面管理",
+                        "parentId": 1300,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1303,
+                        "value": "11-1-3",
+                        "label": "品牌/连锁招商管理",
+                        "parentId": 1300,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1304,
+                        "value": "11-1-4",
+                        "label": "大堂经理/领班",
+                        "parentId": 1300,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1305,
+                        "value": "11-1-5",
+                        "label": "酒店管理",
+                        "parentId": 1300,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1306,
+                        "value": "11-1-6",
+                        "label": "客房管理",
+                        "parentId": 1300,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1307,
+                        "value": "11-1-7",
+                        "label": "收银主管",
+                        "parentId": 1300,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1308,
+                        "value": "11-1-8",
+                        "label": "收银员",
+                        "parentId": 1300,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1309,
+                        "value": "11-1-9",
+                        "label": "店员/营业员",
+                        "parentId": 1300,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1310,
+                        "value": "11-1-10",
+                        "label": "导购员",
+                        "parentId": 1300,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1311,
+                        "value": "11-1-11",
+                        "label": "理货员",
+                        "parentId": 1300,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1312,
+                        "value": "11-1-12",
+                        "label": "促销主管/督导",
+                        "parentId": 1300,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1313,
+                        "value": "11-1-13",
+                        "label": "促销员品类管理",
+                        "parentId": 1300,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1314,
+                        "value": "11-1-14",
+                        "label": "前厅接待/礼仪/迎宾",
+                        "parentId": 1300,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1315,
+                        "value": "11-1-15",
+                        "label": "预订员",
+                        "parentId": 1300,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1316,
+                        "value": "11-1-16",
+                        "label": "行李员",
+                        "parentId": 1300,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1317,
+                        "value": "11-1-17",
+                        "label": "服务员",
+                        "parentId": 1300,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1318,
+                        "value": "11-1-18",
+                        "label": "防损员/内保",
+                        "parentId": 1300,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1319,
+                        "value": "11-1-19",
+                        "label": "奢侈品销售",
+                        "parentId": 1300,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1320,
+                        "value": "11-1-20",
+                        "label": "主持人/司仪",
+                        "parentId": 1300,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1321,
+                        "value": "11-1-21",
+                        "label": "客房服务员",
+                        "parentId": 1300,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1322,
+                        "value": "11-1-22",
+                        "label": "生鲜食品加工/处理",
+                        "parentId": 1300,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1323,
+                        "value": "11-1-23",
+                        "label": "酒店试睡员",
+                        "parentId": 1300,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1324,
+                        "value": "11-1-24",
+                        "label": "门卫",
+                        "parentId": 1300,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1325,
+                        "value": "11-1-25",
+                        "label": "质量管理",
+                        "parentId": 1300,
+                        "level": 3,
+                        "children": null
+                    }
+                ]
+            },
+            {
+                "id": 1326,
+                "value": "11-2",
+                "label": "旅游/度假/出入境服务",
+                "parentId": 1299,
+                "level": 2,
+                "children": [
+                    {
+                        "id": 1327,
+                        "value": "11-2-1",
+                        "label": "旅游产品销售",
+                        "parentId": 1326,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1328,
+                        "value": "11-2-2",
+                        "label": "旅游顾问",
+                        "parentId": 1326,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1329,
+                        "value": "11-2-3",
+                        "label": "导游",
+                        "parentId": 1326,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1330,
+                        "value": "11-2-4",
+                        "label": "票务",
+                        "parentId": 1326,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1331,
+                        "value": "11-2-5",
+                        "label": "旅游计划调度",
+                        "parentId": 1326,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1332,
+                        "value": "11-2-6",
+                        "label": "旅游产品/线路策划",
+                        "parentId": 1326,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1333,
+                        "value": "11-2-7",
+                        "label": "签证业务办理",
+                        "parentId": 1326,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1334,
+                        "value": "11-2-8",
+                        "label": "潜水员",
+                        "parentId": 1326,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1335,
+                        "value": "11-2-9",
+                        "label": "海外游计调",
+                        "parentId": 1326,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1336,
+                        "value": "11-2-10",
+                        "label": "水族馆表演演员",
+                        "parentId": 1326,
+                        "level": 3,
+                        "children": null
+                    }
+                ]
+            },
+            {
+                "id": 1337,
+                "value": "11-3",
+                "label": "烹饪/料理/食品研发",
+                "parentId": 1299,
+                "level": 2,
+                "children": [
+                    {
+                        "id": 1338,
+                        "value": "11-3-1",
+                        "label": "厨师/面点师",
+                        "parentId": 1337,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1339,
+                        "value": "11-3-2",
+                        "label": "食品加工/处理",
+                        "parentId": 1337,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1340,
+                        "value": "11-3-3",
+                        "label": "调酒师",
+                        "parentId": 1337,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1341,
+                        "value": "11-3-4",
+                        "label": "茶艺师",
+                        "parentId": 1337,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1342,
+                        "value": "11-3-5",
+                        "label": "咖啡师",
+                        "parentId": 1337,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1343,
+                        "value": "11-3-6",
+                        "label": "营养师",
+                        "parentId": 1337,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1344,
+                        "value": "11-3-7",
+                        "label": "厨工",
+                        "parentId": 1337,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1345,
+                        "value": "11-3-8",
+                        "label": "食品/饮料研发",
+                        "parentId": 1337,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1346,
+                        "value": "11-3-9",
+                        "label": "食品/饮料检验",
+                        "parentId": 1337,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1347,
+                        "value": "11-3-10",
+                        "label": "餐厅领班",
+                        "parentId": 1337,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1348,
+                        "value": "11-3-11",
+                        "label": "餐厅服务员",
+                        "parentId": 1337,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1349,
+                        "value": "11-3-12",
+                        "label": "行政主厨",
+                        "parentId": 1337,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1350,
+                        "value": "11-3-13",
+                        "label": "中餐厨师",
+                        "parentId": 1337,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1351,
+                        "value": "11-3-14",
+                        "label": "粤菜厨师",
+                        "parentId": 1337,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1352,
+                        "value": "11-3-15",
+                        "label": "鲁菜厨师",
+                        "parentId": 1337,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1353,
+                        "value": "11-3-16",
+                        "label": "凉菜厨师",
+                        "parentId": 1337,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1354,
+                        "value": "11-3-17",
+                        "label": "日韩料理厨师",
+                        "parentId": 1337,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1355,
+                        "value": "11-3-18",
+                        "label": "川菜厨师",
+                        "parentId": 1337,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1356,
+                        "value": "11-3-19",
+                        "label": "湘菜厨师",
+                        "parentId": 1337,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1357,
+                        "value": "11-3-20",
+                        "label": "西餐厨师",
+                        "parentId": 1337,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1358,
+                        "value": "11-3-21",
+                        "label": "西餐厨师",
+                        "parentId": 1337,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1359,
+                        "value": "11-3-22",
+                        "label": "日式厨师",
+                        "parentId": 1337,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1360,
+                        "value": "11-3-23",
+                        "label": "西点师厨师",
+                        "parentId": 1337,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1361,
+                        "value": "11-3-24",
+                        "label": "助理/学徒",
+                        "parentId": 1337,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1362,
+                        "value": "11-3-25",
+                        "label": "送餐员",
+                        "parentId": 1337,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1363,
+                        "value": "11-3-26",
+                        "label": "传菜员",
+                        "parentId": 1337,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1364,
+                        "value": "11-3-27",
+                        "label": "烧烤师",
+                        "parentId": 1337,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1365,
+                        "value": "11-3-28",
+                        "label": "品酒师",
+                        "parentId": 1337,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1366,
+                        "value": "11-3-29",
+                        "label": "杂工",
+                        "parentId": 1337,
+                        "level": 3,
+                        "children": null
+                    }
+                ]
+            },
+            {
+                "id": 1367,
+                "value": "11-4",
+                "label": "美容/美发",
+                "parentId": 1299,
+                "level": 2,
+                "children": [
+                    {
+                        "id": 1368,
+                        "value": "11-4-1",
+                        "label": "美发/发型师",
+                        "parentId": 1367,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1369,
+                        "value": "11-4-2",
+                        "label": "美发助理",
+                        "parentId": 1367,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1370,
+                        "value": "11-4-3",
+                        "label": "美发培训师",
+                        "parentId": 1367,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1371,
+                        "value": "11-4-4",
+                        "label": "美容师",
+                        "parentId": 1367,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1372,
+                        "value": "11-4-5",
+                        "label": "美容助理",
+                        "parentId": 1367,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1373,
+                        "value": "11-4-6",
+                        "label": "美甲师",
+                        "parentId": 1367,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1374,
+                        "value": "11-4-7",
+                        "label": "美体师",
+                        "parentId": 1367,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1375,
+                        "value": "11-4-8",
+                        "label": "美容店长",
+                        "parentId": 1367,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1376,
+                        "value": "11-4-9",
+                        "label": "美发店长",
+                        "parentId": 1367,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1377,
+                        "value": "11-4-10",
+                        "label": "美容导师",
+                        "parentId": 1367,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1378,
+                        "value": "11-4-11",
+                        "label": "宠物美容师",
+                        "parentId": 1367,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1379,
+                        "value": "11-4-12",
+                        "label": "化妆师",
+                        "parentId": 1367,
+                        "level": 3,
+                        "children": null
+                    }
+                ]
+            },
+            {
+                "id": 1380,
+                "value": "11-5",
+                "label": "健身",
+                "parentId": 1299,
+                "level": 2,
+                "children": [
+                    {
+                        "id": 1381,
+                        "value": "11-5-1",
+                        "label": "瑜伽教练",
+                        "parentId": 1380,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1382,
+                        "value": "11-5-2",
+                        "label": "美体教练",
+                        "parentId": 1380,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1383,
+                        "value": "11-5-3",
+                        "label": "跆拳道教练",
+                        "parentId": 1380,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1384,
+                        "value": "11-5-4",
+                        "label": "篮球/羽毛球教练",
+                        "parentId": 1380,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1385,
+                        "value": "11-5-5",
+                        "label": "舞蹈教练",
+                        "parentId": 1380,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1386,
+                        "value": "11-5-6",
+                        "label": "健身顾问/教练",
+                        "parentId": 1380,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1387,
+                        "value": "11-5-7",
+                        "label": "瘦身顾问",
+                        "parentId": 1380,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1388,
+                        "value": "11-5-8",
+                        "label": "游泳教练",
+                        "parentId": 1380,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1389,
+                        "value": "11-5-9",
+                        "label": "救生员",
+                        "parentId": 1380,
+                        "level": 3,
+                        "children": null
+                    }
+                ]
+            },
+            {
+                "id": 1390,
+                "value": "11-6",
+                "label": "保健按摩",
+                "parentId": 1299,
+                "level": 2,
+                "children": [
+                    {
+                        "id": 1391,
+                        "value": "11-6-1",
+                        "label": "按摩师",
+                        "parentId": 1390,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1392,
+                        "value": "11-6-2",
+                        "label": "足疗师",
+                        "parentId": 1390,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1393,
+                        "value": "11-6-3",
+                        "label": "针灸",
+                        "parentId": 1390,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1394,
+                        "value": "11-6-4",
+                        "label": "推拿师",
+                        "parentId": 1390,
+                        "level": 3,
+                        "children": null
+                    }
+                ]
+            },
+            {
+                "id": 1395,
+                "value": "11-7",
+                "label": "医院/医疗/护理",
+                "parentId": 1299,
+                "level": 2,
+                "children": [
+                    {
+                        "id": 1396,
+                        "value": "11-7-1",
+                        "label": "医师",
+                        "parentId": 1395,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1397,
+                        "value": "11-7-2",
+                        "label": "医生助理",
+                        "parentId": 1395,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1398,
+                        "value": "11-7-3",
+                        "label": "中医",
+                        "parentId": 1395,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1399,
+                        "value": "11-7-4",
+                        "label": "针灸推拿",
+                        "parentId": 1395,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1400,
+                        "value": "11-7-5",
+                        "label": "心理医生",
+                        "parentId": 1395,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1401,
+                        "value": "11-7-6",
+                        "label": "牙科医生",
+                        "parentId": 1395,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1402,
+                        "value": "11-7-7",
+                        "label": "儿科医生",
+                        "parentId": 1395,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1403,
+                        "value": "11-7-8",
+                        "label": "康复治疗师",
+                        "parentId": 1395,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1404,
+                        "value": "11-7-9",
+                        "label": "内科医生",
+                        "parentId": 1395,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1405,
+                        "value": "11-7-10",
+                        "label": "外科医生",
+                        "parentId": 1395,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1406,
+                        "value": "11-7-11",
+                        "label": "专科医生",
+                        "parentId": 1395,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1407,
+                        "value": "11-7-12",
+                        "label": "牙科医生",
+                        "parentId": 1395,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1408,
+                        "value": "11-7-13",
+                        "label": "麻醉医生",
+                        "parentId": 1395,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1409,
+                        "value": "11-7-14",
+                        "label": "B超医生",
+                        "parentId": 1395,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1410,
+                        "value": "11-7-15",
+                        "label": "检验科医师",
+                        "parentId": 1395,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1411,
+                        "value": "11-7-16",
+                        "label": "医学影像/放射科医师",
+                        "parentId": 1395,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1412,
+                        "value": "11-7-17",
+                        "label": "综合门诊/全科医生",
+                        "parentId": 1395,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1413,
+                        "value": "11-7-18",
+                        "label": "理疗师",
+                        "parentId": 1395,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1414,
+                        "value": "11-7-19",
+                        "label": "验光师",
+                        "parentId": 1395,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1415,
+                        "value": "11-7-20",
+                        "label": "营养师",
+                        "parentId": 1395,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1416,
+                        "value": "11-7-21",
+                        "label": "公共卫生/疾病控制",
+                        "parentId": 1395,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1417,
+                        "value": "11-7-22",
+                        "label": "兽医",
+                        "parentId": 1395,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1418,
+                        "value": "11-7-23",
+                        "label": "药剂师/药库主任",
+                        "parentId": 1395,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1419,
+                        "value": "11-7-24",
+                        "label": "护理主任/护士长/医院管理人员",
+                        "parentId": 1395,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1420,
+                        "value": "11-7-25",
+                        "label": "护士/护理人员",
+                        "parentId": 1395,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1421,
+                        "value": "11-7-26",
+                        "label": "美容整形师",
+                        "parentId": 1395,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 1422,
+                        "value": "11-7-27",
+                        "label": "美容师/顾问",
+                        "parentId": 1395,
+                        "level": 3,
+                        "children": null
+                    }
+                ]
+            }
+        ]
+    },
   {
     "id": 909,
     "value": "8",
@@ -8883,1127 +9536,474 @@ let positionTypeList = [
       }
     ]
   },
-  {
-    "id": 1299,
-    "value": "11",
-    "label": "服务业",
-    "parentId": 0,
-    "level": 1,
-    "children": [
-      {
-        "id": 1423,
-        "value": "11-8",
-        "label": "家政安保",
-        "parentId": 1299,
-        "level": 2,
+    {
+        "id": 380,
+        "value": "3",
+        "label": "项目 质量 高级管理",
+        "parentId": 0,
+        "level": 1,
         "children": [
-          {
-            "id": 1424,
-            "value": "11-8-1",
-            "label": "保洁/清洁工",
-            "parentId": 1423,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1425,
-            "value": "11-8-2",
-            "label": "保安",
-            "parentId": 1423,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1426,
-            "value": "11-8-3",
-            "label": "保安经理",
-            "parentId": 1423,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1427,
-            "value": "11-8-4",
-            "label": "家政人员",
-            "parentId": 1423,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1428,
-            "value": "11-8-5",
-            "label": "保姆/护工",
-            "parentId": 1423,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1429,
-            "value": "11-8-6",
-            "label": "月嫂/母婴护理",
-            "parentId": 1423,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1430,
-            "value": "11-8-7",
-            "label": "小时工/钟点工",
-            "parentId": 1423,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1431,
-            "value": "11-8-8",
-            "label": "保洁",
-            "parentId": 1423,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1432,
-            "value": "11-8-9",
-            "label": "洗衣工",
-            "parentId": 1423,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1433,
-            "value": "11-8-10",
-            "label": "婚礼/庆典策划服务",
-            "parentId": 1423,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1434,
-            "value": "11-8-11",
-            "label": "家电维修",
-            "parentId": 1423,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1435,
-            "value": "11-8-12",
-            "label": "搬运工",
-            "parentId": 1423,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1436,
-            "value": "11-8-13",
-            "label": "手机维修电脑维修",
-            "parentId": 1423,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1437,
-            "value": "11-8-14",
-            "label": "寻呼员/话务员",
-            "parentId": 1423,
-            "level": 3,
-            "children": null
-          }
+            {
+                "id": 406,
+                "value": "3-2",
+                "label": "质量管理/安全防护",
+                "parentId": 380,
+                "level": 2,
+                "children": [
+                    {
+                        "id": 407,
+                        "value": "3-2-1",
+                        "label": "质量管理/测试经理",
+                        "parentId": 406,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 408,
+                        "value": "3-2-2",
+                        "label": "质量管理/测试主管",
+                        "parentId": 406,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 409,
+                        "value": "3-2-3",
+                        "label": "质量管理/测试工程师",
+                        "parentId": 406,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 410,
+                        "value": "3-2-4",
+                        "label": "质量检验员/测试员",
+                        "parentId": 406,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 411,
+                        "value": "3-2-5",
+                        "label": "化验/检验",
+                        "parentId": 406,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 412,
+                        "value": "3-2-6",
+                        "label": "认证/体系工程师/审核员",
+                        "parentId": 406,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 413,
+                        "value": "3-2-7",
+                        "label": "环境/健康/安全经理/主管",
+                        "parentId": 406,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 414,
+                        "value": "3-2-8",
+                        "label": "环境/健康/安全工程师",
+                        "parentId": 406,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 415,
+                        "value": "3-2-9",
+                        "label": "供应商/采购质量管理",
+                        "parentId": 406,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 416,
+                        "value": "3-2-10",
+                        "label": "安全管理",
+                        "parentId": 406,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 417,
+                        "value": "3-2-11",
+                        "label": "安全消防可靠度工程师",
+                        "parentId": 406,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 418,
+                        "value": "3-2-12",
+                        "label": "故障分析工程师",
+                        "parentId": 406,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 419,
+                        "value": "3-2-13",
+                        "label": "采购材料/设备管理",
+                        "parentId": 406,
+                        "level": 3,
+                        "children": null
+                    }
+                ]
+            },
+            {
+                "id": 420,
+                "value": "3-3",
+                "label": "高级管理",
+                "parentId": 380,
+                "level": 2,
+                "children": [
+                    {
+                        "id": 421,
+                        "value": "3-3-1",
+                        "label": "首席执行官CEO/总裁/总经理",
+                        "parentId": 420,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 422,
+                        "value": "3-3-2",
+                        "label": "首席运营官COO",
+                        "parentId": 420,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 423,
+                        "value": "3-3-3",
+                        "label": "首席财务官CFO",
+                        "parentId": 420,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 424,
+                        "value": "3-3-4",
+                        "label": "CTO/CIO副总裁/副总经理",
+                        "parentId": 420,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 425,
+                        "value": "3-3-5",
+                        "label": "分公司/代表处负责人",
+                        "parentId": 420,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 426,
+                        "value": "3-3-6",
+                        "label": "部门/事业部管理",
+                        "parentId": 420,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 427,
+                        "value": "3-3-7",
+                        "label": "总裁助理/总经理助理",
+                        "parentId": 420,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 428,
+                        "value": "3-3-8",
+                        "label": "总编/副总编",
+                        "parentId": 420,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 429,
+                        "value": "3-3-9",
+                        "label": "行长/副行长",
+                        "parentId": 420,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 430,
+                        "value": "3-3-10",
+                        "label": "工厂厂长/副厂长",
+                        "parentId": 420,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 431,
+                        "value": "3-3-11",
+                        "label": "校长/副校长",
+                        "parentId": 420,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 432,
+                        "value": "3-3-12",
+                        "label": "合伙人办",
+                        "parentId": 420,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 433,
+                        "value": "3-3-13",
+                        "label": "事处首席代表",
+                        "parentId": 420,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 434,
+                        "value": "3-3-14",
+                        "label": "投资者关系",
+                        "parentId": 420,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 435,
+                        "value": "3-3-15",
+                        "label": "企业秘书/董事会秘书",
+                        "parentId": 420,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 436,
+                        "value": "3-3-16",
+                        "label": "策略发展总监",
+                        "parentId": 420,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 437,
+                        "value": "3-3-17",
+                        "label": "运营总监",
+                        "parentId": 420,
+                        "level": 3,
+                        "children": null
+                    }
+                ]
+            },
+            {
+                "id": 381,
+                "value": "3-1",
+                "label": "项目管理/项目协调",
+                "parentId": 380,
+                "level": 2,
+                "children": [
+                    {
+                        "id": 382,
+                        "value": "3-1-1",
+                        "label": "项目总监",
+                        "parentId": 381,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 383,
+                        "value": "3-1-2",
+                        "label": "项目经理/项目主管",
+                        "parentId": 381,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 384,
+                        "value": "3-1-3",
+                        "label": "项目专员/助理",
+                        "parentId": 381,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 385,
+                        "value": "3-1-4",
+                        "label": "广告/会展项目管理",
+                        "parentId": 381,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 386,
+                        "value": "3-1-5",
+                        "label": "IT项目总监",
+                        "parentId": 381,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 387,
+                        "value": "3-1-6",
+                        "label": "IT项目经理/主管",
+                        "parentId": 381,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 388,
+                        "value": "3-1-7",
+                        "label": "IT项目执行/协调人员",
+                        "parentId": 381,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 389,
+                        "value": "3-1-8",
+                        "label": "通信项目管理",
+                        "parentId": 381,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 390,
+                        "value": "3-1-9",
+                        "label": "房地产项目配套工程师",
+                        "parentId": 381,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 391,
+                        "value": "3-1-10",
+                        "label": "房地产项目管理",
+                        "parentId": 381,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 392,
+                        "value": "3-1-11",
+                        "label": "证券/投资项目管理",
+                        "parentId": 381,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 393,
+                        "value": "3-1-12",
+                        "label": "保险项目经理/主管",
+                        "parentId": 381,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 394,
+                        "value": "3-1-13",
+                        "label": "生产项目经理/主管",
+                        "parentId": 381,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 395,
+                        "value": "3-1-14",
+                        "label": "生产项目工程师",
+                        "parentId": 381,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 396,
+                        "value": "3-1-15",
+                        "label": "汽车工程项目管理",
+                        "parentId": 381,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 397,
+                        "value": "3-1-16",
+                        "label": "电子/电器项目管理",
+                        "parentId": 381,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 398,
+                        "value": "3-1-17",
+                        "label": "服装/纺织/皮革项目管理",
+                        "parentId": 381,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 399,
+                        "value": "3-1-18",
+                        "label": "医药项目管理",
+                        "parentId": 381,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 400,
+                        "value": "3-1-19",
+                        "label": "化工项目管理",
+                        "parentId": 381,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 401,
+                        "value": "3-1-20",
+                        "label": "物流/仓储项目管理",
+                        "parentId": 381,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 402,
+                        "value": "3-1-21",
+                        "label": "咨询项目管理",
+                        "parentId": 381,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 403,
+                        "value": "3-1-22",
+                        "label": "能源/矿产项目管理",
+                        "parentId": 381,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 404,
+                        "value": "3-1-23",
+                        "label": "项目计划合约专员",
+                        "parentId": 381,
+                        "level": 3,
+                        "children": null
+                    },
+                    {
+                        "id": 405,
+                        "value": "3-1-24",
+                        "label": "项目招投标",
+                        "parentId": 381,
+                        "level": 3,
+                        "children": null
+                    }
+                ]
+            }
         ]
-      },
-      {
-        "id": 1300,
-        "value": "11-1",
-        "label": "商超/酒店/娱乐/服务",
-        "parentId": 1299,
-        "level": 2,
-        "children": [
-          {
-            "id": 1301,
-            "value": "11-1-1",
-            "label": "店长/卖场管理",
-            "parentId": 1300,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1302,
-            "value": "11-1-2",
-            "label": "楼面管理",
-            "parentId": 1300,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1303,
-            "value": "11-1-3",
-            "label": "品牌/连锁招商管理",
-            "parentId": 1300,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1304,
-            "value": "11-1-4",
-            "label": "大堂经理/领班",
-            "parentId": 1300,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1305,
-            "value": "11-1-5",
-            "label": "酒店管理",
-            "parentId": 1300,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1306,
-            "value": "11-1-6",
-            "label": "客房管理",
-            "parentId": 1300,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1307,
-            "value": "11-1-7",
-            "label": "收银主管",
-            "parentId": 1300,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1308,
-            "value": "11-1-8",
-            "label": "收银员",
-            "parentId": 1300,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1309,
-            "value": "11-1-9",
-            "label": "店员/营业员",
-            "parentId": 1300,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1310,
-            "value": "11-1-10",
-            "label": "导购员",
-            "parentId": 1300,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1311,
-            "value": "11-1-11",
-            "label": "理货员",
-            "parentId": 1300,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1312,
-            "value": "11-1-12",
-            "label": "促销主管/督导",
-            "parentId": 1300,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1313,
-            "value": "11-1-13",
-            "label": "促销员品类管理",
-            "parentId": 1300,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1314,
-            "value": "11-1-14",
-            "label": "前厅接待/礼仪/迎宾",
-            "parentId": 1300,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1315,
-            "value": "11-1-15",
-            "label": "预订员",
-            "parentId": 1300,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1316,
-            "value": "11-1-16",
-            "label": "行李员",
-            "parentId": 1300,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1317,
-            "value": "11-1-17",
-            "label": "服务员",
-            "parentId": 1300,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1318,
-            "value": "11-1-18",
-            "label": "防损员/内保",
-            "parentId": 1300,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1319,
-            "value": "11-1-19",
-            "label": "奢侈品销售",
-            "parentId": 1300,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1320,
-            "value": "11-1-20",
-            "label": "主持人/司仪",
-            "parentId": 1300,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1321,
-            "value": "11-1-21",
-            "label": "客房服务员",
-            "parentId": 1300,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1322,
-            "value": "11-1-22",
-            "label": "生鲜食品加工/处理",
-            "parentId": 1300,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1323,
-            "value": "11-1-23",
-            "label": "酒店试睡员",
-            "parentId": 1300,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1324,
-            "value": "11-1-24",
-            "label": "门卫",
-            "parentId": 1300,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1325,
-            "value": "11-1-25",
-            "label": "质量管理",
-            "parentId": 1300,
-            "level": 3,
-            "children": null
-          }
-        ]
-      },
-      {
-        "id": 1326,
-        "value": "11-2",
-        "label": "旅游/度假/出入境服务",
-        "parentId": 1299,
-        "level": 2,
-        "children": [
-          {
-            "id": 1327,
-            "value": "11-2-1",
-            "label": "旅游产品销售",
-            "parentId": 1326,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1328,
-            "value": "11-2-2",
-            "label": "旅游顾问",
-            "parentId": 1326,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1329,
-            "value": "11-2-3",
-            "label": "导游",
-            "parentId": 1326,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1330,
-            "value": "11-2-4",
-            "label": "票务",
-            "parentId": 1326,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1331,
-            "value": "11-2-5",
-            "label": "旅游计划调度",
-            "parentId": 1326,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1332,
-            "value": "11-2-6",
-            "label": "旅游产品/线路策划",
-            "parentId": 1326,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1333,
-            "value": "11-2-7",
-            "label": "签证业务办理",
-            "parentId": 1326,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1334,
-            "value": "11-2-8",
-            "label": "潜水员",
-            "parentId": 1326,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1335,
-            "value": "11-2-9",
-            "label": "海外游计调",
-            "parentId": 1326,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1336,
-            "value": "11-2-10",
-            "label": "水族馆表演演员",
-            "parentId": 1326,
-            "level": 3,
-            "children": null
-          }
-        ]
-      },
-      {
-        "id": 1337,
-        "value": "11-3",
-        "label": "烹饪/料理/食品研发",
-        "parentId": 1299,
-        "level": 2,
-        "children": [
-          {
-            "id": 1338,
-            "value": "11-3-1",
-            "label": "厨师/面点师",
-            "parentId": 1337,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1339,
-            "value": "11-3-2",
-            "label": "食品加工/处理",
-            "parentId": 1337,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1340,
-            "value": "11-3-3",
-            "label": "调酒师",
-            "parentId": 1337,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1341,
-            "value": "11-3-4",
-            "label": "茶艺师",
-            "parentId": 1337,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1342,
-            "value": "11-3-5",
-            "label": "咖啡师",
-            "parentId": 1337,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1343,
-            "value": "11-3-6",
-            "label": "营养师",
-            "parentId": 1337,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1344,
-            "value": "11-3-7",
-            "label": "厨工",
-            "parentId": 1337,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1345,
-            "value": "11-3-8",
-            "label": "食品/饮料研发",
-            "parentId": 1337,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1346,
-            "value": "11-3-9",
-            "label": "食品/饮料检验",
-            "parentId": 1337,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1347,
-            "value": "11-3-10",
-            "label": "餐厅领班",
-            "parentId": 1337,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1348,
-            "value": "11-3-11",
-            "label": "餐厅服务员",
-            "parentId": 1337,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1349,
-            "value": "11-3-12",
-            "label": "行政主厨",
-            "parentId": 1337,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1350,
-            "value": "11-3-13",
-            "label": "中餐厨师",
-            "parentId": 1337,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1351,
-            "value": "11-3-14",
-            "label": "粤菜厨师",
-            "parentId": 1337,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1352,
-            "value": "11-3-15",
-            "label": "鲁菜厨师",
-            "parentId": 1337,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1353,
-            "value": "11-3-16",
-            "label": "凉菜厨师",
-            "parentId": 1337,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1354,
-            "value": "11-3-17",
-            "label": "日韩料理厨师",
-            "parentId": 1337,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1355,
-            "value": "11-3-18",
-            "label": "川菜厨师",
-            "parentId": 1337,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1356,
-            "value": "11-3-19",
-            "label": "湘菜厨师",
-            "parentId": 1337,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1357,
-            "value": "11-3-20",
-            "label": "西餐厨师",
-            "parentId": 1337,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1358,
-            "value": "11-3-21",
-            "label": "西餐厨师",
-            "parentId": 1337,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1359,
-            "value": "11-3-22",
-            "label": "日式厨师",
-            "parentId": 1337,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1360,
-            "value": "11-3-23",
-            "label": "西点师厨师",
-            "parentId": 1337,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1361,
-            "value": "11-3-24",
-            "label": "助理/学徒",
-            "parentId": 1337,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1362,
-            "value": "11-3-25",
-            "label": "送餐员",
-            "parentId": 1337,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1363,
-            "value": "11-3-26",
-            "label": "传菜员",
-            "parentId": 1337,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1364,
-            "value": "11-3-27",
-            "label": "烧烤师",
-            "parentId": 1337,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1365,
-            "value": "11-3-28",
-            "label": "品酒师",
-            "parentId": 1337,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1366,
-            "value": "11-3-29",
-            "label": "杂工",
-            "parentId": 1337,
-            "level": 3,
-            "children": null
-          }
-        ]
-      },
-      {
-        "id": 1367,
-        "value": "11-4",
-        "label": "美容/美发",
-        "parentId": 1299,
-        "level": 2,
-        "children": [
-          {
-            "id": 1368,
-            "value": "11-4-1",
-            "label": "美发/发型师",
-            "parentId": 1367,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1369,
-            "value": "11-4-2",
-            "label": "美发助理",
-            "parentId": 1367,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1370,
-            "value": "11-4-3",
-            "label": "美发培训师",
-            "parentId": 1367,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1371,
-            "value": "11-4-4",
-            "label": "美容师",
-            "parentId": 1367,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1372,
-            "value": "11-4-5",
-            "label": "美容助理",
-            "parentId": 1367,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1373,
-            "value": "11-4-6",
-            "label": "美甲师",
-            "parentId": 1367,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1374,
-            "value": "11-4-7",
-            "label": "美体师",
-            "parentId": 1367,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1375,
-            "value": "11-4-8",
-            "label": "美容店长",
-            "parentId": 1367,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1376,
-            "value": "11-4-9",
-            "label": "美发店长",
-            "parentId": 1367,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1377,
-            "value": "11-4-10",
-            "label": "美容导师",
-            "parentId": 1367,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1378,
-            "value": "11-4-11",
-            "label": "宠物美容师",
-            "parentId": 1367,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1379,
-            "value": "11-4-12",
-            "label": "化妆师",
-            "parentId": 1367,
-            "level": 3,
-            "children": null
-          }
-        ]
-      },
-      {
-        "id": 1380,
-        "value": "11-5",
-        "label": "健身",
-        "parentId": 1299,
-        "level": 2,
-        "children": [
-          {
-            "id": 1381,
-            "value": "11-5-1",
-            "label": "瑜伽教练",
-            "parentId": 1380,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1382,
-            "value": "11-5-2",
-            "label": "美体教练",
-            "parentId": 1380,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1383,
-            "value": "11-5-3",
-            "label": "跆拳道教练",
-            "parentId": 1380,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1384,
-            "value": "11-5-4",
-            "label": "篮球/羽毛球教练",
-            "parentId": 1380,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1385,
-            "value": "11-5-5",
-            "label": "舞蹈教练",
-            "parentId": 1380,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1386,
-            "value": "11-5-6",
-            "label": "健身顾问/教练",
-            "parentId": 1380,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1387,
-            "value": "11-5-7",
-            "label": "瘦身顾问",
-            "parentId": 1380,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1388,
-            "value": "11-5-8",
-            "label": "游泳教练",
-            "parentId": 1380,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1389,
-            "value": "11-5-9",
-            "label": "救生员",
-            "parentId": 1380,
-            "level": 3,
-            "children": null
-          }
-        ]
-      },
-      {
-        "id": 1390,
-        "value": "11-6",
-        "label": "保健按摩",
-        "parentId": 1299,
-        "level": 2,
-        "children": [
-          {
-            "id": 1391,
-            "value": "11-6-1",
-            "label": "按摩师",
-            "parentId": 1390,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1392,
-            "value": "11-6-2",
-            "label": "足疗师",
-            "parentId": 1390,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1393,
-            "value": "11-6-3",
-            "label": "针灸",
-            "parentId": 1390,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1394,
-            "value": "11-6-4",
-            "label": "推拿师",
-            "parentId": 1390,
-            "level": 3,
-            "children": null
-          }
-        ]
-      },
-      {
-        "id": 1395,
-        "value": "11-7",
-        "label": "医院/医疗/护理",
-        "parentId": 1299,
-        "level": 2,
-        "children": [
-          {
-            "id": 1396,
-            "value": "11-7-1",
-            "label": "医师",
-            "parentId": 1395,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1397,
-            "value": "11-7-2",
-            "label": "医生助理",
-            "parentId": 1395,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1398,
-            "value": "11-7-3",
-            "label": "中医",
-            "parentId": 1395,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1399,
-            "value": "11-7-4",
-            "label": "针灸推拿",
-            "parentId": 1395,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1400,
-            "value": "11-7-5",
-            "label": "心理医生",
-            "parentId": 1395,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1401,
-            "value": "11-7-6",
-            "label": "牙科医生",
-            "parentId": 1395,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1402,
-            "value": "11-7-7",
-            "label": "儿科医生",
-            "parentId": 1395,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1403,
-            "value": "11-7-8",
-            "label": "康复治疗师",
-            "parentId": 1395,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1404,
-            "value": "11-7-9",
-            "label": "内科医生",
-            "parentId": 1395,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1405,
-            "value": "11-7-10",
-            "label": "外科医生",
-            "parentId": 1395,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1406,
-            "value": "11-7-11",
-            "label": "专科医生",
-            "parentId": 1395,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1407,
-            "value": "11-7-12",
-            "label": "牙科医生",
-            "parentId": 1395,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1408,
-            "value": "11-7-13",
-            "label": "麻醉医生",
-            "parentId": 1395,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1409,
-            "value": "11-7-14",
-            "label": "B超医生",
-            "parentId": 1395,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1410,
-            "value": "11-7-15",
-            "label": "检验科医师",
-            "parentId": 1395,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1411,
-            "value": "11-7-16",
-            "label": "医学影像/放射科医师",
-            "parentId": 1395,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1412,
-            "value": "11-7-17",
-            "label": "综合门诊/全科医生",
-            "parentId": 1395,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1413,
-            "value": "11-7-18",
-            "label": "理疗师",
-            "parentId": 1395,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1414,
-            "value": "11-7-19",
-            "label": "验光师",
-            "parentId": 1395,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1415,
-            "value": "11-7-20",
-            "label": "营养师",
-            "parentId": 1395,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1416,
-            "value": "11-7-21",
-            "label": "公共卫生/疾病控制",
-            "parentId": 1395,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1417,
-            "value": "11-7-22",
-            "label": "兽医",
-            "parentId": 1395,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1418,
-            "value": "11-7-23",
-            "label": "药剂师/药库主任",
-            "parentId": 1395,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1419,
-            "value": "11-7-24",
-            "label": "护理主任/护士长/医院管理人员",
-            "parentId": 1395,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1420,
-            "value": "11-7-25",
-            "label": "护士/护理人员",
-            "parentId": 1395,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1421,
-            "value": "11-7-26",
-            "label": "美容整形师",
-            "parentId": 1395,
-            "level": 3,
-            "children": null
-          },
-          {
-            "id": 1422,
-            "value": "11-7-27",
-            "label": "美容师/顾问",
-            "parentId": 1395,
-            "level": 3,
-            "children": null
-          }
-        ]
-      }
-    ]
-  },
+    },
   {
     "id": 1438,
     "value": "12",

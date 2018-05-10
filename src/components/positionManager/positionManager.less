@@ -1,5 +1,4 @@
 .PositionManager {
-  width: calc(~"100% - 200px");
   background-color: #E6F5FF;
   margin-left: 200px;
   margin-top: 90px;
@@ -7,6 +6,7 @@
   min-height: calc(~"100% + 10px");
   padding-bottom: 10px;
   padding-left:10px;
+  overflow: hidden;
   .ant-tabs {
     overflow: visible;
   }
@@ -114,12 +114,26 @@
         float: right;
         width: 180px;
         margin-right: 20px;
+        height:110px;
+        position:relative;
+        .freeTag{
+          text-align: right;
+          i{
+            font-style: normal;
+            margin-right: 20px;
+            border-radius: 4px;
+            padding: 0 8px;
+            font-size: 14px;
+            color: #fff;
+            vertical-align: top;
+            display: inline-block;
+          }
+        }
         .mianShi {
           font-size: 20px;
           color: #F56767;
-          height: 20px;
+          padding-bottom:6px;
           line-height: 20px;
-          margin-bottom: 10px;
           text-align: right;
           i {
             font-style: normal;
@@ -130,6 +144,7 @@
             font-size: 14px;
             color: #fff;
             vertical-align: top;
+            display: inline-block;
           }
           span {
             display: inline-block;
@@ -142,11 +157,10 @@
         }
         .entry {
           font-size: 20px;
-          margin-bottom: 22px;
           color: #F56767;
-          height: 20px;
           line-height: 20px;
           text-align: right;
+          padding-bottom:6px;
           i {
             font-style: normal;
             margin-right: 20px;
@@ -156,6 +170,7 @@
             font-size: 14px;
             color: #fff;
             vertical-align: top;
+            display: inline-block;
           }
           span {
             display: inline-block;
@@ -168,6 +183,11 @@
         }
         .operate_items {
           font-size: 14px;
+          position:absolute;
+          bottom:0px;
+          padding:12px 0px;
+          width:100%;
+          text-align: right;
           span {
             color: #25CCF6;
             margin-right: 48px;

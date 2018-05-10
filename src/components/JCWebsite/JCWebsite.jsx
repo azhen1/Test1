@@ -17,6 +17,16 @@ let JCWebsite = React.createClass({
         }
     },
     componentDidMount () {
+        let appElem = document.getElementsByClassName('app_Box')[0]
+        let companyBtnElem = document.getElementsByClassName('companyLoginBtn')[0]
+        let isMobile = /Android|webOS|iPhone|iPad|BlackBerry/i.test(navigator.userAgent)
+        if (isMobile) {
+            appElem.classList.add('mobile_app_Box')
+            companyBtnElem.style.display = 'block'
+        } else {
+            appElem.classList.remove('mobile_app_Box')
+            companyBtnElem.style.display = 'none'
+        }
         let _th = this
         if (!window.sessionStorage.getItem('animate')) {
             window.sessionStorage.setItem('animate', '1')
@@ -70,10 +80,11 @@ let JCWebsite = React.createClass({
     },
     checkUuid () {
         let sessionUuid = window.localStorage.getItem('sessionUuid')
+        let memberId = window.localStorage.getItem('memberId')
         let URL = 'member/company/uuidCheck'
         let formData = {}
         let _th = this
-        if (sessionUuid === null) {
+        if (this.isNull(sessionUuid) || this.isNull(memberId)) {
             _th.setState({
                 hasUser: false
             })
@@ -121,10 +132,18 @@ let JCWebsite = React.createClass({
     itemClickFn (router) {
         window.location.hash = router
     },
+    isNull (val) {
+        let result = false
+        if (val === undefined || val === null || val === '') {
+            result = true
+        }
+        return result
+    },
     render () {
         let {curCarousel, isCarousel, showErWeiMa, isALShow, initCarousel, hasUser} = this.state
         return (
             <div className='app_Box' onClick={this.appBoxClick}>
+                <div className="companyLoginBtn" onClick={() => this.itemClickFn('login')}>企业登录</div>
                 <div className='header'>
                     <span className='logo'> </span>
                     <div className='operate'>
@@ -154,13 +173,13 @@ let JCWebsite = React.createClass({
                         </Link> : <Link to="/login">
                             企业登录
                             <span> </span>
-                            </Link>}
+                        </Link>}
 
                     </div>
                 </div>
                 {
                     isCarousel
-                    ? <div>
+                        ? <div>
                             {initCarousel === '1' ? <Carousel autoplay={false} className={curCarousel === '1' ? 'twoClaByCar' : ''} beforeChange={this.changeCarousel}>
                                 <div className='bannerRotate'>
                                     <div className='banner2'>

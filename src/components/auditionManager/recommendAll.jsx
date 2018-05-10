@@ -1,5 +1,5 @@
 import React from 'react'
-import {Pagination, message} from 'antd'
+import {Pagination, message, Modal, DatePicker, Button} from 'antd'
 import CommonTpl from './common/commonTpl'
 import {postRequest} from '../../common/ajax'
 import util from '../../common/util'
@@ -7,7 +7,10 @@ import util from '../../common/util'
 let RecommendAll = React.createClass({
     getInitialState () {
         return {
-            isChecked: false
+            isChecked: false,
+            id: '',
+            entryTime: '',
+            showDate: false
         }
     },
     itemClickFn (router) {
@@ -19,6 +22,7 @@ let RecommendAll = React.createClass({
         let URL = '/job/platformInterview/transformToWaitingInterview'
         let formData = {}
         formData.id = id
+        formData.companyId = window.localStorage.getItem('memberId')
         postRequest(true, URL, formData).then((res) => {
             let code = res.code
             if (code === 0) {
@@ -63,19 +67,47 @@ let RecommendAll = React.createClass({
     },
     // 已面试---点击发送入职邀请
     finishInterviewS (id) {
-        let _th = this
-        let URL = '/job/platformInterview/entryInvitation'
-        let formData = {}
-        formData.id = id
-        postRequest(true, URL, formData).then((res) => {
-            let code = res.code
-            if (code === 0) {
-                message.success('发送邀请成功!')
-                _th.props.reqDataSouce()
-            } else {
-                message.error(res.message)
-            }
+        let {showDate} = this.state
+        this.setState({
+            id: id,
+            showDate: !showDate
         })
+    },
+    hideDateFn () {
+        let {showDate} = this.state
+        this.setState({
+            showDate: !showDate
+        })
+    },
+    onFormDateChange (date, dateStrings) {
+        this.setState({
+            entryTime: dateStrings
+        })
+    },
+    handleOk () {
+        let {id, entryTime, showDate} = this.state
+        let _th = this
+        if (entryTime === '') {
+            message.warning('请选择入职日期')
+        } else {
+            let URL = '/job/platformInterview/entryInvitation'
+            let formData = {}
+            formData.id = id
+            formData.entryTime = entryTime
+            postRequest(true, URL, formData).then((res) => {
+                let code = res.code
+                if (code === 0) {
+                    message.success('发送邀请成功!')
+                    _th.props.reqDataSouce()
+                } else {
+                    message.error(res.message)
+                }
+            })
+            this.setState({
+                id: '',
+                showDate: !showDate
+            })
+        }
     },
     // 已面试---点击不合适
     improper (id) {
@@ -122,6 +154,7 @@ let RecommendAll = React.createClass({
             })
         } else {
             postRequest(true, URL, formData).then((res) => {
+                console.log(res)
                 let code = res.code
                 if (code === 0) {
                     message.success('状态更新成功!')
@@ -133,7 +166,9 @@ let RecommendAll = React.createClass({
         }
     },
     render () {
+        let {showDate} = this.state
         let {dataSource, pageSizeTotal, curPagination, pageSizePer} = this.props
+        // dataSource = [{state: 1}, {state: 2}, {state: 3}, {state: 4}, {state: 5}, {state: 6}, {state: 7}, {state: 8}, {state: 9}, {state: 10}, {state: 11}, {state: 12}, {state: 13}, {state: 14}, {state: 15}]
         let {isChecked} = this.state
         return (
             <div className={dataSource.length === 0 ? 'RecommendAll nullContent' : 'RecommendAll'}>
@@ -147,7 +182,7 @@ let RecommendAll = React.createClass({
                                     <div className='onLine' onClick={() => this.sendInvite(v.id)}>同意面试</div>
                                     <div className='noGood' onClick={() => this.rejectSendInvite(v.id)}>拒绝面试</div>
                                 </div> : null}
-                                {v.state === 2 ? <div>
+                                {v.state === 2 || v.state === 3 ? <div>
                                     <div className='onLine' onClick={() => this.finishInterview(v.id)}>完成面试</div>
                                     <div className='noGood' onClick={() => this.itemClickFn(`chatWindow?id=${v.fromMemberId}&name=${v.hrName}&headUrl=${v.personHeadUrl}&positionId=${v.positionId}`)}>联系推荐人</div>
                                 </div> : null}
@@ -165,6 +200,30 @@ let RecommendAll = React.createClass({
                                     {util.timeDifference(v.entryTime) + 1 >= 4 ? null : <div className='onLine'>考核{util.timeDifference(v.entryTime) + 1}天</div>}
                                     {util.timeDifference(v.entryTime) + 1 >= 4 || isChecked ? <div className='noGood unGood'>考核期已过</div> : <div className='noGood' onClick={() => this.entryImproper(v)}>已离职</div>}
                                 </div> : null}
+                                {v.state === 11 ? <div>
+                                    <div className='outline'>已拒绝面试</div>
+                                </div> : null}
+                                {v.state === 12 ? <div>
+                                    <div className='outline'>取消面试</div>
+                                </div> : null}
+                                {v.state === 9 ? <div>
+                                    <div className='outline'>未面试</div>
+                                </div> : null}
+                                {v.state === 8 ? <div>
+                                    <div className='outline'>面试不合适</div>
+                                </div> : null}
+                                {v.state === 15 ? <div>
+                                    <div className='outline'>放弃等待面试结果</div>
+                                </div> : null}
+                                {v.state === 10 ? <div>
+                                    <div className='outline'>未入职</div>
+                                </div> : null}
+                                {v.state === 13 ? <div>
+                                    <div className='outline'>拒绝入职邀请</div>
+                                </div> : null}
+                                {v.state === 14 ? <div>
+                                    <div className='outline'>已离职</div>
+                                </div> : null}
                             </div>
                         </div>
                     )
@@ -176,6 +235,25 @@ let RecommendAll = React.createClass({
                             <Pagination current={curPagination} total={pageSizeTotal} pageSize={pageSizePer} size='large' onChange={this.props.paginationChange}/>
                       </div>
                 }
+                <Modal className='auditionModal'
+                       title='选择入职日期'
+                       visible={showDate}
+                       onCancel={this.hideDateFn}
+                       onOk={this.handleOk}
+                       footer={[
+                           <Button key="back" type="ghost" size="large" onClick={this.hideDateFn}>取 消</Button>,
+                           <Button key="submit" type="primary" size="large" onClick={this.handleOk} style={{background: '#25ccf6', border: '1px solid #25ccf6'}}>
+                               发送入职邀请
+                           </Button>
+                       ]}>
+                    <div className='dateMain'>
+                        <DatePicker size='large'
+                                    placeholder="请选择入职日期"
+                                    onChange={this.onFormDateChange}
+                                    format={'YYYY-MM-DD'}
+                                    style={{width: '200px'}}/>
+                    </div>
+                </Modal>
             </div>
         )
     }

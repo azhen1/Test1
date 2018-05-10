@@ -65,8 +65,9 @@ let Information = React.createClass({
     render () {
         let {contPagination, current, historyMessage, pageSize, messageTotal} = this.state
         return (
-            <div className='Information'>
-                <div className='content'>
+            <div className='Information' style={historyMessage.length === 0 ? {height: '100%'} : {minHeight: 'calc(~"100% + 10px")'}}>
+                <div className={historyMessage.length === 0 ? 'content nullContent' : 'content'} style={historyMessage.length === 0 ? {height: '100%', backgroundColor: '#fff'} : {minHeight: 'calc(~"100% + 10px")'}}>
+                    {historyMessage.length === 0 ? <div className='zanWU'>暂无消息</div> : null}
                     {historyMessage.length !== 0 && historyMessage.map((v, index) => {
                         return (
                             <div className='itemBox' key={index} onClick={() => this.setReaded(v.id)}>
@@ -81,7 +82,7 @@ let Information = React.createClass({
                         )
                     })}
                     {
-                        historyMessage === null
+                        historyMessage.length === 0
                             ? null
                             : <div className='nameClsPagination'>
                                 <Pagination total={messageTotal} current={current} pageSize={pageSize} onChange={this.onPaginChange}/>

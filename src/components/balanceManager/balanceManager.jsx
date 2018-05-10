@@ -53,7 +53,7 @@ let BalanceManager = React.createClass({
             curPage: val
         })
     },
-    // 当前用户余额明细
+    // 当前金额；冻结金额；待入职；待面试
     reqDataTotleList () {
         let URL = 'job/platformInterview/moneyRecordAndCompanyInfo'
         let _th = this
@@ -71,7 +71,7 @@ let BalanceManager = React.createClass({
             }
         })
     },
-    // 当前金额；冻结金额；待入职；待面试
+    // 当前用户余额明细
     reqDataFn () {
         let memberId = localStorage.getItem('memberId')
         let URL = 'member/platformMemberMoneyRecord/queryByPage'
@@ -153,8 +153,8 @@ let BalanceManager = React.createClass({
             })
             return false
         }
-        if (val < 0) {
-            message.warning('充值金额必须大于1000!')
+        if (val < 1000) {
+            message.warning('充值金额最少为1000!')
             this.setState({
                 chongZhiPay: ''
             })
@@ -267,12 +267,12 @@ let BalanceManager = React.createClass({
                         </div>
                         <div className='detail'>
                             <div className='search'>
-                            <span className='detailBalance'>
-                                余额明细
-                            </span>
+                                <span className='detailBalance'>
+                                    余额明细
+                                </span>
                                 <span className='date'>
-                                日期
-                            </span>
+                                    日期
+                                </span>
                                 <RangePicker onChange={this.onDateChange} size='large'/>
                                 <Select placeholder='分类' style={{width: '128px', marginRight: '10px'}}
                                         value={searchList.resourceType}
@@ -312,39 +312,49 @@ let BalanceManager = React.createClass({
                         </div>
                     </div> : null}
                     {curPage === 'rechargePage' ? <div className='rechargePage'>
-                        <a className='backBox' onClick={() => this.togglePage('manager')}></a>
-                        <div className='title'>
-                            <span className='c_count'>充值金额</span>
-                            <span className='c_type'>目前仅支持支付宝</span>
+                        <div className='backpageMain'>
+                            <a className='backBox' onClick={() => this.togglePage('manager')}></a>
                         </div>
-                        <form action="https://api.jingpipei.com/member/ali/webPay" method='post'>
-                            <div className='ipt'>
-                                <Input onBlur={this.onChongZhiBlur} value={chongZhiPay} onChange={this.onChongZhiChange} name='totalMoney' autoComplete='off'/>
+                        <div className="rechargePageMain">
+                            <div className='title'>
+                                <span className='c_count'>充值金额</span>
+                                <span className='c_type'>目前仅支持支付宝</span>
                             </div>
-                            <input value='充值' name='subject' style={{display: 'none'}}/>
-                            <input value={memberId} name='memberId' style={{display: 'none'}}/>
-                            <div className='qiChong'>
-                                1000起冲
-                            </div>
-                            <div className='confirm'>
-                                {chongZhiPay === '' ? <span onClick={this.onChongZhi}>确认充值</span> : <input type="submit" value="确认充值" />}
-                            </div>
-                        </form>
+                            {/* https://api.jingpipei.com/member/ali/webPay */}
+                            {/* http://116.62.136.23 */}
+                            <form action="https://api.jingpipei.com/member/ali/webPay" method='post'>
+                                <div className='ipt'>
+                                    <Input onBlur={this.onChongZhiBlur} value={chongZhiPay} onChange={this.onChongZhiChange} name='totalMoney' autoComplete='off'/>
+                                </div>
+                                <input value='充值' name='subject' style={{display: 'none'}}/>
+                                <input value={memberId} name='memberId' style={{display: 'none'}}/>
+                                <div className='qiChong'>
+                                    1000起冲
+                                </div>
+                                <div className='confirm'>
+                                    {chongZhiPay === '' ? <span onClick={this.onChongZhi}>确认充值</span> : <input type="submit" value="确认充值" />}
+                                </div>
+                            </form>
+                        </div>
                     </div> : null}
                     {curPage === 'refundPage' ? <div className='refundPage'>
-                        <a className='backBox' onClick={() => this.togglePage('manager')}></a>
-                        <div className='title'>
-                            <span className='c_count'>退款金额</span>
+                        <div className='backpageMain'>
+                            <a className='backBox' onClick={() => this.togglePage('manager')}></a>
                         </div>
-                        <div className='iptRefund'>
-                            <Input onBlur={this.onDrawbackBlur} value={drawbackPay} onChange={this.onDrawbackChange}/>
-                        </div>
-                        <div className='iptRefund iptRefund1'>
-                            <span className='c_count'>退款账号</span>
-                            <Input value={drawbackZhanghao} onChange={this.zhangHaoChange}/>
-                        </div>
-                        <div className='confirm'>
-                            <span onClick={this.onDrawback}>申请退款</span>
+                        <div className='refundPageMain'>
+                            <div className='title'>
+                                <span className='c_count'>退款金额</span>
+                            </div>
+                            <div className='iptRefund'>
+                                <Input onBlur={this.onDrawbackBlur} value={drawbackPay} onChange={this.onDrawbackChange}/>
+                            </div>
+                            <div className='iptRefund iptRefund1'>
+                                <span className='c_count'>退款账号</span>
+                                <Input value={drawbackZhanghao} onChange={this.zhangHaoChange}/>
+                            </div>
+                            <div className='confirm'>
+                                <span onClick={this.onDrawback}>申请退款</span>
+                            </div>
                         </div>
                     </div> : null}
                 </div>

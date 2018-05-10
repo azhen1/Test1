@@ -12,7 +12,7 @@ const TabPane = Tabs.TabPane
 let PositionManager = React.createClass({
     getInitialState () {
         return {
-            curTab: window.location.hash.indexOf('newSkip=true') === -1 ? '1' : '0',
+            curTab: sessionStorage.getItem('positionTab') ? sessionStorage.getItem('positionTab') : '1',
             dataSouce: [],
             paginationTotal: 0,
             cruPagination: 1,
@@ -21,6 +21,7 @@ let PositionManager = React.createClass({
         }
     },
     onTabChange (val) {
+        sessionStorage.setItem('positionTab', val)
         this.setState({
             curTab: val,
             dataSouce: [],
@@ -41,15 +42,13 @@ let PositionManager = React.createClass({
     componentDidMount () {
         this._isMounted = true
         let memberId = localStorage.getItem('memberId')
+        let curTab = sessionStorage.getItem('positionTab') ? sessionStorage.getItem('positionTab') : this.state.curTab
         this.setState({
-            memberId: memberId
-        })
-        let hash = window.location.hash
-        if (hash.indexOf('newSkip=true') !== -1) {
-            this.onTabChange('0')
-        } else {
+            memberId: memberId,
+            curTab: curTab
+        }, () => {
             this.reqDataSouce()
-        }
+        })
     },
     itemClickFn (router) {
         window.location.hash = router

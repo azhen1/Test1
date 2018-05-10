@@ -1,6 +1,7 @@
 import React from 'react'
 import addressData from '../../../common/area'
 import './commonTpl.less'
+import defaultHeadImg from '../../../images/default_head.png'
 
 let CommonTpl = React.createClass({
     itemClickFn (router) {
@@ -27,12 +28,31 @@ let CommonTpl = React.createClass({
         }
         return result
     },
+    isNull (val) {
+        return val === '' || val === null || val === undefined
+    },
+    convertDate (date) {
+        date = date.replace(/-/g, '/').slice(0, 10)
+        return date
+    },
+    convertSeconds (date) {
+        date = date.replace(/-/g, '/').slice(0, 16)
+        return date
+    },
+    // 判断图片地址是否为空
+    hasLogoPic (logoPic) {
+        if (logoPic === undefined || logoPic === null || logoPic === '') {
+            return true
+        } else {
+            return false
+        }
+    },
     render () {
         let {itemData} = this.props
         let imgsURL = 'http://dingyi.oss-cn-hangzhou.aliyuncs.com/images/'
         return (
             <div className='tplClass'>
-                <div className='imgBox'><img src={`${imgsURL}${itemData.personHeadUrl}`} alt="" className='pic'/></div>
+                <div className='imgBox'><img src={this.hasLogoPic(itemData.personHeadUrl) ? defaultHeadImg : `${imgsURL}${itemData.personHeadUrl}`} alt="" className='pic' /></div>
                 <div className='tplCont'>
                     <div className='top'>
                         <div className='showPeople'>
@@ -63,6 +83,7 @@ let CommonTpl = React.createClass({
                         <div className='place'>
                             <div className='placeTil'>
                                 {itemData.positionTitle}
+                                {itemData.free === true ? <i>免费职位</i> : null}
                             </div>
                             <div className='basicInfo'>
                                     {this.cityTextFn(itemData.positionProvince, itemData.positionCity) ? <span>{this.cityTextFn(itemData.positionProvince, itemData.positionCity)}</span> : null}
@@ -84,6 +105,7 @@ let CommonTpl = React.createClass({
                             <span className='icon'></span>
                             联系推荐人：{itemData.hrName}
                         </span>
+                        {this.isNull(itemData.entryTime) ? <span className='entryTimeSpan'>{this.convertSeconds(itemData.arriveTime)} 面试</span> : <span className='entryTimeSpan'>{this.convertDate(itemData.entryTime)} 入职</span>}
                     </div>
                 </div>
             </div>

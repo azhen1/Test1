@@ -80,6 +80,7 @@ let BusinessEdit = React.createClass({
             infolist.serviceByBis = businssInfoAllInfo.mainBusiness
             certiState = businssInfoAllInfo.state
             curDesHtml = businssInfoAllInfo.signature
+            console.log(businssInfoAllInfo)
             this.setState({
                 logoPic: businssInfoAllInfo.logoPic,
                 infolist: infolist,
@@ -93,6 +94,7 @@ let BusinessEdit = React.createClass({
             certiState = businssInfoAllInfo.state
             this.setState({
                 infolist: infolist,
+                curDesHtml: curDesHtml,
                 certiState: certiState
             })
         }
@@ -287,7 +289,6 @@ let BusinessEdit = React.createClass({
                 result = v.response.data
             }
         })
-        console.log(fileList)
         this.setState({
             fileListIcon: fileList,
             logoPic: result
@@ -475,8 +476,8 @@ let BusinessEdit = React.createClass({
                 } else {
                     result += `${v.response.data};`
                 }
-            } else if (v.hasOwnProperty('url')) {
-                let newUrl = v.url.split('/')[2]
+            } else if (v.hasOwnProperty('name')) {
+                let newUrl = v.name
                 result += `${newUrl};`
             }
         })
@@ -656,15 +657,16 @@ let BusinessEdit = React.createClass({
             hasSave: true
         }, () => {
             let {infolist, logoPic, environmentPic} = this.state
+            console.log(environmentPic)
             let formData = {}
             let memberId = window.localStorage.getItem('memberId')
             let isNull = false
             for (var v in infolist) {
-                if (infolist[v] === '') {
+                if (infolist[v] === '' || infolist[v] === null) {
                     isNull = true
                 }
             }
-            if (logoPic === '') {
+            if (logoPic === '' || logoPic === null) {
                 isNull = true
             }
             if (isNull) {
@@ -692,6 +694,7 @@ let BusinessEdit = React.createClass({
             let code = res.code
             if (code === 0) {
                 message.success('保存成功!')
+                window.localStorage.setItem('hasChangeCompany', 'true')
                 _th.props.reqBusinssInfoAllInfo(memberId)
                 _th.setState({
                     hasClickEdit: false,
@@ -813,18 +816,20 @@ let BusinessEdit = React.createClass({
     // 当月录用率；简历及时处理率转化
     radiosToggle (val) {
         val = parseFloat(val)
-        val = val.toFixed(2) * 100
+        val = (val.toFixed(2) * 100).toFixed(0)
         return val
     },
     onEditClick () {
         let {fileListIcon, logoPic, environmentPicsList, fileList} = this.state
         let imgsURL = 'http://dingyi.oss-cn-hangzhou.aliyuncs.com/images/'
-        fileListIcon.push({
-            url: `${imgsURL}${logoPic}`,
-            name: logoPic,
-            status: 'done',
-            uid: `-${Math.random() * 100}`
-        })
+        if (logoPic !== '' && logoPic !== null) {
+            fileListIcon.push({
+                url: `${imgsURL}${logoPic}`,
+                name: logoPic,
+                status: 'done',
+                uid: `-${Math.random() * 100}`
+            })
+        }
         let hasKong = false
         for (var v in environmentPicsList) {
             if (environmentPicsList[v] === '') {
@@ -844,7 +849,8 @@ let BusinessEdit = React.createClass({
         this.setState({
             hasClickEdit: true,
             fileListIcon: fileListIcon,
-            environmentPicsList: environmentPicsList
+            environmentPicsList: environmentPicsList,
+            fileList: fileList
         }, () => {
             this.props.countAddFn()
         })
@@ -896,7 +902,7 @@ let BusinessEdit = React.createClass({
             </div>
         )
         let TextAreaStyle = {width: '500px', height: '80px', backgroundColor: '#E6F5FF'}
-        let selectStyle = {marginRight: '10px', width: '160px'}
+        let selectStyle = {marginRight: '10px', width: '120px'}
         let imgsURL = 'http://dingyi.oss-cn-hangzhou.aliyuncs.com/images/'
         return (
             <div className='BusinessEdit'>
@@ -945,7 +951,7 @@ let BusinessEdit = React.createClass({
                     </span>
                     <span>
                         <div className='count'>{`${this.radiosToggle(tongJiList.entryRatio ? tongJiList.entryRatio : 0)}%`}</div>
-                        <div className='type'>当月录用率</div>
+                        <div className='type'>录用率</div>
                     </span>
                     <span>
                         <div className='count'>{`${this.radiosToggle(tongJiList.didRatio ? tongJiList.didRatio : 0)}%`}</div>
@@ -1113,6 +1119,7 @@ let BusinessEdit = React.createClass({
                                 <div className='oneItem' key={index}>
                                     <div className='jibType'>
                                         {v.title}
+                                        {v.free === true ? <i>免费职位</i> : null}
                                     </div>
                                     <div className='info'>
                                         {this.filterCityFn(v.province, v.city) ? <span>{this.filterCityFn(v.province, v.city)}</span> : null}

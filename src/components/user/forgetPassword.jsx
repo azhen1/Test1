@@ -13,7 +13,7 @@ const ForgetPassword = React.createClass({
                 phone: '',
                 imageHtml: '',
                 phoneHtml: '',
-                frist: '',
+                first: '',
                 second: ''
             },
             hasSubmit: false,
@@ -116,7 +116,7 @@ const ForgetPassword = React.createClass({
             let hasNull = false
             let formData = {}
             for (let k in formList) {
-                if (formList[k] === '' && k !== 'frist' && k !== 'second') {
+                if (formList[k] === '' && k !== 'first' && k !== 'second') {
                     hasNull = true
                 }
             }
@@ -245,14 +245,13 @@ const ForgetPassword = React.createClass({
             hasSubmit: true
         }, () => {
             let {formList} = this.state
-            if (formList.frist === '' || formList.second === '') {
-                message.warning('请填写完整密码！')
+            if (formList.first === '' || this.passwordVerifyFail('first') || formList.second === '' || this.passwordVerifyFail('second')) {
                 return false
             }
-            if (formList.frist !== formList.second) {
+            if (formList.first !== formList.second) {
                 message.warning('您两次输入的密码不相等，请重新输入！')
                 return false
-            } else if (formList.frist === formList.second && formList.frist !== '' && formList.second !== '') {
+            } else if (formList.first === formList.second && formList.first !== '' && formList.second !== '') {
                 let formData = {}
                 formData.mobile = formList.phone
                 formData.code = formList.phoneHtml
@@ -260,6 +259,17 @@ const ForgetPassword = React.createClass({
                 this.reqRenameLogin(formData)
             }
         })
+    },
+    // 密码正则验证 密码必须为数字与字母组合长度8-16个字符
+    passwordVerifyFail (type) {
+        let {formList, hasSubmit} = this.state
+        let val = formList[type]
+        let reg = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,16}$/
+        if (hasSubmit && !reg.test(val)) {
+            return true
+        } else {
+            return false
+        }
     },
     // 重置密码接口
     reqRenameLogin (formData) {
@@ -279,7 +289,7 @@ const ForgetPassword = React.createClass({
         let {formList} = this.state
         let val = e.target.value
         if (val !== '') {
-            let reg = /^1[3|4|5|7|8][0-9]{9}$/
+            let reg = /^1[3|4|5|7|8|9][0-9]{9}$/
             if (!reg.test(val)) {
                 message.warning('请输入合法的电话号码')
                 formList.phone = ''
@@ -342,9 +352,7 @@ const ForgetPassword = React.createClass({
                                 {this.hasBorderFn('proving_login') ? <div className='phoneProving formItem'>
                                     <span className='icon'></span>
                                     <Input placeholder="请输入手机验证码" onChange={(e) => this.formChange(e, 'phoneHtml')} key={curKey} value={formList.phoneHtml}/>
-                                    <span className={countDownToggle ? 'obtain activeCount' : 'obtain'} onClick={this.obtainFn}>
-                                {countDownToggle ? `已发送(${defCount})秒` : again ? '重新发送' : '获取验证码'}
-                            </span>
+                                    {countDownToggle ? <span className='obtain activeCount'>{`已发送(${defCount})秒`}</span> : again ? <span className='obtain' onClick={this.obtainFn}>重新发送</span> : <span className='obtain' onClick={this.obtainFn}>获取验证码</span>}
                                 </div> : null}
                                 {this.isNullFn('phoneHtml') ? <div className='nullTest'>
                                     {nullIcon}请输入手机验证码
@@ -353,17 +361,21 @@ const ForgetPassword = React.createClass({
                             {typeActive === 'password_login' ? <div>
                                 <div className='rePassWord phoneProving formItem'>
                                     <span className='icon'></span>
-                                    <Input placeholder="输入新密码" onChange={(e) => this.formChange(e, 'frist')} key={curKey} value={formList.frist} />
+                                    <Input placeholder="输入新密码" onChange={(e) => this.formChange(e, 'first')} key={curKey} value={formList.first} />
                                 </div>
-                                {this.isNullFn('frist') ? <div className='nullTest'>
-                                    {nullIcon}密码长度必须大于6位
+                                {this.isNullFn('first') ? <div className='nullTest'>
+                                    {nullIcon}请输入新密码
+                                </div> : this.passwordVerifyFail('first') ? <div className='nullTest'>
+                                    {nullIcon}密码必须为数字与字母组合长度8-16个字符
                                 </div> : null}
                                 <div className='rePassWord phoneProving formItem'>
                                     <span className='icon'></span>
                                     <Input placeholder="再次输入新密码" onChange={(e) => this.formChange(e, 'second')} key={curKey} value={formList.second} />
                                 </div>
                                 {this.isNullFn('second') ? <div className='nullTest'>
-                                    {nullIcon}密码长度必须大于6位
+                                    {nullIcon}请再次输入新密码
+                                </div> : this.passwordVerifyFail('second') ? <div className='nullTest'>
+                                    {nullIcon}密码必须为数字与字母组合长度8-16个字符
                                 </div> : null}
                             </div> : null}
                             <div className='forget'></div>

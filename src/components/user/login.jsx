@@ -1,6 +1,6 @@
 import React from 'react'
 import {Input, Button, message, Icon} from 'antd'
-import {Link} from 'react-router'
+import {Link, browserHistory} from 'react-router'
 import {getRequest, postRequest} from '../../common/ajax'
 import Base64 from '../../common/base64Decode'
 import yiHuoFn from '../../common/yiHuoFn'
@@ -29,6 +29,29 @@ const Login = React.createClass({
             userName: '',
             userPosition: '',
             logoPic: ''
+        }
+    },
+    componentWillMount () {
+        this.checkUuid()
+    },
+    checkUuid () {
+        let sessionUuid = window.localStorage.getItem('sessionUuid')
+        let memberId = window.localStorage.getItem('memberId')
+        let URL = 'member/company/uuidCheck'
+        let formData = {}
+        let _th = this
+        if (this.isNull(sessionUuid) || this.isNull(memberId)) {
+            _th.setState({
+                hasUser: false
+            })
+        } else {
+            formData.uuid = sessionUuid
+            postRequest(false, URL, formData).then(function (res) {
+                let code = res.code
+                if (code === 0) {
+                    window.location.hash = 'jcWebsite'
+                }
+            })
         }
     },
     // 电话号码加密处理，先异或，再base64转码
@@ -172,8 +195,8 @@ const Login = React.createClass({
                 let data = res.data
                 let state = res.data.state
                 let uuid = data.uuid
-                window.localStorage.setItem('sessionUuid', uuid)
                 if (state === 0) {
+                    window.localStorage.setItem('sessionUuid', uuid)
                     message.error('您的账号还未提交企业认证，请提交审核！')
                     window.location.hash = `certification?memberId=${data.memberId}`
                     return false
@@ -181,6 +204,7 @@ const Login = React.createClass({
                     message.success('您的账号还在审核中，请耐心等待!')
                     return false
                 } else if (state === 2) {
+                    window.localStorage.setItem('sessionUuid', uuid)
                     message.success('您的账号审核失败，请重新提交审核!')
                     window.location.hash = `certification?memberId=${data.memberId}`
                     return false
@@ -292,7 +316,7 @@ const Login = React.createClass({
         let {formList} = this.state
         let val = e.target.value
         if (val !== '') {
-            let reg = /^1[3|4|5|7|8][0-9]{9}$/
+            let reg = /^1[3|4|5|7|8|9][0-9]{9}$/
             if (!reg.test(val)) {
                 message.warning('请输入合法的电话号码')
                 formList.phone = ''
@@ -312,6 +336,13 @@ const Login = React.createClass({
     },
     componentWillUnmount () {
         this._isMounted = false
+    },
+    isNull (val) {
+        let result = false
+        if (val === undefined || val === null || val === '') {
+            result = true
+        }
+        return result
     },
     render () {
         let {curKey, formList, countDownToggle, defCount, again, picBase64} = this.state
@@ -358,9 +389,7 @@ const Login = React.createClass({
                                 <div className='phoneProving formItem'>
                                     <span className='icon'></span>
                                     <Input placeholder="请输入手机验证码" onChange={(e) => this.formChange(e, 'phoneHtml')} key={curKey} value={formList.phoneHtml}/>
-                                    <span className={countDownToggle ? 'obtain activeCount' : 'obtain'} onClick={this.obtainFn}>
-                                    {countDownToggle ? `已发送(${defCount})秒` : again ? '重新发送' : '获取验证码'}
-                                </span>
+                                    {countDownToggle ? <span className='obtain activeCount'>{`已发送(${defCount})秒`}</span> : again ? <span className='obtain' onClick={this.obtainFn}>重新发送</span> : <span className='obtain' onClick={this.obtainFn}>获取验证码</span>}
                                 </div>
                                     {this.isNullFn('phoneHtml') ? <div className='nullTest'>
                                     {nullIcon}请输入手机验证码
@@ -372,7 +401,7 @@ const Login = React.createClass({
                                     <Input placeholder="输入密码" type="password" onChange={(e) => this.formChange(e, 'passWord')} key={curKey} value={formList.passWord} autoComplete="new-password" />
                                 </div>
                                 {this.isNullFn('passWord') ? <div className='nullTest'>
-                                    {nullIcon}密码长度必须大于6位
+                                    {nullIcon}请输入密码
                                     </div> : null}
                             </div> : null}
                             <div className='forget'><Link to="/forget">{this.hasBorderFn('password_login') ? '忘记密码？' : ''}</Link></div>

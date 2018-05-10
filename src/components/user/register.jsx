@@ -26,7 +26,7 @@ const Register = React.createClass({
             picBase64: '',
             captchaCode: '',
             memberId: '',
-            isShowModal: false
+            isShowModal: true
         }
     },
     componentDidMount () {
@@ -52,13 +52,6 @@ const Register = React.createClass({
     formChange (e, type) {
         let val = e.target.value
         let {formList} = this.state
-        // if (type === 'passWord') {
-        // val = val.split('')
-        // val.forEach((v, index) => {
-        // val[index] = '*'
-                    // })
-        // val = val.join('')
-        // }
         formList[type] = val
         this.setState({
             formList: {...formList}
@@ -88,12 +81,6 @@ const Register = React.createClass({
         }, () => {
             let {formList} = this.state
             let hasNull = false
-            // let values = Object.values(formList)
-            // values.map((v, index) => {
-            //     if (v === '') {
-            //         hasNull = true
-            //     }
-            // })
             for (var v in formList) {
                 if (formList[v] === '') {
                     hasNull = true
@@ -232,8 +219,9 @@ const Register = React.createClass({
     phoneIntBlur (e) {
         let {formList} = this.state
         let val = e.target.value
+        let _th = this
         if (val !== '') {
-            let reg = /^1[3|4|5|7|8][0-9]{9}$/
+            let reg = /^1[3|4|5|7|8|9][0-9]{9}$/
             if (!reg.test(val)) {
                 message.warning('请输入合法的电话号码')
                 formList.phone = ''
@@ -241,11 +229,37 @@ const Register = React.createClass({
                     formList: formList
                 })
             } else {
-                formList.phone = val
-                this.setState({
-                    formList: formList
+                let URL = 'member/platformMember/mobileIsExist'
+                let formData = {
+                    mobile: val
+                }
+                getRequest(true, URL, formData).then(function (res) {
+                    if (res.code === 0) {
+                        if (res.data.isExist) {
+                            message.warning('该手机号已经注册，请直接登录')
+                            formList.phone = ''
+                        } else {
+                            formList.phone = val
+                        }
+                        _th.setState({
+                            formList: formList
+                        })
+                    } else {
+                        message.warning(res.message)
+                    }
                 })
             }
+        }
+    },
+    // 密码正则验证 密码必须为数字与字母组合长度8-16个字符
+    passwordVerify () {
+        let {formList, hasSubmit} = this.state
+        let val = formList.passWord
+        let reg = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,16}$/
+        if (hasSubmit && !reg.test(val)) {
+            return true
+        } else {
+            return false
         }
     },
     // '发送验证码' 交互验证
@@ -295,9 +309,7 @@ const Register = React.createClass({
                             {this.hasBorderFn('proving_login') ? <div className='phoneProving formItem'>
                                 <span className='icon'></span>
                                 <Input placeholder="请输入手机验证码" onChange={(e) => this.formChange(e, 'phoneHtml')} key={curKey} value={formList.phoneHtml}/>
-                                <span className={this.isToggleFn() ? 'obtain activeCount' : 'obtain'} onClick={this.obtainFn}>
-                                {this.isToggleFn() ? `已发送(${defCount})秒` : again ? '重新发送' : '获取验证码'}
-                            </span>
+                                {this.isToggleFn() ? <span className='obtain activeCount'>{`已发送(${defCount})秒`}</span> : again ? <span className='obtain' onClick={this.obtainFn}>重新发送</span> : <span className='obtain' onClick={this.obtainFn}>获取验证码</span>}
                             </div> : null}
                             {this.isNullFn('phoneHtml') ? <div className='nullTest'>
                                 {nullIcon}请输入手机验证码
@@ -307,7 +319,9 @@ const Register = React.createClass({
                                 <Input placeholder="设置密码" onChange={(e) => this.formChange(e, 'passWord')} key={curKey} value={formList.passWord} />
                             </div>
                             {this.isNullFn('passWord') ? <div className='nullTest'>
-                                {nullIcon}密码长度必须大于6位
+                                {nullIcon}请输入密码
+                            </div> : this.passwordVerify() ? <div className='nullTest'>
+                                {nullIcon}密码必须为数字与字母组合长度8-16个字符
                             </div> : null}
                             <div className='forget'></div>
                             <div className='submit'>

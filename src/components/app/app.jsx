@@ -1,11 +1,13 @@
 import React from 'react'
 import $ from 'jquery'
+import ShadowCode from '../layout/shadowCode'
 import Header from '../layout/Header'
 import ChatWindow from '../chatWindow/chatWindow'
 import Information from '../information/information'
+import BusinessInfo from '../businessInfo/businessInfo'
 import Tab from '../layout/tab'
 import './app.less'
-import {postRequest} from '../../common/ajax'
+import {getRequest, postRequest} from '../../common/ajax'
 import {message} from 'antd'
 
 const App = React.createClass({
@@ -16,10 +18,14 @@ const App = React.createClass({
             memberId: '',
             socket: '',
             historyMessage: [],
+            pageSize: 20,
             messageTotal: 0,
             historyChat: {},
             hasInfo: false,
-            friendList: []
+            friendList: [],
+            dataList: {},
+            isSend: false,
+            hasLogin: false
         }
     },
     // 判断当前页面是否是系统消息页面
@@ -44,11 +50,24 @@ const App = React.createClass({
         }
         return result
     },
+    // 判断当前页面是否是企业信息页面
+    isBusinessInfoFn () {
+        let hash = window.location.hash
+        let result = false
+        if (hash.indexOf('businessInfo') !== -1) {
+            result = true
+        } else {
+            result = false
+        }
+        return result
+    },
     componentWillMount () {
+        let {pageSize} = this.state
         let sessionUuid = window.localStorage.getItem('sessionUuid')
         let memberId = window.localStorage.getItem('memberId')
         let URL = 'member/company/uuidCheck'
         let formData = {}
+        let _th = this
         if (sessionUuid === null) {
             window.location.hash = '/login'
         } else {
@@ -58,18 +77,56 @@ const App = React.createClass({
                 if (code !== 0) {
                     window.location.hash = '/login'
                     message.warning('登录超时，请重新登录!')
+                    _th.setState({
+                        hasLogin: false
+                    })
+                } else if (code === 0) {
+                    _th.reqBusinssInfoAllInfo(memberId)
+                    // 正式
+                    window.Socket = new WebSocket(`ws://47.97.115.140:8090/chat/websocket?token=${sessionUuid}`)
+                    // 测试
+                    // window.Socket = new WebSocket(`ws://116.62.61.25:8090/chat/websocket?token=${sessionUuid}`)
+                    let hash = window.location.hash
+                    let data = {to: memberId, pageNo: 1, pageSize: pageSize}
+                    window.Socket.onopen = function () {
+                        if (hash.indexOf('information') !== -1) {
+                            window.Socket.send(JSON.stringify(data))
+                        }
+                    }
+                    window.Socket.onmessage = _th.onMessageFn
+                    _th.setState({
+                        hasLogin: true
+                    })
                 }
             })
         }
-        window.Socket = new WebSocket(`ws://116.62.61.25:8090/chat/websocket?token=${sessionUuid}`)
-        let hash = window.location.hash
-        let data = {to: memberId, pageNo: 1, pageSize: 10}
-        window.Socket.onopen = function () {
-            if (hash.indexOf('information') !== -1) {
-                window.Socket.send(JSON.stringify(data))
+    },
+    // 查询公司所有信息
+    reqBusinssInfoAllInfo (memberId) {
+        let URL = 'member/company/getView'
+        let _th = this
+        let formData = {}
+        let {dataList} = this.state
+        formData.memberId = memberId
+        getRequest(true, URL, formData).then(function (res) {
+            let code = res.code
+            if (code === 0) {
+                let userName = res.data.userName
+                let companyName = res.data.name
+                let logoPic = res.data.logoPic
+                window.localStorage.setItem('userName', userName)
+                window.localStorage.setItem('companyName', companyName)
+                window.localStorage.setItem('logoPic', logoPic)
+                dataList.userName = userName
+                dataList.companyName = companyName
+                dataList.logoPic = logoPic
+                _th.setState({
+                    dataList: dataList
+                })
+            } else {
+                message.error(res.message)
             }
-        }
-        window.Socket.onmessage = this.onMessageFn
+        })
     },
     onMessageFn (res) {
         let _th = this
@@ -97,24 +154,6 @@ const App = React.createClass({
             } else {  // 推送聊天消息
                 this.onChatFn(data)
             }
-        } else if (data.hasOwnProperty('result')) {
-            // let messageId = data.id
-            // let toId = data.to
-            // let msgList = window.localStorage.getItem(`${memberId}_${toId}_MSG`)
-            // if (messageId !== null && toId !== null && msgList !== null) {
-            //     msgList = JSON.parse(msgList)
-            //     msgList.forEach((v, index) => {
-            //         if (v.id === messageId) {
-            //             if (data.result === 'SUCCESS') {
-            //                 v.status = '1'
-            //             } else {
-            //                 v.status = '0'
-            //             }
-            //             return
-            //         }
-            //     })
-            // }
-            // return data
         }
     },
     onChatFn (data) {
@@ -209,10 +248,11 @@ const App = React.createClass({
             let fromId = data.from
             let friendInfo = this.reqFriendFn(fromId)
             // 111----存储消息内容到好友会话
-            let target = JSON.parse(window.localStorage.getItem(`${memberId}_${fromId}_MSG`))
+            let target = window.localStorage.getItem(`${memberId}_${fromId}_MSG`)
             if (target !== null) {
-                target.push(data)
-                window.localStorage.setItem(`${memberId}_${fromId}_MSG`, JSON.stringify(target))
+                let friendMsg = JSON.parse(target)
+                friendMsg.push(data)
+                window.localStorage.setItem(`${memberId}_${fromId}_MSG`, JSON.stringify(friendMsg))
             } else {
                 window.localStorage.setItem(`${memberId}_${fromId}_MSG`, JSON.stringify([data]))
             }
@@ -342,10 +382,24 @@ const App = React.createClass({
         let memberId = window.localStorage.getItem('memberId')
         this.setState({
             count: ++this.state.count,
-            memberId: memberId
+            memberId: memberId,
+            isSend: false
         }, () => {
             this.scrollTopFn()
         })
+        this.timerFn()
+    },
+    // 定时器
+    timerFn () {
+        let _th = this
+        setInterval(function () {
+            let hasChange = window.localStorage.getItem('hasChangeCompany')
+            let memberId = window.localStorage.getItem('memberId')
+            if (hasChange === 'true') {
+                _th.reqBusinssInfoAllInfo(memberId)
+                window.localStorage.setItem('hasChangeCompany', 'false')
+            }
+        }, 700)
     },
     componentWillUnmount () {
         window.removeEventListener('hashchange', this.scrollTopFn, false)
@@ -354,8 +408,8 @@ const App = React.createClass({
         $(document).scrollTop(0)
     },
     render () {
-        let {noHeaderList, count, memberId, historyMessage, messageTotal, historyChat, friendList} = this.state
-        let propertyList = {historyMessage: historyMessage, historyChat: historyChat, reqFriendFn: this.reqFriendFn, memberId: memberId, messageTotal: messageTotal, friendList: friendList}
+        let {noHeaderList, count, memberId, historyMessage, messageTotal, historyChat, friendList, dataList, isSend, hasLogin} = this.state
+        let propertyList = {historyMessage: historyMessage, historyChat: historyChat, reqFriendFn: this.reqFriendFn, memberId: memberId, messageTotal: messageTotal, friendList: friendList, dataList: dataList, isSend: isSend}
         let currentHash = window.location.hash
         let isHeader = false
         noHeaderList.map((v, index) => {
@@ -365,11 +419,13 @@ const App = React.createClass({
         })
         return (
             <div className="App_object">
+                <ShadowCode></ShadowCode>
                 {/* <ChatWindow type='init' onInfoFn={this.onInfoFn}/> */}
-                <Header />
+                <Header {...propertyList}/>
                 <Tab />
-                {this.isInformationFn() ? <Information {...propertyList}/> : null}
-                {this.ischatWindowFn() ? <ChatWindow {...propertyList}/> : null}
+                {this.isInformationFn() && hasLogin ? <Information {...propertyList}/> : null}
+                {this.ischatWindowFn() && hasLogin ? <ChatWindow {...propertyList}/> : null}
+                {/* {this.isBusinessInfoFn() ? <BusinessInfo {...propertyList}/> : null} */}
                 {this.ischatWindowFn() || this.isInformationFn() ? null : this.props.children}
             </div>
         )

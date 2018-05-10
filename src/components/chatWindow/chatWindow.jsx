@@ -177,7 +177,6 @@ let ChatWindow = React.createClass({
                 toObj.name = name
                 toObj.headUrl = headUrl
                 window.localStorage.setItem(`FRIENDLIST_LIST_ITEM_${memberId}`, JSON.stringify(friendList))
-                console.log(toObj)
                 _th.setState({
                     toId: idTo,
                     toObj: toObj,
@@ -224,26 +223,29 @@ let ChatWindow = React.createClass({
     // 取历史对话记录
     historyChatRecod () {
         let {memberId, toId, magList} = this.state
-        let cache = window.localStorage.getItem(`${memberId}_${toId}_MSG`)
-        if (cache !== null) {
-            magList = [...JSON.parse(cache)]
-            this.setState({
-                magList: magList
-            }, () => {
-                let showChatDom = document.getElementById('showChatId')
-                if (showChatDom !== null) {
-                    showChatDom.scrollTop = showChatDom.scrollHeight
-                    this.setState({
-                        count: ++this.state.count
-                    })
-                }
-            })
-        } else {
-            this.setState({
-                magList: []
-            })
+        if (toId !== '') {
+            let cache = window.localStorage.getItem(`${memberId}_${toId}_MSG`)
+            if (cache !== null) {
+                magList = [...JSON.parse(cache)]
+                this.setState({
+                    magList: magList
+                })
+            } else {
+                this.setState({
+                    magList: []
+                })
+            }
         }
     },
+    componentDidUpdate () {
+        let showChatDom = document.getElementById('showChatId')
+        if (showChatDom !== null) {
+            let height = showChatDom.scrollHeight
+            let top = height
+            showChatDom.scrollTop = top
+        }
+    },
+    // mtype发送的消息类型 0=文本 1= 图片 2=音频 3=视频 4=简历 5=职位 10=名片
     onSendFn (mtype, imgUrl) {
         let {Socket, memberId, toId, magList, msg, toObj, fromObj} = this.state
         let date = util.getDateTimeStr(new Date())
@@ -252,7 +254,7 @@ let ChatWindow = React.createClass({
         let msgtype = mtype
         if (msgtype === '1') {
             let filepath = imgUrl
-            magNew = {id: `${toId} ${date}`, from: memberId, to: toId, msg: msg, filepath: filepath, type: 'online', timestamp: date, identity: '1', msgtype: msgtype, fromname: fromObj.name, fromportrait: fromObj.headUrl, toname: toObj.name, toportrait: toObj.headUrl}
+            magNew = {id: 'web', from: memberId, to: toId, msg: msg, filepath: filepath, type: 'online', timestamp: date, identity: '1', msgtype: msgtype, fromname: fromObj.name, fromportrait: fromObj.headUrl, toname: toObj.name, toportrait: toObj.headUrl}
             // console.log(magNew)
             Socket.send(JSON.stringify(magNew))
             magList.push(magNew)
@@ -260,17 +262,11 @@ let ChatWindow = React.createClass({
                 magList: magList
             }, () => {
                 window.localStorage.setItem(`${memberId}_${toId}_MSG`, JSON.stringify(magList))
-                let showChatDom = document.getElementById('showChatId')
-                showChatDom.scrollTop = showChatDom.scrollHeight
-                this.setState({
-                    count: ++this.state.count
-                })
             })
         } else {
             if (msg !== '') {
                 if (has) {
-                    magNew = {from: memberId, to: toId, msg: msg, type: 'online', timestamp: date, identity: '1', msgtype: msgtype, fromname: fromObj.name, fromportrait: fromObj.headUrl, toname: toObj.name, toportrait: toObj.headUrl}
-                    // console.log(magNew)
+                    magNew = {id: 'web', from: memberId, to: toId, msg: msg, type: 'online', timestamp: date, identity: '1', msgtype: msgtype, fromname: fromObj.name, fromportrait: fromObj.headUrl, toname: toObj.name, toportrait: toObj.headUrl}
                     Socket.send(JSON.stringify(magNew))
                     magList.push(magNew)
                     this.setState({
@@ -278,11 +274,6 @@ let ChatWindow = React.createClass({
                         msg: ''
                     }, () => {
                         window.localStorage.setItem(`${memberId}_${toId}_MSG`, JSON.stringify(magList))
-                        let showChatDom = document.getElementById('showChatId')
-                        showChatDom.scrollTop = showChatDom.scrollHeight
-                        this.setState({
-                            count: ++this.state.count
-                        })
                     })
                 } else {
                     this.setState({
@@ -344,23 +335,16 @@ let ChatWindow = React.createClass({
     },
     render () {
         let {memberId, magList, msg, friendList, toId, topId} = this.state
-        let {type} = this.props
         let propertyList = {toIdChangeFn: this.toIdChangeFn, onSendFn: this.onSendFn, sendPosition: this.sendPosition, msgChange: this.msgChange, memberId: memberId, magList: magList, msg: msg, toggleChat: this.toggleChat, friendList: friendList, goTop: this.goTop, deleteFriend: this.deleteFriend, toId: toId, topId: topId}
-        if (type !== 'init') {
-            return (
-                <div className='ChatWindow'>
-                    <div className={friendList.length > 0 ? 'content' : 'content contentNull'}>
-                        {friendList.length > 0 ? null : <div className='messageNulltext'>暂无消息</div>}
-                        {friendList.length > 0 ? <FriendTabList {...propertyList}/> : null}
-                        {friendList.length > 0 ? <RightWindow {...propertyList}/> : null}
-                    </div>
+        return (
+            <div className='ChatWindow'>
+                <div className={friendList.length > 0 ? 'content' : 'content contentNull'}>
+                    {friendList.length > 0 ? null : <div className='messageNulltext'>暂无消息</div>}
+                    {friendList.length > 0 ? <FriendTabList {...propertyList}/> : null}
+                    {friendList.length > 0 ? <RightWindow {...propertyList}/> : null}
                 </div>
-            )
-        } else {
-            return (
-                <div></div>
-            )
-        }
+            </div>
+        )
     }
 })
 

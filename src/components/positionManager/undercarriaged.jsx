@@ -23,15 +23,20 @@ let Undercarriaged = React.createClass({
                                 <ListItemTpl listItemArr={v} curTab={curTab}/>
                                 <div className='line'></div>
                                 <div className='operate_right'>
-                                    <div className='mianShi' style={{color: '#999999'}}>
-                                        <i style={styleList}>面试</i>
-                                        <span title={`${v.interviewBid}元`}>{`${v.interviewBid}元`}</span>
+                                    {v.free === true ? <div className='freeTag'>
+                                        <i style={{color: '#999999', background: 'rgba(235,235,235)'}}>免费职位</i>
+                                    </div> : <div>
+                                        <div className='mianShi' style={{color: '#999999'}}>
+                                            <i style={styleList}>面试</i>
+                                            <span title={`${v.interviewBid}元`}>{`${v.interviewBid}元`}</span>
+                                        </div>
+                                        <div className='entry' style={{color: '#999999'}}>
+                                            <i style={styleList}>入职</i>
+                                            <span title={`${v.entryBid}元`}>{`${v.entryBid}元`}</span>
+                                        </div>
                                     </div>
-                                    <div className='entry' style={{color: '#999999'}}>
-                                        <i style={styleList}>入职</i>
-                                        <span title={`${v.entryBid}元`}>{`${v.entryBid}元`}</span>
-                                    </div>
-                                    <div className='operate_items' style={{marginLeft: '76px'}}>
+                                    }
+                                    <div className='operate_items'>
                                         <span className='edit' onClick={(e) => this.itemClickFn(e, `/positionManager/recruitIngEdit?type=edit&id=${v.id}`)}>编辑</span>
                                         <span className='down' onClick={() => this.props.onUp(v.id)}>上架</span>
                                     </div>

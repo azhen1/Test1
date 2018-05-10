@@ -7,7 +7,7 @@
   line-height: 90px;
   background-color: #fff;
   box-shadow: 5px 0 10px 0;
-  z-index: 10;
+  z-index: 9991;
   .left {
     float: left;
     .app_logo {
@@ -98,7 +98,6 @@
       vertical-align: top;
       cursor: pointer;
       border-radius:50%;
-      background:#f5f5f5;
     }
     .operate_item {
       display: inline-block;
@@ -120,141 +119,268 @@
   background-color: #fff;
   height: calc(~"100% - 90px");
   z-index: 9;
-  .ant-menu-item-selected{
+  overflow-y:scroll;
+  .appMain{
+    position:relative;
+    padding-bottom:230px;
+    min-height: 100%;
+    width:180px;
+    .tab_item_box{
+      font-size:0px;
+      display: block;
+      .tab_item{
+        font-size:18px;
+        display: inline-block;
+        vertical-align: middle;
+      }
+    }
+    .ant-menu-item-selected{
+      .tab_item_box1 {
+        .iconBox_Tab1 {
+          background: url("../../images/zhiWeiGuanliSle.png") no-repeat center;
+          background-size: contain;
+        }
+      }
+      .tab_item_box2 {
+        .iconBox_Tab2 {
+          background: url("../../images/mianshiGLSel.png") no-repeat center;
+          background-size: contain;
+        }
+      }
+      .tab_item_box3 {
+        .iconBox_Tab3 {
+          background: url("../../images/qiYeXinXiSel.png") no-repeat center;
+          background-size: contain;
+        }
+      }
+      .tab_item_box4 {
+        .iconBox_Tab4 {
+          background: url("../../images/yuEGuanLiSel.png") no-repeat center;
+          background-size: contain;
+        }
+      }
+      .tab_item_box5 {
+        .iconBox_Tab5 {
+          background: url("../../images/jingJiRenSel.png") no-repeat center;
+          background-size: contain;
+        }
+      }
+      .tab_item_box6 {
+        .iconBox_Tab6 {
+          background: url("../../images/houxuanrenSel.png") no-repeat center;
+          background-size: contain;
+        }
+      }
+    }
     .tab_item_box1 {
-      .iconBox_Tab1 {
-        background: url("../../images/zhiWeiGuanliSle.png") no-repeat;
-        background-size: 100% 100%;
+      &:hover .iconBox_Tab1 {
+        background: url("../../images/zhiWeiGuanliSle.png") no-repeat center;
+        background-size: contain;
+      }
+      &:hover .tab_item {
+        color: #25CCF6;
       }
     }
     .tab_item_box2 {
-      .iconBox_Tab2 {
-        background: url("../../images/mianshiGLSel.png") no-repeat;
-        background-size: 100% 100%;
+      &:hover .iconBox_Tab2 {
+        background: url("../../images/mianshiGLSel.png") no-repeat center;
+        background-size: contain;
+      }
+      &:hover .tab_item {
+        color: #25CCF6;
       }
     }
     .tab_item_box3 {
-      .iconBox_Tab3 {
-        background: url("../../images/qiYeXinXiSel.png") no-repeat;
-        background-size: 100% 100%;
+      &:hover .iconBox_Tab3 {
+        background: url("../../images/qiYeXinXiSel.png") no-repeat center;
+        background-size: contain;
+      }
+      &:hover .tab_item {
+        color: #25CCF6;
       }
     }
     .tab_item_box4 {
-      .iconBox_Tab4 {
-        background: url("../../images/yuEGuanLiSel.png") no-repeat;
-        background-size: 100% 100%;
+      &:hover .iconBox_Tab4 {
+        background: url("../../images/yuEGuanLiSel.png") no-repeat center;
+        background-size: contain;
+      }
+      &:hover .tab_item {
+        color: #25CCF6;
       }
     }
     .tab_item_box5 {
-      .iconBox_Tab5 {
-        background: url("../../images/jingJiRenSel.png") no-repeat;
-        background-size: 100% 100%;
+      &:hover .iconBox_Tab5 {
+        background: url("../../images/jingJiRenSel.png") no-repeat center;
+        background-size: contain;
+      }
+      &:hover .tab_item {
+        color: #25CCF6;
+      }
+    }
+    .tab_item_box6 {
+      &:hover .iconBox_Tab6 {
+        background: url("../../images/houxuanrenSel.png") no-repeat center;
+        background-size: contain;
+      }
+      &:hover .tab_item {
+        color: #25CCF6;
+      }
+    }
+    .tab_item {
+      &:hover {
+        color: #25CCF6;
+      }
+    }
+    .iconBox_Tab {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      vertical-align: middle;
+      margin-right: 20px;
+    }
+    .iconBox_Tab1 {
+      background: url("../../images/zhiWeiGuanli.png") no-repeat center;
+      background-size: contain;
+    }
+    .iconBox_Tab2 {
+      background: url("../../images/mianshiGL.png") no-repeat center;
+      background-size: contain;
+    }
+    .iconBox_Tab3 {
+      background: url("../../images/qiYeXinXi.png") no-repeat center;
+      background-size: contain;
+    }
+    .iconBox_Tab4 {
+      background: url("../../images/yuEGuanLi.png") no-repeat center;
+      background-size: contain;
+    }
+    .iconBox_Tab5 {
+      background: url("../../images/jingJiRen.png") no-repeat center;
+      background-size: contain;
+    }
+    .iconBox_Tab6 {
+      background: url("../../images/houxuanren.png") no-repeat center;
+      background-size: contain;
+    }
+    .ant-menu {
+      background-color: #fff;
+      border-right: 0;
+      .ant-menu-item {
+        height: 60px;
+        line-height: 60px;
+        text-align: left;
+        font-size: 18px;
+        color: #666666;
+      }
+    }
+    .ant-menu-submenu-title {
+      height: 60px;
+      line-height: 60px;
+      font-size: 18px;
+      color: #666666;
+      text-align: left;
+      &:after {
+        font-size: 18px !important;
+      }
+    }
+    .ant-menu-inline .ant-menu-item:after {
+      border-right: 0;
+    }
+    .ant-menu-item-selected {
+      background-color: rgba(235, 235, 235, 0.2) !important;
+      color: #25CCF6 !important;
+    }
+    .accountInfo {
+      position:absolute;
+      bottom:30px;
+      background:url('../../images/accountbg.png') no-repeat center;
+      left:10px;
+      right:10px;
+      background-size:contain;
+      padding:75px 10px 26px 20px;
+      font-size:12px;
+      color:#666;
+      .box{
+        padding:1px 0 0;
+        .on{
+          color:#25CCF6;
+        }
+      }
+      .moreBtn {
+        font-size:13px;
+        color:#F5A623;
+        position:absolute;
+        right:10px;
+        top:35px;
+        cursor:pointer;
       }
     }
   }
-  .tab_item_box1 {
-    &:hover .iconBox_Tab1 {
-      background: url("../../images/zhiWeiGuanliSle.png") no-repeat;
-      background-size: 100% 100%;
-    }
-    &:hover .tab_item {
-      color: #25CCF6;
-    }
+}
+.popMain{
+  position:fixed;
+  background:rgba(0,0,0,0.7);
+  width:100%;
+  bottom:0;
+  height:140px;
+  left:0;
+  font-size:0px;
+  text-align: center;
+  z-index: 10;
+  &.pull{
+    animation:fromLeft 0.6s forwards linear;
   }
-  .tab_item_box2 {
-    &:hover .iconBox_Tab2 {
-      background: url("../../images/mianshiGLSel.png") no-repeat;
-      background-size: 100% 100%;
-    }
-    &:hover .tab_item {
-      color: #25CCF6;
-    }
+  &.push{
+    animation:toLeft 0.6s forwards linear;
   }
-  .tab_item_box3 {
-    &:hover .iconBox_Tab3 {
-      background: url("../../images/qiYeXinXiSel.png") no-repeat;
-      background-size: 100% 100%;
-    }
-    &:hover .tab_item {
-      color: #25CCF6;
-    }
-  }
-  .tab_item_box4 {
-    &:hover .iconBox_Tab4 {
-      background: url("../../images/yuEGuanLiSel.png") no-repeat;
-      background-size: 100% 100%;
-    }
-    &:hover .tab_item {
-      color: #25CCF6;
-    }
-  }
-  .tab_item_box5 {
-    &:hover .iconBox_Tab5 {
-      background: url("../../images/jingJiRenSel.png") no-repeat;
-      background-size: 100% 100%;
-    }
-    &:hover .tab_item {
-      color: #25CCF6;
-    }
-  }
-  .tab_item {
-    &:hover {
-      color: #25CCF6;
-    }
-  }
-  .iconBox_Tab {
+  .popImg{
+    width:1200px;
+    position:relative;
     display: inline-block;
-    width: 16px;
-    height: 14px;
-    vertical-align: middle;
-    margin-right: 20px;
-  }
-  .iconBox_Tab1 {
-    background: url("../../images/zhiWeiGuanli.png") no-repeat;
-    background-size: 100% 100%;
-  }
-  .iconBox_Tab2 {
-    background: url("../../images/mianshiGL.png") no-repeat;
-    background-size: 100% 100%;
-  }
-  .iconBox_Tab3 {
-    background: url("../../images/qiYeXinXi.png") no-repeat;
-    background-size: 100% 100%;
-  }
-  .iconBox_Tab4 {
-    background: url("../../images/yuEGuanLi.png") no-repeat;
-    background-size: 100% 100%;
-  }
-  .iconBox_Tab5 {
-    background: url("../../images/jingJiRen.png") no-repeat;
-    background-size: 100% 100%;
-  }
-  .ant-menu {
-    background-color: #fff;
-    border-right: 0;
-    .ant-menu-item {
-      height: 60px;
-      line-height: 60px;
-      text-align: left;
-      font-size: 18px;
-      color: #666666;
+    background:url("../../images/popImg.png") no-repeat center;
+    background-size:contain;
+    height:100%;
+    .closeBtn{
+      position:absolute;
+      width:26px;
+      height:26px;
+      background:url("../../images/close.png") no-repeat center;
+      background-size:contain;
+      right:10px;
+      top:10px;
+      cursor:pointer;
     }
   }
-  .ant-menu-submenu-title {
-    height: 60px;
-    line-height: 60px;
-    font-size: 18px;
-    color: #666666;
-    text-align: left;
-    &:after {
-      font-size: 18px !important;
-    }
+}
+@keyframes fromLeft {
+  from {
+    left:-100%;
   }
-  .ant-menu-inline .ant-menu-item:after {
-    border-right: 0;
+  to {
+    left:0;
   }
-  .ant-menu-item-selected {
-    background-color: rgba(235, 235, 235, 0.2) !important;
-    color: #25CCF6 !important;
+}
+@-webkit-keyframes fromLeft {
+  from {
+    left:-100%;
+  }
+  to {
+    left:0;
+  }
+}
+@keyframes toLeft {
+  from {
+    left:0;
+  }
+  to {
+    left:-100%;
+  }
+}
+@-webkit-keyframes toLeft {
+  from {
+    left:0;
+  }
+  to {
+    left:-100%;
   }
 }

@@ -1,7 +1,7 @@
 import React from 'react'
 import {Dropdown, Menu, message} from 'antd'
 import './layout.less'
-import defaultHeadImg from '../../images/default_head.png'
+import defaultHeadImg from '../../images/defaultC.png'
 import {getRequest} from '../../common/ajax'
 
 const Header = React.createClass({
@@ -16,8 +16,6 @@ const Header = React.createClass({
         let memberId = window.localStorage.getItem('memberId')
         this.setState({
             memberId: memberId
-        }, () => {
-            this.reqBusinssInfoAllInfo()
         })
         let weiDuInfo = document.getElementsByClassName('weiDu_info')[0]
         if (weiDuInfo.innerHTML === '0') {
@@ -32,29 +30,12 @@ const Header = React.createClass({
             weiDuHint.style.display = 'inline-block'
         }
     },
-    // 查询公司所有信息
-    reqBusinssInfoAllInfo () {
-        let URL = 'member/company/getView'
-        let _th = this
-        let formData = {}
-        let {dataList} = this.state
-        formData.memberId = this.state.memberId
-        getRequest(true, URL, formData).then(function (res) {
-            let code = res.code
-            if (code === 0) {
-                dataList.userName = res.data.userName
-                dataList.companyName = res.data.name
-                dataList.logoPic = res.data.logoPic
-                _th.setState({
-                    dataList: dataList
-                })
-            } else {
-                message.error(res.message)
-            }
-        })
-    },
-    componentWillReceiveProps () {
+    componentWillReceiveProps (nextProps) {
         // console.log('componentWillReceiveProps')
+        let {dataList} = nextProps
+        this.setState({
+            dataList: dataList
+        })
     },
     itemClickFn (router) {
         if (router === 'chatWindow') {
@@ -91,6 +72,12 @@ const Header = React.createClass({
         let imgsURL = 'http://dingyi.oss-cn-hangzhou.aliyuncs.com/images/'
         const menu = (
             <Menu>
+                <Menu.Item>
+                    <span onClick={() => this.itemClickFn('modifiedInfo')}
+                          style={{fontSize: '14px', width: '74px', display: 'inline-block', color: 'rgba(0,0,0,.65)'}}>
+                        修改资料
+                    </span>
+                </Menu.Item>
                 <Menu.Item>
                     <span onClick={this.onQuitFn}
                           style={{fontSize: '14px', width: '74px', display: 'inline-block', color: 'rgba(0,0,0,.65)'}}>

@@ -43,6 +43,7 @@ let PositionManagerEdit = React.createClass({
                 educational: [],                // 学历
                 jobXingZhi: []                  // 工作性质
             },
+            peopleNum: '',
             mianShiList: mianShiList,           // 奖赏金额---面试费列表
             entryList: entryList,               // 奖赏金额---入职费列表
             curMainshiChoiceIn: 0,              // 面试费
@@ -64,13 +65,15 @@ let PositionManagerEdit = React.createClass({
             jobTilCount: 0,                     // 职位标题字数
             isPublish: false,                   // 是否发布  控制点击发布时是否有未填写的信息
             hasPublish: false,                  // 是否发布  控制点击发布时信息是否已经提交
+            isChange: false,                    // 信息是否被编辑
             isAttestation: false,
             publishLongitude: {},               // 发布位置经纬度
             placeLongitude: {},                 // 工作地点经纬度
             shangQuanList: {},                  // 商圈枚举列表
             memberId: '',                       // 公司ID
             positionId: '',                     // 职位ID
-            pageType: ''                        // 职位编辑类型
+            pageType: '',                       // 职位编辑类型
+            freePosition: false                 // 是否免费职位
         }
     },
     componentDidMount () {
@@ -97,12 +100,24 @@ let PositionManagerEdit = React.createClass({
             })
         }
         this.reqMeiJUListFn()
+        this.props.router.setRouteLeaveHook(
+            this.props.route,
+            this.routerWillLeave
+        )
+    },
+    routerWillLeave (nextLocation) {
+        let _th = this
+        // 返回 false 会继续停留当前页面，
+        // 否则，返回一个字符串，会显示给用户，让其自己决定
+        if (!_th.state.hasPublish && _th.state.isChange) {
+            return '职位信息还未保存，确认要离开？'
+        }
     },
     // 编辑职位时查询所有职位信息
     reqTotalPosition () {
         let URL = 'job/platformPosition/webGet'
         let _th = this
-        let {positionId, publishPosition, filterItem, jobPlace, entryList, mianShiList, curEntryChoiceIn, curMainshiChoiceIn, meiJuList, placeLongitude} = _th.state
+        let {positionId, publishPosition, filterItem, jobPlace, entryList, mianShiList, curEntryChoiceIn, curMainshiChoiceIn, meiJuList, peopleNum, placeLongitude} = _th.state
         let formData = {}
         formData.id = positionId
         getRequest(true, URL, formData).then(function (res) {
@@ -129,6 +144,7 @@ let PositionManagerEdit = React.createClass({
                     }
                 })
                 filterItem.jobType = data.typeCode.split(';')
+                peopleNum = data.number
                 meiJuList.educational.map((v, index) => {
                     if (data.education !== null && v.content === data.education) {
                         filterItem.educational = v.code
@@ -226,6 +242,7 @@ let PositionManagerEdit = React.createClass({
                     curEntryChoiceIn: curEntryChoiceIn,
                     curMainshiChoiceIn: curMainshiChoiceIn,
                     filterItem: filterItem,
+                    peopleNum: peopleNum,
                     municipality: municipality,
                     municipalityPlace: municipalityPlace,
                     publishPosition: publishPosition,
@@ -519,6 +536,7 @@ let PositionManagerEdit = React.createClass({
                 entryList: entryList
             })
         }
+        this.changeAny()
     },
     welfareLableAdd (type) {
         let {labelList, mianShiList, entryList} = this.state
@@ -544,6 +562,7 @@ let PositionManagerEdit = React.createClass({
                 this.textInput.focus()
             })
         }
+        this.changeAny()
     },
     addLableFn (e, index, type) {
         let {labelList, mianShiList, entryList} = this.state
@@ -588,6 +607,8 @@ let PositionManagerEdit = React.createClass({
             this.setState({
                 jobDes: val,
                 textAreaCount: val.length
+            }, () => {
+                this.changeAny()
             })
         }
     },
@@ -598,8 +619,32 @@ let PositionManagerEdit = React.createClass({
             this.setState({
                 jobTil: val,
                 jobTilCount: val.length
+            }, () => {
+                this.changeAny()
             })
         }
+    },
+    // 招聘人数
+    peopleChange (e) {
+        let val = e.target.value
+        let reg = /^[0-9]*$/
+        if (val === '') {
+            val = ''
+        } else if (reg.test(val)) {
+            val = parseInt(val)
+            if (val > 100000) {
+                message.warning('招聘人数不能大于100000')
+                val = ''
+            }
+        } else {
+            val = ''
+            message.warning('只能输入数字')
+        }
+        this.setState({
+            peopleNum: val
+        }, () => {
+            this.changeAny()
+        })
     },
     // 职位类别，学历要求，工作经验，年龄，到，月薪，工作性质
     filterItemFn (val, type) {
@@ -607,6 +652,8 @@ let PositionManagerEdit = React.createClass({
         filterItem[type] = val
         this.setState({
             filterItem: filterItem
+        }, () => {
+            this.changeAny()
         })
     },
     // 省市县三级列表筛选---发布位置
@@ -688,6 +735,8 @@ let PositionManagerEdit = React.createClass({
         publishPosition[type] = val
         this.setState({
             publishPosition: publishPosition
+        }, () => {
+            this.changeAny()
         })
     },
     adressPublishBlur (e) {
@@ -825,6 +874,7 @@ let PositionManagerEdit = React.createClass({
             if (type === 'province' || type === 'city' || type === 'county') {
                 this.areaFilterPlaceFn(val, type)
             }
+            this.changeAny()
         })
     },
     adressPlaceBlur (e) {
@@ -948,7 +998,7 @@ let PositionManagerEdit = React.createClass({
                                 result += `${vC.value}-`
                                 vC.children.map((vCG, indexCG) => {
                                     if (vCG.id === data.county) {
-                                        result += `${vCG.value}`
+                                        result += `${vCG.value}-`
                                     }
                                 })
                             }
@@ -957,7 +1007,7 @@ let PositionManagerEdit = React.createClass({
                 })
                 for (let key in shangQuanList) {
                     if (key === data.road) {
-                        result = `${result}-${shangQuanList[key]}`
+                        result = `${result}${shangQuanList[key]}`
                     }
                 }
             }
@@ -965,17 +1015,15 @@ let PositionManagerEdit = React.createClass({
         return result
     },
     // 确认发布
-    onPublish () {
+    onPublish (type) {
         this.setState({
             isPublish: true
         }, () => {
-            let {publishPosition, jobPlace, filterItem, placeLongitude, jobTil, mianShiList, entryList, labelList, curMainshiChoiceIn, curEntryChoiceIn, jobDes, memberId} = this.state
+            let {publishPosition, jobPlace, filterItem, peopleNum, placeLongitude, jobTil, mianShiList, entryList, labelList, curMainshiChoiceIn, curEntryChoiceIn, jobDes, memberId, freePosition} = this.state
             let hasNull = false
             let formDate = {}
-
-            hasNull = this.cityHasNullFn(publishPosition)
-            hasNull = this.cityHasNullFn(jobPlace)
-            if (filterItem.jobType === undefined || filterItem.jobNature === undefined) {
+            hasNull = this.cityHasNullFn(publishPosition) || this.cityHasNullFn(jobPlace)
+            if (this.isNull(filterItem.jobType) || this.isNull(filterItem.jobNature) || this.isNull(filterItem.pay) || this.isNull(filterItem.educational) || this.isNull(filterItem.experience) || this.isNull(peopleNum) || this.isNull(jobDes) || this.isNull(jobTil)) {
                 hasNull = true
             }
             if (filterItem.ageForm !== undefined && filterItem.ageTo === undefined) {
@@ -1054,10 +1102,9 @@ let PositionManagerEdit = React.createClass({
                 }
                 formDate.salary = filterItem.pay      // 薪资
                 formDate.positionNature = filterItem.jobNature      // 性质
+                formDate.number = peopleNum      // 招聘人数
                 formDate.welfare = labelList.join(';')      // 福利标签
                 formDate.description = jobDes      // 描述
-                formDate.interviewBid = mianShiList[curMainshiChoiceIn]      // 面试费选中
-                formDate.entryBid = entryList[curEntryChoiceIn]      // 入职费选中
                 formDate.interviewBids = mianShiList.join(';')     // 面试费list
                 formDate.entryBids = entryList.join(';')     // 入职费list
                 formDate.longitude = placeLongitude.lng      // 经度
@@ -1065,6 +1112,17 @@ let PositionManagerEdit = React.createClass({
                 formDate.location = this.queryCityNameFn(publishPosition, 'publishPosition')
                 formDate.workLocation = this.queryCityNameFn(jobPlace, 'jobPlace')
                 formDate.companyId = memberId
+                if (type === 'free') {
+                    freePosition = true
+                    formDate.interviewBid = '0'      // 面试费选中
+                    formDate.entryBid = '0'      // 入职费选中
+                } else {
+                    freePosition = false
+                    formDate.interviewBid = mianShiList[curMainshiChoiceIn]      // 面试费选中
+                    formDate.entryBid = entryList[curEntryChoiceIn]      // 入职费选中
+                }
+                formDate.free = freePosition
+                // console.log('success')
                 this.addDoPublish(formDate)
             }
         })
@@ -1102,12 +1160,16 @@ let PositionManagerEdit = React.createClass({
         postRequest(true, URL, JSON.stringify(formData), true).then(function (res) {
             let code = res.code
             if (code === 0) {
-                message.success('保存成功!')
-                if (pageType === 'new') {
-                    window.location.hash = 'positionManager/recruitIng?newSkip=true'
-                } else {
-                    _th.reqTotalPosition()
+                message.success('发布成功!')
+                if (res.data.compare === -1) {
+                    message.warning('您帐号中余额不足以支付该职位的费用，请及时充值')
                 }
+                // else {
+                //     sessionStorage.setItem('positionTab', '0')
+                //     window.location.hash = 'positionManager/recruitIng'
+                // }
+                sessionStorage.setItem('positionTab', '0')
+                window.location.hash = 'positionManager/recruitIng'
             } else {
                 message.error('系统错误!')
             }
@@ -1138,6 +1200,8 @@ let PositionManagerEdit = React.createClass({
         filterItem.jobType = val
         this.setState({
             filterItem: filterItem
+        }, () => {
+            this.changeAny()
         })
     },
     createRoadSelect () {
@@ -1160,8 +1224,21 @@ let PositionManagerEdit = React.createClass({
         })
         return result
     },
+    changeAny () {
+        this.setState({
+            hasPublish: false,
+            isChange: true
+        })
+    },
+    isNull (val) {
+        if (val === undefined || val === null || val === '') {
+            return true
+        } else {
+            return false
+        }
+    },
     render () {
-        let {mianShiList, entryList, labelList, textAreaCount, jobTilCount, jobDes, jobTil, jobPlace, filterItem, publishPosition, isPublish, hasPublish, curMainshiChoiceIn, curEntryChoiceIn, citySelectList, countySelectList, roadSelectList, municipality, citySelectListPlace, countySelectListPlace, municipalityPlace, meiJuList, ageMeiJuListL} = this.state
+        let {mianShiList, entryList, labelList, textAreaCount, jobTilCount, jobDes, jobTil, jobPlace, filterItem, publishPosition, isPublish, hasPublish, isChange, curMainshiChoiceIn, curEntryChoiceIn, citySelectList, countySelectList, roadSelectList, municipality, citySelectListPlace, countySelectListPlace, municipalityPlace, meiJuList, peopleNum, ageMeiJuListL} = this.state
         let selectStyle = {marginRight: '10px', width: '128px'}
         let inputStyle = {width: '500px', backgroundColor: '#E6F5FF'}
         if (!this.hasBuXianFn(citySelectList) && municipalityPlace) {
@@ -1216,7 +1293,7 @@ let PositionManagerEdit = React.createClass({
                     </div>
                     <div className='jobTitle'>
                         <lable className="lab">职位标题</lable>
-                        <Input placeholder="请输入职位标题" style={inputStyle} size='large' onChange={this.jobTilChange} value={jobTil}/>
+                        <Input placeholder="请输入职位标题" style={inputStyle} className={isPublish && this.isNull(jobTil) ? 'selectNullClass' : ''} size='large' onChange={this.jobTilChange} value={jobTil}/>
                         <span style={{fontSize: '14px', color: '#999999', marginLeft: '10px'}}>{`${jobTilCount} / 20`}</span>
                     </div>
                     <div className='screen'>
@@ -1227,6 +1304,7 @@ let PositionManagerEdit = React.createClass({
                                   className={isPublish && filterItem.jobType === undefined ? 'selectNullClass' : ''}
                                   placeholder="职位类别" />
                         <Select placeholder="学历要求" style={selectStyle} value={filterItem.educational}
+                                className={isPublish && filterItem.educational === undefined ? 'selectNullClass' : ''}
                                 size='large' onChange={(val) => this.filterItemFn(val, 'educational')}>
                             {this.hasProtopyFn('educational').map((v, index) => {
                                 return (
@@ -1235,6 +1313,7 @@ let PositionManagerEdit = React.createClass({
                             })}
                         </Select>
                         <Select placeholder="工作经验" style={selectStyle} value={filterItem.experience}
+                                className={isPublish && filterItem.experience === undefined ? 'selectNullClass' : ''}
                                 size='large' onChange={(val) => this.filterItemFn(val, 'experience')}>
                             {this.hasProtopyFn('experience').map((v, index) => {
                                 return (
@@ -1242,8 +1321,6 @@ let PositionManagerEdit = React.createClass({
                                 )
                             })}
                         </Select>
-                    </div>
-                    <div className='screen'>
                         <Select placeholder="年龄" style={selectStyle} value={filterItem.ageForm}
                                 size='large' onChange={(val) => this.filterItemFn(val, 'ageForm')}>
                             {ageMeiJuListL.map((v, index) => {
@@ -1261,7 +1338,10 @@ let PositionManagerEdit = React.createClass({
                                 )
                             })}
                         </Select>
+                    </div>
+                    <div className='screen'>
                         <Select placeholder="月薪" style={selectStyle} value={filterItem.pay}
+                                className={isPublish && filterItem.pay === undefined ? 'selectNullClass' : ''}
                                 size='large' onChange={(val) => this.filterItemFn(val, 'pay')}>
                             {this.hasProtopyFn('pay').map((v, index) => {
                                 return (
@@ -1278,6 +1358,7 @@ let PositionManagerEdit = React.createClass({
                                 )
                             })}
                         </Select>
+                        <Input placeholder="请输入招聘人数" style={selectStyle} className={isPublish && this.isNull(peopleNum) ? 'selectNullClass' : ''} size='large' onChange={(val) => this.peopleChange(val)} value={peopleNum}/>
                     </div>
                     <div className='welfareLable'>
                         <lable className="lab">福利标签</lable>
@@ -1309,7 +1390,7 @@ let PositionManagerEdit = React.createClass({
                     </div>
                     <div className='jobDescribe'>
                         <lable className="lab">职位描述</lable>
-                        <TextArea rows={4} style={{height: '140px', ...inputStyle}} placeholder='岗位职责：任职资格：工作时间：' onChange={this.jobDesChange} value={jobDes}/>
+                        <TextArea rows={4} style={{height: '140px', ...inputStyle}} className={isPublish && this.isNull(jobDes) ? 'selectNullClass' : ''} placeholder='岗位职责：任职资格：工作时间：' onChange={this.jobDesChange} value={jobDes}/>
                         <span style={{fontSize: '14px', color: '#999999', marginLeft: '10px'}}>{`${textAreaCount} / 800`}</span>
                     </div>
                     <div className='jobPlace'>
@@ -1415,9 +1496,15 @@ let PositionManagerEdit = React.createClass({
                             </div>
                         </div>
                     </div>
-                    <div className='confirm'>
-                        {hasPublish ? <span className='btn onBtn'>确认发布</span> : <span className='btn' onClick={this.onPublish}>确认发布</span>}
-                    </div>
+                    {
+                        hasPublish ? <div className='confirm'>
+                                <span className='btn btnFree onBtn'>我要免费发布</span>
+                                <span className='btn onBtn'>确认发布</span>
+                            </div> : <div className='confirm'>
+                                <span className='btn btnFree' onClick={() => this.onPublish('free')}>我要免费发布</span>
+                                <span className='btn' onClick={() => this.onPublish()}>确认发布</span>
+                            </div>
+                    }
                 </div>
             </div>
         )

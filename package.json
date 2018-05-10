@@ -1,5 +1,5 @@
 {
-  "name": "lu-app",
+  "name": "my-app",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -24,10 +24,6 @@
       "pathRewrite": {
         "^/images": "/images"
       }
-    },
-    "/company": {
-      "target": "http://192.168.0.103:8012",
-      "changeOrigin": true
     }
   },
   "author": "",
@@ -69,6 +65,8 @@
   "dependencies": {
     "antd": "^2.12.1",
     "axios": "^0.16.2",
+    "babel-polyfill": "^6.26.0",
+    "core-js": "^2.5.5",
     "echarts": "^3.6.2",
     "jquery": "^3.2.1",
     "moment": "^2.20.1",

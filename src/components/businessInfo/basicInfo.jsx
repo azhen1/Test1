@@ -7,8 +7,8 @@ import util from '../../common/util'
 import addressData from '../../common/area'
 
 const Option = Select.Option
-let lightPointList = ['D轮融资', '即将上市', '免费零食', '老板人帅', '美女如云', '免费零食']
-let fuLiList = ['周末双休', '带薪年假', '餐补', '房补']
+let lightPointList = ['D轮融资', '即将上市', '免费零食', '老板人帅', '美女如云', '环境优美', '扁平管理', '牛人众多', '交通便捷', '团队优秀', '美食下午茶', '文艺办公室']
+let fuLiList = ['周末双休', '带薪年假', '早九晚六', '年底双薪', '五险一金', '加班补贴', '餐饮补贴', '交通补贴', '通讯补贴', '住房补贴', '免费班车', '包吃包住', '弹性工作', '绩效奖金', '全勤奖金', '岗位晋升', '定期体检', '出国机会', '股票期权', '员工旅游']
 let nowDate = new Date()
 let BasicInfo = React.createClass({
     getInitialState () {
@@ -116,6 +116,7 @@ let BasicInfo = React.createClass({
         let _th = this
         postRequest(true, URL, JSON.stringify(formData), true).then(function (res) {
             let code = res.code
+            console.log(res)
             if (code === 0) {
                 message.success('保存成功!')
                 _th.props.reqBusinssInfoAllInfo(formData.memberId)
@@ -169,6 +170,7 @@ let BasicInfo = React.createClass({
             formList.people = businssInfoAllInfo.scale
             let date = businssInfoAllInfo.companyCreatetime ? businssInfoAllInfo.companyCreatetime.replace(/-/g, '/') : ''
             formList.date = util.getDateStrH(new Date(date))
+            console.log(formList.date)
             this.setState({
                 formList: formList,
                 lightPointList: businssInfoAllInfo.companyBrightPoint || lightPointList,
@@ -265,7 +267,7 @@ let BasicInfo = React.createClass({
                     </div>
                 </div>
                 <div className='lightFuli'>
-                    <div className='til'>公司福利</div>
+                    <div className='til' style={{padding: '18px 0px'}}>公司福利</div>
                     <div className='fuLiList'>
                         {fuLiList.map((v, index) => {
                             if (v !== 'init' && v !== '') {

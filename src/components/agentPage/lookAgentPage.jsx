@@ -28,11 +28,13 @@ let LookAgentPage = React.createClass({
     },
     handleChange (val, type) {
         let {searchList} = this.state
+        let _th = this
         if (type === 'province') {
             if (val === '110100' || val === '120100' || val === '500100' || val === '310100') {
                 this.setState({
                     isZhiXiaShi: true
                 })
+                searchList.city = val
             } else {
                 this.setState({
                     isZhiXiaShi: false
@@ -43,6 +45,8 @@ let LookAgentPage = React.createClass({
         searchList[type] = val
         this.setState({
             searchList: searchList
+        }, () => {
+            _th.onSearch()
         })
     },
     componentDidMount () {
@@ -99,7 +103,6 @@ let LookAgentPage = React.createClass({
         getRequest(true, URL, formData).then(function (res) {
             let code = res.code
             if (code === 0) {
-                console.log(res)
                 let data = res.data
                 _th.setState({
                     dataSource: data.list,
@@ -154,12 +157,7 @@ let LookAgentPage = React.createClass({
         if (searchList.hangYe !== undefined) {
             formData.trade = searchList.hangYe
         }
-        if (isZhiXiaShi && searchList.province !== undefined) {
-            formData.city = searchList.province
-        } else if (!isZhiXiaShi && searchList.city !== undefined) {
-            formData.city = searchList.city
-        }
-        console.log(formData)
+        formData.city = searchList.city
         this.reqDataFn(formData)
     },
     onPleaceTui (id, name, headUrl) {
@@ -188,12 +186,13 @@ let LookAgentPage = React.createClass({
     },
     render () {
         let {dataSource, searchList, tradeList, provinceList, cityList, isZhiXiaShi, curPage, pageTotal} = this.state
-        let selectStyle = {width: '120px', marginRight: '10px', marginTop: '10px'}
+        let selectStyle = {width: '180px', marginRight: '10px', marginTop: '10px'}
+        let selectStyle2 = {width: '120px', marginRight: '10px', marginTop: '10px'}
         return (
             <div className='LookAgentPage' style={dataSource.length === 0 ? {height: '100%'} : {minHeight: 'calc(~"100% + 10px")'}}>
                 <div className={dataSource.length === 0 ? 'content nullContent' : 'content'} style={dataSource.length === 0 ? {height: '100%', backgroundColor: '#fff'} : {minHeight: 'calc(~"100% + 10px")'}}>
                     <div className='til' style={dataSource.length === 0 ? {borderBottom: '1px solid #e6f5ff'} : {}}>
-                        <Select placeholder="省份" style={selectStyle}
+                        <Select placeholder="省份" style={selectStyle2}
                                 value={searchList.province}
                                 allowClear={true}
                                 onChange={(val) => this.handleChange(val, 'province')} size='large'>
@@ -204,7 +203,7 @@ let LookAgentPage = React.createClass({
                         {
                             isZhiXiaShi
                             ? null
-                            : <Select placeholder="城市" style={selectStyle}
+                            : <Select placeholder="城市" style={selectStyle2}
                                       value={searchList.city}
                                       notFoundContent='请选择省份'
                                       allowClear={true}
@@ -222,7 +221,7 @@ let LookAgentPage = React.createClass({
                                 return <Option value={v.content} key={index}>{v.content}</Option>
                             }) : null}
                         </Select>
-                        <Select placeholder="等级" style={selectStyle} value={searchList.leval}
+                        <Select placeholder="等级" style={selectStyle2} value={searchList.leval}
                                 allowClear={true}
                                 onChange={(val) => this.handleChange(val, 'leval')} size='large'>
                             <Option value="1">Lv1</Option>
@@ -232,7 +231,6 @@ let LookAgentPage = React.createClass({
                             <Option value="5">Lv5</Option>
                             <Option value="6">Lv6</Option>
                         </Select>
-                        <Icon type="search" className='searchIcon' onClick={this.onSearch}/>
                     </div>
                     {dataSource.length === 0 ? <div className='zanWU'>暂无数据</div> : null}
                     {dataSource.map((v, index) => {

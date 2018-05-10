@@ -16,6 +16,7 @@ let PositionDetails = React.createClass({
     },
     componentDidMount () {
         let hash = window.location.hash
+        let {dataSouce} = this.state
         let id = hash.split('?')[1].split('=')[1]
         this.setState({
             curId: parseInt(id)
@@ -30,13 +31,14 @@ let PositionDetails = React.createClass({
         let formData = {}
         formData.id = curId
         getRequest(true, URL, formData).then(function (res) {
-            console.log(res)
             let code = res.code
             if (code === 0) {
                 let data = res.data
                 _th.setState({
                     dataSouce: {...data}
                 }, () => {
+                    // var strContent = document.getElementById('desVal')
+                    // strContent.innerHTML = data.description
                     _th.setState({
                         isAuto: _th.heightAgentDetails()
                     })
@@ -79,67 +81,88 @@ let PositionDetails = React.createClass({
         }
         return result
     },
+    isNull (val) {
+        return val === '' || val === null || val === undefined
+    },
+    // 根据location中的第二个值获取城市名:浙江省-杭州市-江干区-
+    getCity (location) {
+        if (location) {
+            location = location.split('-')[1]
+            return location
+        } else {
+            return false
+        }
+    },
+    goBack () {
+        window.history.go(-1)
+    },
     render () {
         let {dataSouce, isAuto} = this.state
-        console.log(dataSouce)
         return (
             <div className='PositionDetails' style={isAuto ? {height: 'auto'} : {height: 'calc(100% + 10px)'}}>
                 <div className='content'>
-                    <div className='basicInfo'>
-                        <div className='jobType'>
+                    <div className='backpageMain'>
+                        <a className='backBox' onClick={() => this.goBack()}></a>
+                    </div>
+                    <div className='positionDetailsMain'>
+                        <div className='basicInfo'>
+                            <div className='jobType'>
                             <span className='name'>
                                 <div className='position'>{dataSouce.title}</div>
                                 <div className='pay'>{dataSouce.salary}</div>
                             </span>
-                            <span className='pay-count'>
+                                {
+                                    dataSouce.free === true ? <span className="pay-free">免费职位</span> : <span className='pay-count'>
                                 <div><span>面试</span><i>{`${dataSouce.interviewBid}元`}</i></div>
                                 <div><span style={{backgroundColor: '#48D2A0'}}>入职</span><i>{`${dataSouce.entryBid}元`}</i></div>
                             </span>
+                                }
+                            </div>
+                            <div className='xueLi'>
+                                {this.getCity(dataSouce.workLocation) ? <span>{this.getCity(dataSouce.workLocation)}</span> : null}
+                                {this.getCity(dataSouce.workLocation) ? <span className='shuxian'></span> : null}
+                                {dataSouce.workExperience ? <span>{dataSouce.workExperience}</span> : null}
+                                {dataSouce.workExperience ? <span className='shuxian'></span> : null}
+                                {dataSouce.education ? <span>{dataSouce.education}</span> : null}
+                                {dataSouce.education ? <span className='shuxian'></span> : null}
+                                {dataSouce.positionNature ? <span>{dataSouce.positionNature}</span> : null}
+                                {dataSouce.positionNature ? <span className='shuxian'></span> : null}
+                            </div>
+                            <div className='zhiWei'>
+                                <span className='zwBox'>职位：{dataSouce.type}</span>
+                                <span className='zwBox'>要求：
+                                    {this.isNull(dataSouce.number) ? <i>招0人</i> : <i>招{dataSouce.number}人</i>}<i>/</i>
+                                    {this.isNull(dataSouce.age) ? <i>不限年龄</i> : <i>{dataSouce.age}岁</i>}
+                            </span>
+                            </div>
+                            <div className='res'>
+                                <span>{`${dataSouce.updateTime}更新`}</span>
+                                <span>{`共收到${dataSouce.recommendNum}个推荐`}</span>
+                                <span>{`已面试${dataSouce.recommendSuccess}人`}</span>
+                                <span>{`待入职${dataSouce.waitEntryNum}人`}</span>
+                                <span>{`已入职${dataSouce.entrySuccess}人`}</span>
+                            </div>
+                            <div className='fuLi'>
+                                <label>福利：</label>
+                                {dataSouce.welfare !== undefined && dataSouce.welfare.split(';').map((vFuLi, index) => {
+                                    return (
+                                        <span key={index}>{vFuLi}</span>
+                                    )
+                                })}
+                            </div>
                         </div>
-                        <div className='xueLi'>
-                            {this.filterCityFn(dataSouce.province, dataSouce.city) ? <span>{this.filterCityFn(dataSouce.province, dataSouce.city)}</span> : null}
-                            {this.filterCityFn(dataSouce.province, dataSouce.city) ? <span className='shuxian'></span> : null}
-                            {dataSouce.workExperience ? <span>{dataSouce.workExperience}</span> : null}
-                            {dataSouce.workExperience ? <span className='shuxian'></span> : null}
-                            {dataSouce.education ? <span>{dataSouce.education}</span> : null}
-                            {dataSouce.education ? <span className='shuxian'></span> : null}
-                            {dataSouce.positionNature ? <span>{dataSouce.positionNature}</span> : null}
-                            {dataSouce.positionNature ? <span className='shuxian'></span> : null}
-                        </div>
-                        <div className='zhiWei'>
-                             职位：{dataSouce.type}
-                        </div>
-                        <div className='res'>
-                            <span>{`${dataSouce.updateTime}更新`}</span>
-                            <span>{`共收到${dataSouce.recommendNum}个推荐`}</span>
-                            <span>{`已面试${dataSouce.recommendSuccess}人`}</span>
-                            <span>{`待入职${dataSouce.waitEntryNum}人`}</span>
-                            <span>{`已入职${dataSouce.entrySuccess}人`}</span>
-                        </div>
-                        <div className='fuLi'>
-                            <label>福利：</label>
-                            {dataSouce.welfare !== undefined && dataSouce.welfare.split(';').map((vFuLi, index) => {
-                                return (
-                                    <span key={index}>{vFuLi}</span>
-                                )
-                            })}
-                        </div>
-                    </div>
-                    <div className='jobDes'>
-                        <div className='til'>职位描述</div>
-                        <pre className='desValue'>
+                        <div className='jobDes'>
+                            <div className='til'>职位描述</div>
+                            <pre className='desValue' id='desVal'>
                             {dataSouce.description}
                         </pre>
-                        <div className='til'>工作时间</div>
-                        <div className='desValue'>
-                            <div>上午9：00 - 下午6：00</div>
                         </div>
-                    </div>
-                    <div className='companyPlace'>
-                        <div className='til'>工作地点</div>
-                        <div className='place'>
-                            <span>{dataSouce.workLocation}</span>
-                            <a href={`http://map.baidu.com/?latlng=${dataSouce.longitude},${dataSouce.latitude}`} target='_blank' className='lookDiTu'>查看地图</a>
+                        <div className='companyPlace'>
+                            <div className='til'>工作地点</div>
+                            <div className='place'>
+                                <span>{dataSouce.workLocation}</span>
+                                <a href={`http://api.map.baidu.com/marker?location=${dataSouce.latitude},${dataSouce.longitude}&title=公司位置&content=${dataSouce.companyName}&output=html&src=${dataSouce.companyName}`} target='_blank' className='lookDiTu'>查看地图</a>
+                            </div>
                         </div>
                     </div>
                 </div>

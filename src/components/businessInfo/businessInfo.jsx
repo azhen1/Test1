@@ -11,7 +11,8 @@ let BusinessInfo = React.createClass({
             businssInfoAllInfo: {},
             hasNew: false,
             count: 0,
-            memberId: ''
+            memberId: '',
+            dataList: {}
         }
     },
     componentDidMount () {
@@ -58,8 +59,15 @@ let BusinessInfo = React.createClass({
             count: ++this.state.count
         })
     },
+    componentWillReceiveProps (nextProps) {
+        // console.log('componentWillReceiveProps')
+        let {dataList} = nextProps
+        this.setState({
+            dataList: dataList
+        })
+    },
     render () {
-        let {businssInfoAllInfo, hasNew, memberId} = this.state
+        let {businssInfoAllInfo, hasNew, memberId, dataList} = this.state
         let prototyList = {businssInfoAllInfo: businssInfoAllInfo, reqBusinssInfoAllInfo: this.reqBusinssInfoAllInfo, hasNew: hasNew, memberId: memberId, countAddFn: this.countAddFn}
         return (
             <div className='BusinessInfo'>

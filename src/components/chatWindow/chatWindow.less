@@ -6,6 +6,7 @@
   padding-left: 10px;
   min-height: calc(~"100% + 10px");
   margin-top: 90px;
+  overflow: hidden;
   .content {
     width: 1200px;
     margin-left: 50%;
@@ -151,7 +152,8 @@
         .from, .to {
           font-size: 18px;
           color: #9BA2AD;
-          margin-bottom: 50px;
+          padding-top:30px;
+          padding-bottom:40px;
           .headerPic {
             display: inline-block;
             width: 64px;
@@ -240,19 +242,17 @@
               font-size: 14px;
               color: #9BA2AD;
               position: absolute;
-              bottom: -40px;
+              bottom: -30px;
             }
           }
 
         }
         .fromImg {
-          margin-top:30px;
           .headerPic {
             vertical-align: top;
           }
         }
         .toImg {
-          margin-top:30px;
           .headerPic {
             vertical-align: top;
           }
@@ -299,7 +299,7 @@
             text-align:right;
             width:480px;
             margin:0px auto;
-            padding-top:16px;
+            position:relative;
             .positionBox{
               min-height:98px;
               text-align: left;
@@ -413,13 +413,13 @@
               }
             }
             .date{
+              position:absolute;
+              right:0px;
+              bottom:-30px;
               font-size:14px;
             }
           }
 
-        }
-        .positionTo{
-          margin-bottom:10px;
         }
       }
       .ipt_box {
@@ -567,5 +567,366 @@
   }
   .my_pagination{
     padding:30px 30px 10px;
+  }
+}
+.chatResumeModal{
+  width:1100px !important;
+  border-radius:4px;
+  position:absolute;
+  padding-bottom:0px;
+  left:50%;
+  margin-left:-550px;
+  top:100px;
+  bottom:100px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  .chatAuditionDetails {
+    .detailsMain{
+      position:relative;
+      padding:20px 20px 40px 115px;
+    }
+    .icon_pic {
+      display: inline-block;
+      width: 70px;
+      height: 68px;
+      position: absolute;
+      top: 20px;
+      left: 25px;
+      overflow:hidden;
+      img{
+        width:64px;
+        height:64px;
+        border-radius:64px;
+      }
+      i{
+        width:20px;
+        height:20px;
+        background-repeat:no-repeat;
+        background-position:center;
+        background-image:url("../../images/man.png");
+        background-size:contain;
+        position:absolute;
+        bottom:4px;
+        right:0px;
+      }
+      i.female{
+        background-image:url("../../images/woman.png");
+      }
+    }
+    .basic {
+      padding-bottom: 20px;
+      border-bottom: 1px dashed #E0E0E0;
+      font-size: 14px;
+      color: #999999;
+      .name {
+        margin-bottom: 4px;
+        .til {
+          font-size: 20px;
+          color: #333333;
+          margin-right: 10px;
+        }
+        .trade {
+          display: inline-block;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          vertical-align: text-bottom;
+          span{
+            padding:0px 5px;
+          }
+          span:last-child{
+            display: none;
+          }
+        }
+      }
+      .info {
+        min-height:20px;
+        .shuXian {
+          margin: 0 5px;
+          display: inline-block;
+          width: 1px;
+          height: 14px;
+          background-color: #999999;
+          vertical-align: middle;
+        }
+        .basicInfoBox {
+          span:last-child{
+            display: none;
+          }
+        }
+        .jobStates {
+          display: inline-block;
+          width: 40px;
+          height: 20px;
+          line-height: 20px;
+          text-align: center;
+          margin-left: 10px;
+          background: #25CCF6;
+          border-radius: 4px;
+          color: #fff;
+          font-size: 14px;
+          vertical-align: text-bottom;
+          float: right;
+        }
+      }
+    }
+    .mySelf, .hope {
+      padding: 20px 0 10px 0;
+      border-bottom: 1px dashed #E0E0E0;
+      .til {
+        font-size: 18px;
+        color: #666666;
+        margin-bottom: 20px;
+      }
+      div {
+        font-size: 14px;
+        color: #999999;
+        margin-bottom: 10px;
+      }
+      .qiWangPay {
+        margin-bottom: 10px;
+        span {
+          font-size: 14px;
+          color: #666666;
+          margin-right: 20px;
+        }
+        i {
+          font-style: normal;
+          font-size: 14px;
+          color: #25CCF6;
+        }
+      }
+    }
+    .jobJingLi {
+      border-bottom: 1px dashed #E0E0E0;
+      .til {
+        font-size: 18px;
+        color: #666666;
+        margin-top: 20px;
+        margin-bottom: 20px;
+      }
+      .company {
+        .name {
+          font-size: 14px;
+          color: #666666;
+          margin-right: 20px;
+        }
+        .buMen, .time {
+          font-size: 14px;
+          color: #999999;
+        }
+        .time {
+          float: right;
+        }
+      }
+      .jobNeiRong {
+        margin-bottom: 20px;
+        div {
+          font-size: 14px;
+          color: #999999;
+          margin-top: 10px;
+        }
+      }
+    }
+    .jiaoYuJing, .mySelfDes {
+      padding: 20px 0;
+      border-bottom: 1px dashed #E0E0E0;
+      .title {
+        font-size: 18px;
+        color: #666666;
+        margin-bottom: 20px;
+      }
+      span {
+        font-size: 14px;
+        color: #999999;
+      }
+      .daXue {
+        color: #3F3F3F;
+        margin-right: 40px;
+      }
+      .date {
+        float: right;
+      }
+    }
+  }
+  .chatAgentDetails{
+    .detailsMain{
+      position:relative;
+      padding:20px 20px 40px 115px;
+    }
+    .icon_pic {
+      display: inline-block;
+      width: 70px;
+      height: 68px;
+      position: absolute;
+      top: 20px;
+      left: 25px;
+      overflow:hidden;
+      img{
+        width:64px;
+        height:64px;
+        border-radius:64px;
+      }
+      i{
+        width:20px;
+        height:20px;
+        background-repeat:no-repeat;
+        background-position:center;
+        background-image:url("../../images/man.png");
+        background-size:contain;
+        position:absolute;
+        bottom:4px;
+        right:0px;
+      }
+      i.female{
+        background-image:url("../../images/woman.png");
+      }
+    }
+    .basic {
+      padding-bottom: 20px;
+      border-bottom: 1px dashed #E0E0E0;
+      font-size: 14px;
+      color: #999999;
+      position: relative;
+      min-height: 76px;
+      .name {
+        margin-bottom: 4px;
+        .til {
+          font-size: 20px;
+          color: #333333;
+          margin-right: 10px;
+        }
+      }
+      .info {
+        .shuXian {
+          margin: 0 5px;
+          display: inline-block;
+          width: 1px;
+          height: 14px;
+          background-color: #999999;
+          vertical-align: middle;
+        }
+        span:last-child{
+          display: none;
+        }
+      }
+      .total {
+        position: absolute;
+        right: 0;
+        top: 2px;
+        >span {
+          display: inline-block;
+          margin-left: 30px;
+        }
+        div {
+          text-align: center;
+        }
+        .cont {
+          font-size: 20px;
+          color: #25CCF6;
+        }
+      }
+    }
+    .mySelf, .hope {
+      padding-top: 20px;
+      border-bottom: 1px dashed #E0E0E0;
+      div {
+        font-size: 14px;
+        color: #999999;
+        margin-bottom: 10px;
+      }
+      .qiWangPay {
+        margin-bottom: 20px;
+        .tilte {
+          font-size: 18px;
+          color: #666666;
+        }
+        .item {
+          display: inline-block;
+          padding: 0 18px;
+          font-size: 14px;
+          color: #25CCF6;
+          border: 1px solid #25CCF6;
+          border-radius: 2px;
+          text-align: center;
+          height: 30px;
+          line-height: 30px;
+          margin-right: 10px;
+        }
+      }
+    }
+    .jobJingLi {
+      border-bottom: 1px dashed #E0E0E0;
+      .til {
+        font-size: 18px;
+        color: #666666;
+        margin-top: 20px;
+        margin-bottom: 20px;
+      }
+      .companyBox{
+        position:relative;
+        .time {
+          position:absolute;
+          top:0px;
+          right:0px;
+          font-size: 14px;
+          color: #999999;
+        }
+      }
+      .company {
+        .name {
+          font-size: 14px;
+          color: #666666;
+          margin-right: 20px;
+        }
+        .buMen, .line {
+          font-size: 14px;
+          color: #999999;
+        }
+        .line{
+          padding:0px 5px;
+          &:last-child{
+            display: none;
+          }
+        }
+
+      }
+      .jobNeiRong {
+        margin-bottom: 20px;
+        div {
+          font-size: 14px;
+          color: #999999;
+          margin-top: 10px;
+        }
+      }
+    }
+    .jiaoYuJing, .mySelfDes {
+      padding: 20px 0;
+      border-bottom: 1px dashed #E0E0E0;
+      .title {
+        font-size: 18px;
+        color: #666666;
+        margin-bottom: 20px;
+      }
+      span {
+        font-size: 14px;
+        color: #999999;
+      }
+      .line{
+        padding:0px 5px;
+        font-size: 14px;
+        color: #999999;
+        &:last-child{
+          display: none;
+        }
+      }
+      .daXue {
+        color: #3F3F3F;
+        margin-right: 40px;
+      }
+      .date {
+        float: right;
+      }
+    }
   }
 }

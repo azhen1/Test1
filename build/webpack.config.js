@@ -1,4 +1,5 @@
 var webpack = require('webpack');
+require('babel-polyfill')
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -12,7 +13,7 @@ var ROOT = utils.fullPath('../');
 var config = {
     entry: {
         main: ["./src/entry/main.js"],
-        vendor: ["react-dom", "react", "react-router"]
+        vendor: ["react-dom", "react", "react-router", "babel-polyfill"],
     },
     output: {
         path: ROOT + '/portal',

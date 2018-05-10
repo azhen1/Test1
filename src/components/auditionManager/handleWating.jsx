@@ -12,6 +12,7 @@ let HandleWating = React.createClass({
         let URL = '/job/platformInterview/transformToWaitingInterview'
         let formData = {}
         formData.id = id
+        formData.companyId = window.localStorage.getItem('memberId')
         postRequest(true, URL, formData).then((res) => {
             let code = res.code
             if (code === 0) {

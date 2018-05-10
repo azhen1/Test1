@@ -1,0 +1,113 @@
+.modifiedMain{
+  width: calc(~"100% - 200px");
+  background-color: #E6F5FF;
+  margin-left: 200px;
+  margin-top: 90px;
+  padding-left: 10px;
+  padding-top: 10px;
+  height: calc(~"100% + 10px");
+  overflow: hidden;
+  padding-bottom:10px;
+  .content {
+    width: 1190px;
+    margin-left: 50%;
+    transform: translate(-50%, 0);
+    border-radius: 4px;
+    height: 100%;
+    .til {
+      height: 50px;
+      line-height: 50px;
+      padding-top: 5px;
+      border-bottom: 1px solid #e6f5ff;
+      padding-left: 40px;
+      background-color: #fff;
+      .ant-tabs-bar {
+        border-bottom: 0;
+        margin-bottom: 0;
+        .ant-tabs-ink-bar {
+          background-color: #25CCF6;
+          bottom: 2px;
+        }
+      }
+      .ant-tabs-tab {
+        font-size: 18px;
+        margin-right: 20px;
+        padding-bottom: 11px;
+        user-select: none;
+        &:hover {
+          color: #25CCF6;
+        }
+      }
+      .ant-tabs-nav .ant-tabs-tab-active {
+        color: #25CCF6;
+      }
+    }
+    .modifiedBox{
+      height: calc(~"100% - 50px");
+      overflow: hidden;
+      position: relative;
+      background:#fff;
+      padding:20px 40px;
+      .telBox{
+        margin-bottom:12px;
+        span.tips{
+          padding-left:120px;
+          color:#bbb;
+          font-size:12px;
+        }
+        .label{
+          font-size: 14px;
+          color: #999999;
+          margin-right: 10px;
+          width: 110px;
+          display: inline-block;
+        }
+        .codeIpt{
+          position:relative;
+          margin-top:6px;
+          border-top:1px solid #e6f5ff;
+          border-bottom:1px solid #e6f5ff;
+          width:300px;
+          display: inline-block;
+          padding:5px 0;
+          input{
+            border:none;
+            border-radius:0;
+            width:200px;
+            &:focus{
+              outline: none;
+              box-shadow: none;
+            }
+          }
+          span{
+            position:absolute;
+            right:0;
+            top:5px;
+            line-height: 28px;
+            border-left:1px solid #e6f5ff;
+            width:100px;
+            text-align: left;
+            padding-left:8px;
+            cursor:pointer;
+            color:#25ccf6;
+          }
+        }
+        .button{
+          cursor:pointer;
+          display: inline-block;
+          width: 130px;
+          height: 50px;
+          border-radius: 25px;
+          line-height: 50px;
+          background: #25ccf6;
+          text-align: center;
+          color: #fff;
+          font-size: 20px;
+          border:none;
+          margin-left:120px;
+          margin-top:60px;
+        }
+      }
+    }
+  }
+}

@@ -7,6 +7,7 @@
   padding-top: 10px;
   min-height: 100%;
   padding-bottom: 10px;
+  overflow: hidden;
   .content {
     width: 1200px;
     margin-left: 50%;
@@ -14,30 +15,62 @@
     border-radius: 4px;
     min-height: 100%;
     background-color: #fff;
-    position: relative;
-    padding-right: 26px;
-    padding-top: 72px;
-    padding-left: 115px;
-    padding-right: 20px;
-    padding-bottom:40px;
-    .backBox{
-      position:absolute;
-      display: block;
-      width:36px;
-      height:36px;
-      background:url("../../images/返回上一层 1.png") no-repeat center;
-      background-size:contain;
-      top:20px;
-      left:25px;
+    position:relative;
+    .backpageMain{
+      height:50px;
+      border-bottom:1px solid #eee;
+      .backBox{
+        position:absolute;
+        display: block;
+        width:12px;
+        height:34px;
+        background:url("../../images/leftArrow.png") no-repeat center;
+        background-size:contain;
+        top:8px;
+        left:25px;
+      }
+      .downloadResume{
+        float:right;
+        width:130px;
+        line-height: 50px;
+        background:#25CCF6;
+        color:#fff;
+        text-align:center;
+        font-size:14px;
+        letter-spacing: 2px;
+      }
+    }
+    .detailsMain{
+      position:relative;
+      padding:20px 20px 40px 115px;
     }
     .icon_pic {
       display: inline-block;
-      width: 64px;
-      height: 64px;
+      width: 70px;
+      height: 68px;
       position: absolute;
-      top: 72px;
+      top: 20px;
       left: 25px;
-      border-radius:50px;
+      overflow:hidden;
+      img{
+        width:64px;
+        height:64px;
+        border-radius:64px;
+      }
+      i{
+        width:20px;
+        height:20px;
+        background-repeat:no-repeat;
+        background-position:center;
+        background-image:url("../../images/man.png");
+        background-size:contain;
+        position:absolute;
+        bottom:4px;
+        right:0px;
+      }
+      i.female{
+        background-image:url("../../images/woman.png");
+      }
     }
     .basic {
       padding-bottom: 20px;
@@ -45,6 +78,7 @@
       font-size: 14px;
       color: #999999;
       position: relative;
+      min-height: 76px;
       .name {
         margin-bottom: 4px;
         .til {
