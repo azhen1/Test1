@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no" name="viewport" id="viewport" />
+    <meta name="format-detection" content="telephone=no, email=no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>邀请好友</title>
+    <link rel="stylesheet" type="text/css" href="css/inviteFriends.css"/>
+</head>
+<body>
+<div class="topContent" id="topContent">
+    <div class="titleImg"><img src="imgsH5/bgTxt2.png" alt=""></div>
+    <div class="mask"></div>
+    <div class="formBox">
+        <div class="phone"><input type="number" id="phoneIpt" placeholder="输入手机号码"></div>
+        <div class="code"><input type="number" id="codeIpt" placeholder="输入验证码"><span id="codeBtn">获取验证码</span></div>
+        <div id="submitBtn">立即注册</div>
+        <div class="close"></div>
+    </div>
+    <div class="inviteBtns">
+        <div class="hrBtns btns">
+            <span class="player">我是HR</span>
+            <span>免费资源圈管理奖励多多</span>
+        </div>
+        <div class="candidateBtns btns">
+            <span class="player">我是求职者</span>
+            <span>面试有补贴 免费看房</span>
+        </div>
+        <span class="checkInfor" id="checkInfor">查看平台说明</span>
+    </div>
+</div>
+<div class="message" id="message">提示消息</div>
+<div class="platformMain">
+    <div class="platformBox">
+        <h6>公司简介</h6>
+        <p>鲸匹配™——求职租房一站式服务平台，隶属于杭州鲸城网络科技有限公司，主打共享+匹配经济，通过自主研发的鲸AI智能匹配系统，采用复合式ERP管理+移动互联匹配模式，定位于颠覆两个行业：招聘和租房。</p>
+        <p>从相“加”到相“融”，创造一个新的体系——招聘生态圈，鲸匹配不仅为现有企业提供更高效、优质的招聘解决方案，并将通过赋能招聘和租房体系的“影子”参与者，释放其潜在储备资源的经济效力和社会价值。</p>
+        <h6>主营业务</h6>
+        <p>鲸匹配™——人工+智能AI小鲸机器人，双核双动力，有深度、更有温度！</p>
+        <p>融合大数据智能招聘、智慧信用租房管理系统，合二为一，旨在为求职者、招聘企业、租客、个人房东、物业服务企业等用户，搭建一个综合性交互平台，为用户提供精准、高效、优质的招聘、租房一站式服务，快速求职、租房，实现人尽其才、物尽其用！</p>
+        <h6>产品特色：</h6>
+        <p>【企业真实】平台安全验证，人工审核招聘、租房信息</p>
+        <p>【免费咨询】专员提前帮助搜寻招聘企业，免费提供多对一专业级求职咨询，快速获取意向企业真实信息，不盲目面试，精准匹配、无缝对接</p>
+        <p>【求职补贴】完成面试获取相应补贴，求职路上我买单</p>
+        <p>【贴心提示】自动生成日程提示，合理规划，不错过任何一次机会</p>
+        <p>【认证房源】平台提供物业房源和房东直租房源，拒绝肆意溢价、全免中介费</p>
+        <p>【看房服务】随时预约线上线下双通道免费带看房，真实安全有保障</p>
+        <p>【一键报修】线上报修，一键获取物业贴心服务</p>
+        <p>【安全保障】线上预约、看房、签约、缴租金可获得平台赠送财产安全险，提供多种支付方式</p>
+        <p>【信息保障】保障个人联系方式私密性，拒绝电话轰炸，一键注册终身服务</p>
+    </div>
+</div>
+</body>
+<script src="jsH5/jquery-1.8.3.min.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+<script>
+    window.onload=function(){
+        var windowHeight = window.innerHeight
+        // document.getElementById('topContent').style.height = windowHeight + 'px'
+        document.getElementById('checkInfor').onclick = function(){
+            document.body.scrollTop = document.documentElement.scrollTop = windowHeight
+        }
+        // 获取元素
+        var phoneIptEvent = document.getElementById('phoneIpt')
+        var codeIptEvent = document.getElementById('codeIpt')
+        var messageEvent = document.getElementById('message')
+
+        $('.btns').click(function(){
+            $('.mask').show()
+            $('.formBox').show()
+        })
+        $('.mask').click(function(){
+            $('.mask').hide()
+            $('.formBox').hide()
+            phoneIptEvent.value = ''
+            codeIptEvent.value = ''
+        })
+        $('.close').click(function(){
+            $('.mask').hide()
+            $('.formBox').hide()
+            phoneIptEvent.value = ''
+            codeIptEvent.value = ''
+        })
+
+        var href = window.location.href
+        var id = ''
+        if (href !== '' && href !== null && href !== undefined && href.indexOf('memberId') > -1) {
+            id = href.split('?')[1].split('&')[0].split('=')[1]
+        }
+        phoneIptEvent.onblur = function() {
+            var val = this.value
+            if (val !== '') {
+                var reg = /^1[3|4|5|7|8|9][0-9]{9}$/
+                if (!reg.test(val)) {
+                    messageFun('请输入合法的电话号码')
+                    this.value = ''
+                }
+            }
+        }
+        document.getElementById('codeBtn').onclick = function(){
+            var _th = this
+            var phoneNumber = phoneIptEvent.value
+            var formData = {
+                mobile: ''
+            }
+
+            var URL = 'https://api.jingpipei.com/member/platformMember/getCode'
+            // var URL = 'http://116.62.136.23/member/platformMember/getCode'
+            if (phoneNumber !== '') {
+                if (_th.getAttribute('class') !== 'noClick') {
+                    formData.mobile = encryptPhone(phoneNumber)
+                    $.ajax({
+                        type: 'GET',
+                        async: true,
+                        url: URL,
+                        data: formData,
+                        success: function (response) {
+                            if(response.code === 0) {
+                                countDown(_th)
+                            }
+                        },
+                        error: function (err) {
+                            alert(err)
+                        }
+                    })
+                }
+            } else {
+                messageFun('电话号码不能为空')
+            }
+        }
+        document.getElementById('submitBtn').onclick = function () {
+            var phoneNumber = phoneIptEvent.value
+            var codeNumber = codeIptEvent.value
+            var formData = {}
+            if (id === '') {
+                formData = {
+                    mobile: phoneNumber,
+                    code: codeNumber
+                }
+            } else {
+                formData = {
+                    mobile: phoneNumber,
+                    code: codeNumber,
+                    memberId: id
+                }
+            }
+            var URL = 'https://api.jingpipei.com/member/platformMember/inviteFriendCodeLogin'
+            // var URL = 'http://116.62.136.23/member/platformMember/inviteFriendCodeLogin'
+            if (phoneNumber !== '' && codeNumber !== '') {
+                $.ajax({
+                    type: 'POST',
+                    async: true,
+                    url: URL,
+                    data: formData,
+                    success: function (response) {
+                        if(response.code === 0){
+                            messageFun('注册成功！')
+                            var u = navigator.userAgent;
+                            if (u.indexOf('Android') > -1 || u.indexOf('Linux') > -1) {//安卓手机
+                                // alert("下载Android APP链接")
+                                window.location.href = "http://www.jingpipei.com/apk/download.html"
+                            } else if (u.indexOf('iPhone') > -1) {//苹果手机
+                                // alert("下载IOS APP链接")
+                                window.location.href = "https://itunes.apple.com/cn/app/id1354342518?mt=8"
+                            }
+                        } else {
+                            messageFun(response.message)
+                        }
+                    },
+                    error: function (err) {
+                        messageFun(err)
+                    }
+                })
+            } else {
+                messageFun('你有信息尚未填写')
+            }
+        }
+        var time1;
+        // 消息弹窗
+        function messageFun (txt) {
+            messageEvent.innerHTML = txt
+            clearTimeout(time1)
+            messageEvent.style.display = 'block'
+            time1 = setTimeout(function(){
+                messageEvent.style.display = 'none'
+            },2500)
+        }
+
+        // 倒计时
+        function countDown (e) {
+            e.setAttribute('class', 'noClick')
+            var _th = this
+            var defCount = 60
+            e.innerHTML = '已发送'+defCount+'秒'
+            var count = setInterval(function () {
+                if (defCount === 0) {
+                    e.innerHTML = '重新发送'
+                    e.setAttribute('class', '')
+                    clearInterval(count)
+                } else {
+                    --defCount
+                    e.innerHTML = '已发送 '+defCount+' 秒'
+                }
+            }, 1000)
+        }
+
+        // 电话号码加密处理，先异或，再base64转码
+        function encryptPhone (phoneStr) {
+            var base = new Base64()
+            var result = []
+            var tpl = '00000dingyi'
+            var strRes = ''
+            var phoneArr = unpack(phoneStr)
+            var tplArr = unpack(tpl)
+            phoneArr.map(function(v, index){
+                result.push(v ^ tplArr[index])
+            })
+            result = pack(result)
+            strRes = base.encode(result)
+            return strRes
+        }
+        weixinShare(href)
+        // 微信分享
+        function weixinShare (href) {
+            var URLShare = 'https://api.jingpipei.com/member/weixin/signWeixin'
+            // var URLShare = 'http://116.62.136.23/member/weixin/signWeixin'
+            var formDataShare = {
+                url: href.split('#')[0]
+            }
+            var imgUrl = 'http://dingyi.oss-cn-hangzhou.aliyuncs.com/images/83ad1a50119a4587859e606eb28a8f75.png'
+            var title = '邀请好友'
+            var description = '鲸匹配----求职租房一站式服务平台'
+            $.ajax({
+                type: 'GET',
+                async: true,
+                url: URLShare,
+                data: formDataShare,
+                success: function (response) {
+                    console.log(response)
+                    if(response.code === 0){
+                        var dataShare = response.data
+                        wx.config({
+                            debug: false,
+                            appId: 'wx1b55b3cbfa6c3879',
+                            timestamp: dataShare.timestamp,
+                            nonceStr: dataShare.nonceStr,
+                            signature: dataShare.signature,
+                            jsApiList: [
+                                'onMenuShareTimeline',
+                                'onMenuShareAppMessage',
+                                'onMenuShareQQ',
+                                'onMenuShareQZone'
+                            ]
+                        })
+                        wx.ready(function(){
+                            wx.checkJsApi({
+                                jsApiList: [
+                                    'onMenuShareTimeline',
+                                    'onMenuShareAppMessage',
+                                    'onMenuShareQQ',
+                                    'onMenuShareQZone'
+                                ],
+                                success: function(res) {
+                                }
+                            })
+                            wx.onMenuShareTimeline({
+                                title: title, // 分享标题
+                                link: href, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                                imgUrl: imgUrl, // 分享图标
+                                success: function () {
+                                },
+                                cancel: function () {
+                                    // 用户取消分享后执行的回调函数
+                                }
+                            })
+                            wx.onMenuShareAppMessage({
+                                title: title, // 分享标题
+                                desc: description, // 分享描述
+                                link: href, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                                imgUrl: imgUrl, // 分享图标
+                                type: 'link', // 分享类型,music、video或link，不填默认为link
+                                dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+                                success: function () {
+                                },
+                                cancel: function () {
+                                }
+                            })
+                            wx.onMenuShareQQ({
+                                title: title, // 分享标题
+                                desc: description, // 分享描述
+                                link: href, // 分享链接
+                                imgUrl: imgUrl, // 分享图标
+                                success: function () {
+                                },
+                                cancel: function () {
+                                }
+                            })
+                            wx.onMenuShareQZone({
+                                title: title, // 分享标题
+                                desc: description, // 分享描述
+                                link: href, // 分享链接
+                                imgUrl: imgUrl, // 分享图标
+                                success: function () {
+                                },
+                                cancel: function () {
+                                }
+                            })
+                        })
+                        wx.error(function (res) {
+                            console.log(res);
+                        })
+                    }
+                },
+                error: function (err) {
+                    messageFun(err)
+                }
+            })
+        }
+
+        var Base64 = function () {
+
+            var _keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/="
+            this.encode = function (input, fn) {
+                var output = ''
+                var chr1, chr2, chr3, enc1, enc2, enc3, enc4
+                var i = 0
+                input = this._utf8_encode(input)
+                while (i < input.length) {
+                    chr1 = input.charCodeAt(i++)
+                    chr2 = input.charCodeAt(i++)
+                    chr3 = input.charCodeAt(i++)
+                    enc1 = chr1 >> 2
+                    enc2 = ((chr1 & 3) << 4) | (chr2 >> 4)
+                    enc3 = ((chr2 & 15) << 2) | (chr3 >> 6)
+                    enc4 = chr3 & 63
+                    if (isNaN(chr2)) {
+                        enc3 = enc4 = 64
+                    } else if (isNaN(chr3)) {
+                        enc4 = 64
+                    }
+                    output = output +
+                        _keyStr.charAt(enc1) + _keyStr.charAt(enc2) +
+                        _keyStr.charAt(enc3) + _keyStr.charAt(enc4)
+                }
+                return output
+            }
+
+            this.decode = function (input, fn) {
+                var output = ''
+                var chr1, chr2, chr3
+                var enc1, enc2, enc3, enc4
+                var i = 0
+                input = input.replace(/[^A-Za-z0-9\+\/\=]/g, '')
+                while (i < input.length) {
+                    enc1 = _keyStr.indexOf(input.charAt(i++))
+                    enc2 = _keyStr.indexOf(input.charAt(i++))
+                    enc3 = _keyStr.indexOf(input.charAt(i++))
+                    enc4 = _keyStr.indexOf(input.charAt(i++))
+                    chr1 = (enc1 << 2) | (enc2 >> 4)
+                    chr2 = ((enc2 & 15) << 4) | (enc3 >> 2)
+                    chr3 = ((enc3 & 3) << 6) | enc4
+                    output = output + String.fromCharCode(chr1)
+                    if (enc3 != 64) {
+                        output = output + String.fromCharCode(chr2)
+                    }
+                    if (enc4 != 64) {
+                        output = output + String.fromCharCode(chr3)
+                    }
+                }
+                output = this._utf8_decode(output)
+                return output
+            }
+
+            this._utf8_encode = function (string) {
+                string = string.replace(/\r\n/g, '\n')
+                var utftext = ''
+                for (var n = 0; n < string.length; n++) {
+                    var c = string.charCodeAt(n)
+                    if (c < 128) {
+                        utftext += String.fromCharCode(c)
+                    } else if((c > 127) && (c < 2048)) {
+                        utftext += String.fromCharCode((c >> 6) | 192)
+                        utftext += String.fromCharCode((c & 63) | 128)
+                    } else {
+                        utftext += String.fromCharCode((c >> 12) | 224)
+                        utftext += String.fromCharCode(((c >> 6) & 63) | 128)
+                        utftext += String.fromCharCode((c & 63) | 128)
+                    }
+                }
+                return utftext
+            }
+
+            this._utf8_decode = function (utftext) {
+                var string = ''
+                var i = 0
+                var c = 0
+                var c1 = 0
+                var c2 = 0
+                var c3 = 0
+                while ( i < utftext.length ) {
+                    c = utftext.charCodeAt(i)
+                    if (c < 128) {
+                        string += String.fromCharCode(c)
+                        i++
+                    } else if((c > 191) && (c < 224)) {
+                        c2 = utftext.charCodeAt(i+1);
+                        string += String.fromCharCode(((c & 31) << 6) | (c2 & 63))
+                        i += 2
+                    } else {
+                        c2 = utftext.charCodeAt(i+1);
+                        c3 = utftext.charCodeAt(i+2);
+                        string += String.fromCharCode(((c & 15) << 12) | ((c2 & 63) << 6) | (c3 & 63))
+                        i += 3
+                    }
+                }
+                return string
+            }
+        }
+
+        function unpack (str) {
+            var bytes = new Array()
+            var len
+            var c
+            len = str.length
+            for (var i = 0; i < len; i++) {
+                c = str.charCodeAt(i)
+                if (c >= 0x010000 && c <= 0x10FFFF) {
+                    bytes.push(((c >> 18) & 0x07) | 0xF0)
+                    bytes.push(((c >> 12) & 0x3F) | 0x80)
+                    bytes.push(((c >> 6) & 0x3F) | 0x80)
+                    bytes.push((c & 0x3F) | 0x80)
+                } else if (c >= 0x000800 && c <= 0x00FFFF) {
+                    bytes.push(((c >> 12) & 0x0F) | 0xE0)
+                    bytes.push(((c >> 6) & 0x3F) | 0x80)
+                    bytes.push((c & 0x3F) | 0x80)
+                } else if (c >= 0x000080 && c <= 0x0007FF) {
+                    bytes.push(((c >> 6) & 0x1F) | 0xC0)
+                    bytes.push((c & 0x3F) | 0x80)
+                } else {
+                    bytes.push(c & 0xFF)
+                }
+            }
+            return bytes
+        }
+        function pack (arr) {
+            if (typeof arr === 'string') {
+                return arr
+            }
+            var str = ''
+            var _arr = arr
+            for (var i = 0; i < _arr.length; i++) {
+                var one = _arr[i].toString(2)
+                var v = one.match(/^1+?(?=0)/)
+                if (v && one.length === 8) {
+                    var bytesLength = v[0].length
+                    var store = _arr[i].toString(2).slice(7 - bytesLength)
+                    for (var st = 1; st < bytesLength; st++) {
+                        store += _arr[st + i].toString(2).slice(2)
+                    }
+                    str += String.fromCharCode(parseInt(store, 2))
+                    i += bytesLength - 1
+                } else {
+                    str += String.fromCharCode(_arr[i])
+                }
+            }
+            return str
+        }
+    }
+</script>
+</html>

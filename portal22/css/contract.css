@@ -1,0 +1,81 @@
+@charset "utf-8";
+/*公用样式*/
+*{margin:0;padding:0;color:#646464;font-size:12px;font-family:Tahoma,Helvetica,Arial,微软雅黑,sans-serif;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent}
+*,:after,:before{box-sizing:border-box;-o-box-sizing:border-box;-ms-box-sizing:border-box}
+:after,:before{display:none;content:""}
+img{outline:none;border:none;}
+i{font-style: normal;}
+a{color:inherit;text-decoration:none;font-size:inherit;}
+a,a img{cursor:pointer}
+a img{outline:none;border:none;}
+ul,li{list-style:none}
+a:link,a:visited{color:#646464;text-decoration:none}
+html{text-size-adjust:none;-webkit-text-size-adjust:none;-moz-text-size-adjust:none;-o-text-size-adjust:none;-ms-text-size-adjust:none}
+body,html{width:100%;height:100%;}
+body{position:relative;height:100%;}
+body,div,ol,p,span,ul{word-break:break-all;/*允许在单词内换行*/}
+h1,h2,h3,h4,h5,h6{font-weight: normal;}
+
+.container {
+    height:100%;
+}
+.contractMain{
+    color:#666;
+    height:100%;
+}
+.topPage{
+    padding-top:30px;
+    text-align:center;
+    height:100%;
+    position:relative;
+}
+.topPage h5{
+    font-size:5vw;
+    color:#333;
+    border-bottom:1px solid #333;
+    padding-bottom:20px;
+    margin-bottom:10px;
+}
+.topPage .date{
+    font-size:3vw;
+}
+.topPage .btm{
+    width:100%;
+    position:absolute;
+    bottom:30px;
+    left:0px;
+    text-align: center;
+}
+.topPage .btm p{
+    font-size:16px;
+    color:#333;
+}
+.descBox{
+    padding:15px;
+}
+.descBox h5{
+    font-size:5vw;
+    color:#333;
+    text-align:center;
+    padding:20px 0px;
+}
+.descBox p{
+    text-indent: 24px;
+}
+.contract_main{
+    padding:15px;
+}
+.txtIndent24{text-indent: 24px;}
+
+
+
+
+
+
+
+
+
+
+
+
+

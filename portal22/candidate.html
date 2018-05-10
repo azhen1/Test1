@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no" name="viewport" id="viewport" />
+    <meta name="format-detection" content="telephone=no, email=no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>鲸匹配</title>
+    <link rel="stylesheet" type="text/css" href="css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="css/details.css"/>
+    <script src="jsH5/jquery-1.8.3.min.js"></script>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+    <script src="jsH5/mainFn.js"></script>
+    <script src="jsH5/react.js"></script>
+    <script src="jsH5/react-dom.js"></script>
+    <script src="jsH5/browser.min.js"></script>
+</head>
+<body>
+<div id="root"></div>
+</body>
+<script type="text/babel">
+    var Root = React.createClass({
+        getInitialState: function() {
+            return {
+                candidateInfo: {
+                    name: '',
+                    headUrl: '',
+                    gender: '',
+                    age: '',
+                    workYears: '',
+                    education: '',
+                    position: '',
+                    trade: '',
+                    onJob: 0,
+                    entryTime: '',
+                    city: '',
+                    brief: '',
+                    selfAssessment: ''
+                },
+                resumePositions: [],
+                workExperiences: [],
+                educationExperiences: [],
+                showBlank: false,
+                showDownload: false,
+                openAndroid: 'app://www.jingpipei.com/',
+                openIOS: 'jingpipei://sssix2.whalecity',
+                openUrl: '',
+                isSupport: '1'
+            }
+        },
+        componentDidMount: function() {
+            let href = window.location.href
+            let id = ''
+            if (href !== '' && href !== null && href !== undefined && href.indexOf('memberId') > -1) {
+                id = href.split('?')[1].split('&')[0].split('=')[1]
+            }
+            let {candidateInfo, resumePositions, workExperiences, educationExperiences} = this.state
+            let _th = this
+            // id = 13
+            let formData = {
+                memberId: id,
+                type: 0
+            }
+            let URL = 'https://api.jingpipei.com/member/resume/get'
+            // let URL = 'http://116.62.136.23/member/resume/get'
+            getRequest(true, URL, formData).then(function (res) {
+                if(res.code === 0) {
+                    let data = res.data
+                    if (data !== null) {
+                        candidateInfo.name = data.name
+                        candidateInfo.headUrl = data.headUrl
+                        candidateInfo.gender = data.gender
+                        candidateInfo.position = data.position
+                        candidateInfo.age = data.age
+                        candidateInfo.brief = data.brief
+                        candidateInfo.workYears = data.workYearsText
+                        candidateInfo.education = data.educationText
+                        candidateInfo.trade = data.trade
+                        candidateInfo.onJob = data.onJob
+                        candidateInfo.entryTime = data.lastestEntryTime
+                        candidateInfo.city = data.location.split('-')[1]
+                        candidateInfo.selfAssessment = data.selfAssessment
+                        resumePositions = data.resumePositions
+                        workExperiences = data.workExperiences
+                        educationExperiences = data.educationExperiences
+                        _th.setState({
+                            candidateInfo: candidateInfo,
+                            resumePositions: resumePositions,
+                            workExperiences: workExperiences,
+                            educationExperiences: educationExperiences,
+                            isSupport: '1'
+                        })
+                    }
+                    _th.weixinShare(href, data)
+                }
+            })
+            // setTimeout(function(){
+            //     if (_th.state.isSupport === '0') {
+            //         _th.setState({
+            //             isSupport: '2'
+            //         })
+            //     }
+            // }, 1000)
+            let u = navigator.userAgent
+            let {openUrl, openAndroid, openIOS} = _th.state
+            if (u.indexOf('Android') > -1 || u.indexOf('Linux') > -1) {//安卓手机
+                openUrl = openAndroid
+            } else if (u.indexOf('iPhone') > -1) {//苹果手机
+                openUrl = openIOS
+            }
+            _th.setState({
+                openUrl: openUrl
+            })
+        },
+        weixinShare (href, data) {
+            var URLShare = 'https://api.jingpipei.com/member/weixin/signWeixin'
+            // var URLShare = 'http://116.62.136.23/member/weixin/signWeixin'
+            var formDataShare = {
+                url: href.split('#')[0]
+            }
+            var imgUrl = 'http://dingyi.oss-cn-hangzhou.aliyuncs.com/images/83ad1a50119a4587859e606eb28a8f75.png'
+            var title = this.hideName(data.name)
+            var description = '正在寻找' + data.position + '岗位工作'
+            getRequest(true, URLShare, formDataShare).then(function (response) {
+                if (response.code === 0) {
+                    var dataShare = response.data
+                    wx.config({
+                        debug: false,
+                        appId: 'wx1b55b3cbfa6c3879',
+                        timestamp: dataShare.timestamp,
+                        nonceStr: dataShare.nonceStr,
+                        signature: dataShare.signature,
+                        jsApiList: [
+                            'onMenuShareTimeline',
+                            'onMenuShareAppMessage',
+                            'onMenuShareQQ',
+                            'onMenuShareQZone'
+                        ]
+                    })
+                    wx.ready(function(){
+                        wx.checkJsApi({
+                            jsApiList: [
+                                'onMenuShareTimeline',
+                                'onMenuShareAppMessage',
+                                'onMenuShareQQ',
+                                'onMenuShareQZone'
+                            ],
+                            success: function(res) {
+                            }
+                        })
+                        wx.onMenuShareTimeline({
+                            title: title, // 分享标题
+                            link: href, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                            imgUrl: imgUrl, // 分享图标
+                            success: function () {
+                            },
+                            cancel: function () {
+                                // 用户取消分享后执行的回调函数
+                            }
+                        })
+                        wx.onMenuShareAppMessage({
+                            title: title, // 分享标题
+                            desc: description, // 分享描述
+                            link: href, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                            imgUrl: imgUrl, // 分享图标
+                            type: 'link', // 分享类型,music、video或link，不填默认为link
+                            dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+                            success: function () {
+                            },
+                            cancel: function () {
+                            }
+                        })
+                        wx.onMenuShareQQ({
+                            title: title, // 分享标题
+                            desc: description, // 分享描述
+                            link: href, // 分享链接
+                            imgUrl: imgUrl, // 分享图标
+                            success: function () {
+                            },
+                            cancel: function () {
+                            }
+                        })
+                        wx.onMenuShareQZone({
+                            title: title, // 分享标题
+                            desc: description, // 分享描述
+                            link: href, // 分享链接
+                            imgUrl: imgUrl, // 分享图标
+                            success: function () {
+                            },
+                            cancel: function () {
+                            }
+                        })
+                    })
+                }
+            })
+        },
+        showFooter () {
+            let {showBlank} = this.state
+            let _th = this
+            if (!showBlank) {
+                setTimeout(function(){
+                    _th.refs.blankBox.style.height = _th.refs.footer.offsetHeight + 10 + 'px'
+                    _th.setState({
+                        showBlank: true,
+                        showDownload: true
+                    })
+                }, 1000)
+            }
+        },
+        // 判断属性是否为空
+        isNull (val) {
+            if (val === undefined || val === null || val === '') {
+                return true
+            } else {
+                return false
+            }
+        },
+        downloadApp () {
+            var u = navigator.userAgent
+            if (u.indexOf('Android') > -1 || u.indexOf('Linux') > -1) {//安卓手机
+                window.location.href = "http://www.jingpipei.com/apk/download.html"
+            } else if (u.indexOf('iPhone') > -1) {//苹果手机
+                window.location.href = "https://itunes.apple.com/cn/app/id1354342518?mt=8"
+            }
+        },
+        hideName (val) {
+            if (val !== '' && val !== undefined && val !== null) {
+                let valStr = val.substr(0, 1) + '*'
+                return valStr
+            } else {
+                return ''
+            }
+        },
+        hideCompany (val) {
+            if (val !== '' && val !== undefined && val !== null) {
+                var length = val.length
+                if (length <= 1) {
+                    return val
+                } else if (length === 2) {
+                    val = val.substr(0, 1) + '*'
+                    return val
+                } else {
+                    let num = Math.floor(length / 2)
+                    let remainder = length % 2
+                    let replaceStr = ''
+                    let str = ''
+                    let replaceNum = 0
+                    let strNum = 0
+                    if (remainder === 0) {
+                        strNum = Math.floor(num / 2)
+                        replaceStr = val.substr(strNum, num)
+                    } else {
+                        strNum = Math.ceil(num / 2)
+                        replaceStr = val.substr(strNum, num)
+                    }
+                    for (var i = 0; i < num; i++){
+                        str += '*'
+                    }
+                    val = val.replace(replaceStr, str)
+                    return val
+                }
+            } else {
+                return ''
+            }
+        },
+        render: function () {
+            let {candidateInfo, resumePositions, workExperiences, educationExperiences, showBlank, showDownload, openUrl, isSupport} = this.state
+            let imgsURL = 'http://dingyi.oss-cn-hangzhou.aliyuncs.com/images/'
+            let headStyleDefault = {'backgroundImage': 'url(imgsH5/default_head.png)'}
+            let headStyle = {'backgroundImage': `url(${imgsURL}${candidateInfo.headUrl})`}
+            return (
+                <div className='shareMain'>
+                    {isSupport === '1' ? <div className="DetailsMain">
+                        <div className="candidateTop">
+                            <div className="header">候选人详情</div>
+                            <div className="content">
+                                <div className="contentBrief">
+                                    <a href={openUrl} className="rightNow btnClick" onClick={() => this.showFooter()}>立即查看</a>
+                                    <div className="img">
+                                        <span style={this.isNull(candidateInfo.headUrl) ? headStyleDefault : headStyle}></span>
+                                        {candidateInfo.gender === 0 ? <i className="male"></i> : <i></i>}
+                                    </div>
+                                    <div className="box personInfo">
+                                        {candidateInfo.onJob === 0 ? <i>离职</i> : <i>在职</i>}
+                                        <span className="name">{this.hideName(candidateInfo.name)}</span>
+                                        <span>{candidateInfo.position}</span>
+                                        {this.isNull(candidateInfo.position) ? null : <span>|</span>}
+                                        <span>{candidateInfo.trade}</span>
+                                        {this.isNull(candidateInfo.trade) ? null : <span>|</span>}
+                                    </div>
+                                    <div className="box">
+                                        <span>{candidateInfo.education}</span>
+                                        {this.isNull(candidateInfo.education) ? null : <span>|</span>}
+                                        <span>{candidateInfo.workYears}</span>
+                                        {this.isNull(candidateInfo.workYears) ? null : <span>|</span>}
+                                    </div>
+                                </div>
+                                <div className="contentOther">
+                                    <div className="box">
+                                        <label>城市：</label>
+                                        <span>{candidateInfo.city}</span>
+                                    </div>
+                                    <div className="box">
+                                        <span>{candidateInfo.brief}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="candidateBox expectBox">
+                            <div className="title"><i></i>期望职位</div>
+                            {
+                                resumePositions.map((v, index) => {
+                                    return (
+                                        <div className="content" key={index}>
+                                            <div className="name"><span>{v.position}</span><i>{v.wages}</i></div>
+                                            <div className="box">
+                                                <label>城市：</label>
+                                                <span>{v.workCity}</span>
+                                            </div>
+                                            <div className="box">
+                                                <label>求职类型：</label>
+                                                <span>{v.jobType}</span>
+                                            </div>
+                                        </div>
+                                    )
+                                })
+                            }
+                        </div>
+                        <div className="candidateBox experienceBox">
+                            <div className="title"><i></i>工作经历</div>
+                            {
+                                workExperiences.map((v, index) => {
+                                    return (
+                                        <div className="content" key={index}>
+                                            <div className="name"><span>{this.hideCompany(v.company)}</span><i>{v.time}</i></div>
+                                            <div className="box">
+                                                <span>{v.department}</span>
+                                                {this.isNull(v.department) ? null : <span className="line">|</span>}
+                                                <span>{v.position}</span>
+                                                {this.isNull(v.position) ? null : <span className="line">|</span>}
+                                                <span>{v.trade}</span>
+                                                {this.isNull(v.trade) ? null : <span className="line">|</span>}
+                                            </div>
+                                            <div className="conditionLi">
+                                                <label>工作内容：</label>
+                                                <span>{v.jobDescription}</span>
+                                            </div>
+                                            <div className="conditionLi">
+                                                <label>个人荣誉：</label>
+                                                <span>{v.honor}</span>
+                                            </div>
+                                        </div>
+                                    )
+                                })
+                            }
+                        </div>
+                        <div className="candidateBox educationBox">
+                            <div className="title"><i></i>教育经历</div>
+                            {
+                                educationExperiences.map((v, index) => {
+                                    return (
+                                        <div className="content" key={index}>
+                                            <div className="name"><span>{v.school}</span><i>{v.time}</i></div>
+                                            <div className="box">
+                                                <span>{v.major}</span>
+                                                {this.isNull(v.major) ? null : <span className="line">|</span>}
+                                                <span>{v.education}</span>
+                                                {this.isNull(v.education) ? null : <span className="line">|</span>}
+                                            </div>
+                                        </div>
+                                    )
+                                })
+                            }
+                        </div>
+                        <div className="candidateBox selfBox">
+                            <div className="title"><i></i>自我描述</div>
+                            {
+                                this.isNull(candidateInfo.selfAssessment) ? null : <div className="content">
+                                    <div className="box">
+                                        <p>{candidateInfo.selfAssessment}</p>
+                                    </div>
+                                </div>
+                            }
+
+                        </div>
+                        <div className={showBlank ? 'blankBox show' : 'blankBox hide'} ref='blankBox'></div>
+                        <div className={showDownload ? 'footer fshow' : 'footer fhide'} ref='footer'>
+                            <div className="footerMain">
+                                <div className="footerTitle">
+                                    <img src="imgsH5/logo2.png" alt="" />
+                                    <div className="title">
+                                        <img src="imgsH5/title@2x.png" alt="" />
+                                    </div>
+                                    <div className="content">鲸匹配-招聘求职租房一站式服务平台</div>
+                                </div>
+                                <div className="footerBtn">
+                                    <a className="download" onClick={() => this.downloadApp()}>下载APP</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div> : null}
+                    {isSupport === '2' || isSupport === '0' ? <div className="shareFail"><p>没有找到内容<br/>刷新网络或者换个浏览器试试</p></div> : null}
+                </div>
+
+            )
+        }
+    })
+    ReactDOM.render(
+        <Root></Root>,
+    document.getElementById('root')
+    )
+</script>
+</html>

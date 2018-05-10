@@ -1,0 +1,563 @@
+@charset "utf-8";
+html{
+    background:#f7f7f7;
+    height:100%;
+}
+body{
+    height:100%;
+}
+#root{
+    height:100%;
+}
+.DetailsMain{
+    max-width:640px;
+    margin:0px auto;
+    height:100%;
+}
+.shareMain{
+    height:100%;
+}
+.shareFail{
+    height:100%;
+    overflow: hidden;
+    background:url("../imgsH5/no_message.png") no-repeat center;
+    background-size:cover;
+    position:relative;
+}
+.shareFail p{
+    width:100%;
+    text-align:center;
+    line-height:24px;
+    color:#666;
+    position:absolute;
+    bottom:80px;
+}
+.DetailsMain .header{
+    background:#fff;
+    height:48px;
+    line-height: 48px;
+    color:#333;
+    font-size:16px;
+    text-align:center;
+    border-bottom:1px solid #ebebeb;
+    position:relative;
+}
+.fshow{
+    opacity: 1;
+    z-index: 9;
+}
+.fhide{
+    opacity: 0;
+    z-index: -1;
+}
+.footer{
+    background:#25CCF6;
+    padding:20px 7%;
+    margin-top:10px;
+    position:fixed;
+    bottom:0px;
+    left:0px;
+    width:100%;
+}
+.footerMain{
+    max-width:640px;
+    margin:0px auto;
+}
+.footerTitle{
+    padding-left:15%;
+    position:relative;
+    padding-top:12px;
+    padding-bottom:12px;
+}
+.footerTitle>img{
+    width:13%;
+    position:absolute;
+    top:50%;
+    left:0px;
+    transform:translateY(-50%)
+}
+.footerTitle .title{
+    padding:2px 0px;
+}
+.footerTitle .title>img{
+    width:20%;
+}
+.footerTitle .content{
+    color:#fff;
+    font-size:14px;
+    padding:0px;
+}
+.footerBtn {
+    font-size:0px;
+    padding-top:12px;
+}
+.footerBtn a{
+    width:98%;
+    display: block;
+    margin:0px auto;
+    font-size:14px;
+    border:1px solid #fff;
+    padding:3px 10px;
+    border-radius:100px;
+    color:#fff;
+    text-align:center;
+    line-height: 30px;
+}
+.footerBtn a:last-child{
+    margin-right:0px;
+}
+.blankBox{
+    width:100%;
+    height:200px;
+}
+.show{
+    display: block;
+}
+.hide{
+    display: none;
+}
+.brief{
+    background:#fff;
+    padding:14px 10px 10px;
+}
+.brief .name{
+    font-size:16px;
+    color:#333;
+}
+.brief .salary{
+    font-size:16px;
+    color:#F56767;
+    padding-top:6px;
+}
+.brief .message{
+    border-bottom:1px dashed rgba(151,151,151,0.3);
+    padding:6px 0px;
+    color:#999;
+    margin-bottom:4px;
+    font-size:0px;
+}
+.brief .message span{
+    color:#999;
+    font-size:12px;
+    width:33%;
+    display: inline-block;
+}
+.conditionLi{
+    padding-top:6px;
+    padding-left:40px;
+    position:relative;
+    min-height:23px;
+}
+.conditionLi label{
+    color:#999;
+    position:absolute;
+    left:0px;
+    top:6px;
+}
+.conditionLi span{
+    color:#151515;
+}
+.conditionWelfare{
+    font-size:0px;
+    min-height:31px;
+}
+.conditionWelfare span{
+    background:rgba(37,204,246,0.10);
+    border-radius:2px;
+    padding:0px 4px;
+    color:#25CCF6;
+    margin-right:5px;
+    margin-bottom:5px;
+    display: inline-block;
+    font-size:12px;
+    line-height: 19px;
+}
+.brief .loc{
+    border-top:1px dashed rgba(151,151,151,0.3);
+    margin-top:8px;
+}
+.brief .loc .companyName{
+    color:#666;
+    padding-top:6px;
+}
+.brief .loc .address{
+    color:#151515;
+    padding-top:8px;
+    position:relative;
+    min-height:20px;
+}
+.brief .loc .address span{
+    color:#25CCF6;
+    padding-right:10px;
+    position:relative;
+}
+.brief .loc .address i.locIcon{
+    position:absolute;
+    right:10px;
+    top:8px;
+    width:18px;
+    height:18px;
+    background:url("../imgsH5/loc2x.png") no-repeat center;
+    background-size:contain;
+}
+.brief .loc .address i.point{
+    position:absolute;
+    right:10px;
+    top:-10px;
+    font-size:20px;
+    right:2px;
+    color:#333;
+}
+.commonDesc{
+    margin-top:10px;
+    background:#fff;
+    padding:0px 10px;
+}
+.commonDesc .title{
+    color:#333;
+    font-size:14px;
+    padding:10px 0px 10px 26px;
+    position:relative;
+    border-bottom:1px dashed rgba(151,151,151,0.3);
+}
+.commonDesc .title i{
+    position:absolute;
+    width:16px;
+    height:16px;
+    background:url("../imgsH5/positionIcon2x.png") no-repeat center;
+    background-size:contain;
+    top:11px;
+    left:0px;
+}
+.positionDesc .desc{
+    padding:16px 0px 20px;
+    font-size:13px;
+    line-height: 21px;
+    white-space:pre-wrap;
+    white-space:-moz-pre-wrap;
+    white-space:-o-pre-wrap;
+    word-wrap:break-word;
+}
+.companyDesc .title i{
+    background:url("../imgsH5/companyIcon2x.png") no-repeat center;
+    background-size:contain;
+}
+.companyContent {
+    padding:8px 0px 12px;
+    position:relative;
+}
+.attention{
+    position:absolute;
+    top:8px;
+    right:0px;
+    line-height: 18px;
+    padding-right:19px;
+    color:#333;
+}
+.attention a{
+    display: inline-block;
+    width:15px;
+    height:15px;
+    background:url("../imgsH5/职位详情收藏公司 copy2x.png") no-repeat center right;
+    background-size:contain;
+    position:absolute;
+    top:2px;
+    right:0px;
+}
+a.rightNow{
+    position:absolute;
+    top:40px;
+    right:0px;
+    background:#F56767;
+    color:#fff;
+    border-radius:100px;
+    padding:3px 8px;
+    z-index: 6;
+}
+.companyContent .name{
+    position:relative;
+    font-size:0px;
+}
+.companyContent .name span{
+    display: inline-block;
+    max-width:63%;
+    white-space: nowrap;
+    overflow: hidden;
+    -ms-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+    font-size:14px;
+    color:#333;
+}
+.companyContent .name i{
+    display: inline-block;
+    vertical-align:middle;
+    margin-left:4px;
+    font-size:12px;
+    background:#25CCF6 url("../imgsH5/check2x.png") no-repeat 5px 3px;
+    line-height: 18px;
+    color:#fff;
+    border-radius:100px;
+    padding:0px 5px 0px 20px;
+    background-size:12px 12px;
+}
+.candidateTop{
+    padding:18px 20px 0px;
+    width:100%;
+    background:linear-gradient(-224deg, #00D2FF 0%, #3A7BD5 100%);
+}
+.candidateTop .header{
+    background:transparent;
+    border-bottom:1px solid transparent;
+    color:#fff;
+    position:absolute;
+    width:100%;
+    top:0px;
+    left:0px;
+}
+.candidateTop .content{
+    background:#fff;
+    border-radius:8px;
+    padding:10px;
+    position:relative;
+    bottom:-30px;
+    box-shadow: 0 4px 20px 0 rgba(0,0,0,0.08);
+}
+.contentBrief{
+    position:relative;
+    border-bottom:1px dashed rgba(151,151,151,0.3);
+    padding:5px 0px 15px 60px;
+}
+.contentBrief a.rightNow{
+    bottom:8px;
+    top:auto;
+}
+.contentBrief .img{
+    position:absolute;
+    top:5px;
+    left:0px;
+    width:50px;
+    height:50px;
+}
+.contentBrief .img span{
+    position:absolute;
+    top:5px;
+    left:0px;
+    width:50px;
+    height:50px;
+    background-repeat:no-repeat;
+    background-position:center;
+    background-size:cover;
+    border-radius:100px;
+}
+.contentBrief .img i{
+    position:absolute;
+    bottom:2px;
+    right:-3px;
+    width:16px;
+    height:16px;
+    background:url("../imgsH5/female.png") no-repeat center;
+    background-size:contain;
+}
+.contentBrief .img i.male{
+    background:url("../imgsH5/male.png") no-repeat center;
+    background-size:contain;
+}
+.contentBrief .box{
+    padding:2px 0px;
+    position:relative;
+}
+.contentBrief .personInfo{
+    display: inline-block;
+    padding-right:40px;
+}
+.contentBrief .box i{
+    display: inline-block;
+    padding:0px 5px 1px;
+    background: #25CCF6;
+    border-radius: 3px;
+    color:#fff;
+}
+.contentBrief .personInfo i{
+    position:absolute;
+    right:0px;
+    top:4px;
+}
+.contentBrief .img img{
+    width:50px;
+    height:50px;
+    border-radius:100px;
+}
+.contentBrief span.name{
+    color:#333;
+    font-size:16px;
+    margin-right:6px;
+}
+.contentBrief span{
+    font-size:12px;
+    color:#999;
+    padding:0px 2px;
+}
+.contentBrief .box span:last-child{
+    display: none;
+}
+.contentBrief .credit{
+    position:absolute;
+    right:0px;
+    top:5px;
+    color:#999;
+    text-align:center;
+}
+.contentBrief .credit .num{
+    font-size:20px;
+    color:#25CCF6;
+}
+.contentBrief .credit div{
+    color:#999;
+    padding:1px 0px;
+}
+.contentOther{
+    padding:5px 0px 0px;
+}
+.contentOther .box label{
+    color:#999;
+}
+.contentOther .box span{
+    color:#666;
+}
+.candidateBox {
+    margin-top:40px;
+    background:#fff;
+}
+.candidateBox .title{
+    height:40px;
+    line-height: 40px;
+    padding-left:34px;
+    position:relative;
+    font-size:14px;
+}
+.candidateBox .title i{
+    position:absolute;
+    top:13px;
+    left:10px;
+    width:14px;
+    height:14px;
+    background:url("../imgsH5/期望职位2x.png") no-repeat center;
+    background-size:contain;
+}
+.candidateBox .content{
+    padding:10px;
+    border-top:1px dashed rgba(151,151,151,0.3);
+}
+.candidateBox .name{
+    color:#333;
+    font-size:16px;
+    position:relative;
+}
+.candidateBox .name span{
+    display: inline-block;
+    width:80%;
+    white-space: nowrap;
+    overflow: hidden;
+    -ms-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    font-size:16px;
+    color:#333;
+}
+.candidateBox .name i{
+    position:absolute;
+    right:0px;
+    top:0px;
+    line-height: 20px;
+}
+.expectBox .box {
+    padding-top:5px;
+}
+.candidateBox .box label{
+    color:#999;
+    font-weight: normal;
+}
+.candidateBox .box span{
+    color:#666;
+    font-weight: normal;
+}
+.candidateBox .box span.line{
+    padding:0px 2px;
+}
+.candidateBox .box span.line:last-child{
+    display: none;
+}
+.experienceBox {
+    margin-top:10px;
+}
+.experienceBox .title i{
+    background:url("../imgsH5/工作经历2x.png") no-repeat center;
+    background-size:contain;
+}
+.experienceBox .name i{
+    position:absolute;
+    right:0px;
+    top:0px;
+    line-height: 20px;
+    color:#999;
+}
+.experienceBox .conditionLi{
+    padding-left:60px;
+}
+.educationBox {
+    margin-top:10px;
+}
+.educationBox .title i{
+    background:url("../imgsH5/教育经历2x.png") no-repeat center;
+    background-size:contain;
+    top:11px;
+    width:16px;
+    height:16px;
+}
+.educationBox .name i{
+    position:absolute;
+    right:0px;
+    top:0px;
+    line-height: 20px;
+    color:#999;
+}
+.selfBox {
+    margin-top:10px;
+}
+.selfBox .title i{
+    background:url("../imgsH5/自我描述2x.png") no-repeat center;
+    background-size:contain;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

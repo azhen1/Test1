@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no" name="viewport" id="viewport" />
+    <meta name="format-detection" content="telephone=no, email=no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>鲸匹配</title>
+    <link rel="stylesheet" type="text/css" href="css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="css/details.css"/>
+    <script src="jsH5/jquery-1.8.3.min.js"></script>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+    <script src="jsH5/mainFn.js"></script>
+    <script src="jsH5/react.js"></script>
+    <script src="jsH5/react-dom.js"></script>
+    <script src="jsH5/browser.min.js"></script>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+    var Root = React.createClass({
+        getInitialState: function() {
+            return {
+                title: '',
+                salary: '',
+                updateTime: '',
+                browserNumber: 0,
+                recommendSuccess: 0,
+                type: '',
+                demandList: {
+                    number: undefined,
+                    age: undefined,
+                    education: undefined,
+                    experience: undefined
+                },
+                positionInfo: {
+                    positionDesc: '',
+                    location: '',
+                    address: '',
+                    welfare: [],
+                },
+                companyInfo: {
+                    name: '',
+                    scale: '',
+                    trade: '',
+                    brightSpot: [],
+                    welfare: [],
+                    state: 0
+                },
+                showBlank: false,
+                showDownload: false,
+                openAndroid: 'app://www.jingpipei.com/',
+                openIOS: 'jingpipei://sssix2.whalecity',
+                openUrl: '',
+                isSupport: '1'
+            }
+        },
+        componentDidMount: function() {
+            var href = window.location.href
+            var id = ''
+            if (href !== '' && href !== null && href !== undefined && href.indexOf('positionId') > -1) {
+                id = href.split('?')[1].split('&')[0].split('=')[1]
+            }
+            var {demandList, positionInfo, companyInfo} = this.state
+            var _th = this
+            var formData = {
+                id: id
+            }
+            var URL = 'https://api.jingpipei.com/job/platformPosition/get'
+            // var URL = 'http://116.62.136.23/job/platformPosition/get'
+            getRequest(true, URL, formData).then(function (res) {
+                if(res.code === 0) {
+                    var data = res.data
+                    demandList.number = data.number
+                    demandList.age = data.age
+                    demandList.education = data.education
+                    demandList.experience = data.workExperience
+                    positionInfo.welfare = _th.isNull(data.welfare) ? [] : data.welfare.split(';')
+                    positionInfo.positionDesc = data.description
+                    positionInfo.location = data.workLocation.split('-')[2]
+                    positionInfo.address = data.workAddress
+                    companyInfo.name = data.company.name
+                    companyInfo.scale = data.company.scale
+                    companyInfo.trade = data.company.trade
+                    companyInfo.brightSpot = _th.isNull(data.company.brightSpot) ? [] : data.company.brightSpot.split(';')
+                    companyInfo.welfare = _th.isNull(data.company.welfare) ? [] : data.company.welfare.split(';')
+                    companyInfo.state = data.company.state
+                    _th.setState({
+                        title: data.title,
+                        salary: data.salary,
+                        updateTime: data.updateTime,
+                        browserNumber: data.browseNumber,
+                        recommendSuccess: data.recommendSuccess,
+                        type: data.type,
+                        demandList: demandList,
+                        positionInfo: positionInfo,
+                        companyInfo: companyInfo,
+                        isSupport: '1'
+                    })
+                    _th.weixinShare(href, data)
+                }
+            })
+            // setTimeout(function(){
+            //     if (_th.state.isSupport === '0') {
+            //         _th.setState({
+            //             isSupport: '2'
+            //         })
+            //     }
+            // }, 1000)
+            var u = navigator.userAgent
+            var {openUrl, openAndroid, openIOS} = _th.state
+            if (u.indexOf('Android') > -1 || u.indexOf('Linux') > -1) {//安卓手机
+                openUrl = openAndroid
+            } else if (u.indexOf('iPhone') > -1) {//苹果手机
+                openUrl = openIOS
+            }
+            _th.setState({
+                openUrl: openUrl
+            })
+        },
+        weixinShare (href, data) {
+            var URLShare = 'https://api.jingpipei.com/member/weixin/signWeixin'
+            // var URLShare = 'http://116.62.136.23/member/weixin/signWeixin'
+            var formDataShare = {
+                url: href.split('#')[0]
+            }
+            var imgUrl = 'http://dingyi.oss-cn-hangzhou.aliyuncs.com/images/83ad1a50119a4587859e606eb28a8f75.png'
+            getRequest(true, URLShare, formDataShare).then(function (response) {
+                console.log(response)
+                if (response.code === 0) {
+                    var dataShare = response.data
+                    wx.config({
+                        debug: false,
+                        appId: 'wx1b55b3cbfa6c3879',
+                        timestamp: dataShare.timestamp,
+                        nonceStr: dataShare.nonceStr,
+                        signature: dataShare.signature,
+                        jsApiList: [
+                            'onMenuShareTimeline',
+                            'onMenuShareAppMessage',
+                            'onMenuShareQQ',
+                            'onMenuShareQZone'
+                        ]
+                    })
+                    wx.ready(function(){
+                        wx.checkJsApi({
+                            jsApiList: [
+                                'onMenuShareTimeline',
+                                'onMenuShareAppMessage',
+                                'onMenuShareQQ',
+                                'onMenuShareQZone'
+                            ],
+                            success: function(res) {
+                            }
+                        })
+                        wx.onMenuShareTimeline({
+                            title: data.title, // 分享标题
+                            link: href, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                            imgUrl: imgUrl, // 分享图标
+                            success: function () {
+                            },
+                            cancel: function () {
+                                // 用户取消分享后执行的回调函数
+                            }
+                        })
+                        wx.onMenuShareAppMessage({
+                            title: data.title, // 分享标题
+                            desc: data.description, // 分享描述
+                            link: href, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                            imgUrl: imgUrl, // 分享图标
+                            type: 'link', // 分享类型,music、video或link，不填默认为link
+                            dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+                            success: function () {
+                            },
+                            cancel: function () {
+                            }
+                        })
+                        wx.onMenuShareQQ({
+                            title: data.title, // 分享标题
+                            desc: data.description, // 分享描述
+                            link: href, // 分享链接
+                            imgUrl: imgUrl, // 分享图标
+                            success: function () {
+                            },
+                            cancel: function () {
+                            }
+                        })
+                        wx.onMenuShareQZone({
+                            title: data.title, // 分享标题
+                            desc: data.description, // 分享描述
+                            link: href, // 分享链接
+                            imgUrl: imgUrl, // 分享图标
+                            success: function () {
+                            },
+                            cancel: function () {
+                            }
+                        })
+                    })
+                }
+            })
+        },
+        isNull (val) {
+            if (val === undefined || val === null || val === '') {
+                return true
+            } else {
+                return false
+            }
+        },
+        showFooter () {
+            var {showBlank} = this.state
+            var _th = this
+            if (!showBlank) {
+                setTimeout(function(){
+                    _th.refs.blankBox.style.height = _th.refs.footer.offsetHeight + 10 + 'px'
+                    _th.setState({
+                        showBlank: true,
+                        showDownload: true
+                    })
+                }, 1000)
+            }
+        },
+        downloadApp () {
+            var u = navigator.userAgent
+            if (u.indexOf('Android') > -1 || u.indexOf('Linux') > -1) {//安卓手机
+                window.location.href = "http://www.jingpipei.com/apk/download.html"
+            } else if (u.indexOf('iPhone') > -1) {//苹果手机
+                window.location.href = "https://itunes.apple.com/cn/app/id1354342518?mt=8"
+            }
+        },
+        render: function() {
+            var {title, salary, updateTime, browserNumber, recommendSuccess, type, demandList, positionInfo, companyInfo, showBlank, showDownload, openUrl, isSupport} = this.state
+            return (
+                <div className='shareMain'>
+                    {isSupport === '1' ? <div className="DetailsMain">
+                        <div className="header">职位详情</div>
+                        <div className="brief">
+                            <div className="name">{title}</div>
+                            <div className="salary">{salary}/月</div>
+                            <div className="message">
+                                <span style={{width: '45%'}}>更新：{updateTime}</span>
+                                <span style={{textAlign: 'center', width: '25%'}}>浏览：{browserNumber}人</span>
+                                <span style={{textAlign: 'right', width: '30%'}}>面试人数：{recommendSuccess}人</span>
+                            </div>
+                            <div className="conditionLi">
+                                <label>职位：</label>
+                                <span>{type}</span>
+                            </div>
+                            <div className="conditionLi">
+                                <label>要求：</label>
+                                <span>{this.isNull(demandList.number)  ? '不限人数' :`招${demandList.number}人`}／{this.isNull(demandList.age) ? '不限年龄' :`${demandList.age}岁`}／{this.isNull(demandList.education) ? '不限学历' : demandList.education}／{this.isNull(demandList.experience) ? '不限经验' : demandList.experience}</span>
+                            </div>
+                            <div className="conditionLi conditionWelfare">
+                                <label>福利：</label>
+                                {
+                                    positionInfo.welfare.map((v, index) => {
+                                        if (!this.isNull(v)) {
+                                            return <span key={index}>{v}</span>
+                                        }
+                                    })
+                                }
+                            </div>
+                            <div className="loc">
+                                <div className="address"><span>{positionInfo.location}<i className="point">.</i></span>{positionInfo.address}<i className="locIcon"></i></div>
+                            </div>
+                        </div>
+                        <div className="commonDesc positionDesc">
+                            <div className="title"><i></i>职位描述</div>
+                            <pre className="desc">
+                            {positionInfo.positionDesc}
+                        </pre>
+                        </div>
+                        <div className="commonDesc companyDesc">
+                            <div className="title"><i></i>公司信息</div>
+                            <div className="companyContent">
+                                <div className="name"><span>{companyInfo.name}</span>{companyInfo.state === 3 ? <i>已认证</i> : null}</div>
+                                <div className="attention">关注公司<a className="btnClick" onClick={() => this.showFooter()}></a></div>
+                                <a href={openUrl} className="rightNow btnClick" onClick={() => this.showFooter()}>立即联系</a>
+                                <div className="conditionLi">
+                                    <label>规模：</label>
+                                    <span>{companyInfo.scale}</span>
+                                </div>
+                                <div className="conditionLi">
+                                    <label>行业：</label>
+                                    <span>{companyInfo.trade}</span>
+                                </div>
+                                <div className="conditionLi conditionWelfare">
+                                    <label>亮点：</label>
+                                    {
+                                        companyInfo.brightSpot.map((v, index) => {
+                                            if (!this.isNull(v)) {
+                                                return <span key={index}>{v}</span>
+                                            }
+                                        })
+                                    }
+                                </div>
+                                <div className="conditionLi conditionWelfare">
+                                    <label>福利：</label>
+                                    {
+                                        companyInfo.welfare.map((v, index) => {
+                                            if (!this.isNull(v)) {
+                                                return <span key={index}>{v}</span>
+                                            }
+                                        })
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div className={showBlank ? 'blankBox show' : 'blankBox hide'} ref='blankBox'></div>
+                        <div className={showDownload ? 'footer fshow' : 'footer fhide'} ref='footer'>
+                            <div className="footerMain">
+                                <div className="footerTitle">
+                                    <img src="imgsH5/logo2.png" alt="" />
+                                    <div className="title">
+                                        <img src="imgsH5/title@2x.png" alt="" />
+                                    </div>
+                                    <div className="content">鲸匹配-招聘求职租房一站式服务平台</div>
+                                </div>
+                                <div className="footerBtn">
+                                    <a className="download" onClick={() => this.downloadApp()}>下载APP</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div> : null}
+                    {isSupport === '2' || isSupport === '0' ? <div className="shareFail"><p>没有找到内容<br/>刷新网络或者换个浏览器试试</p></div> : null}
+                </div>
+
+            )
+        }
+    })
+    ReactDOM.render(
+        <Root></Root>,
+        document.getElementById('root')
+    )
+</script>
+</body>
+</html>
