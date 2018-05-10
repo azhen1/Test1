@@ -1,21 +1,19 @@
 <b>xxx企业管理系统</b>
-    - [效果线上地址](http://www.jingpipei.com)
-    - [效果测试地址](http://116.62.136.23/)
+[效果线上地址](http://www.jingpipei.com)
+[效果测试地址](http://116.62.136.23/)
 
-// git 地址
-    git@github.com:azhen1/my-company.git
+## 开发：
+git clone git@github.com:azhen1/my-company.git
 
-// 克隆项目到本地
-    git clone git@github.com:azhen1/my-company.git
+cd my-company
 
-// 安装依赖
-    npm install
+npm install
 
-// 启动项目 项目启动完成后在浏览器输入http://localhost:8081/即可打开项目
-    npm run dev/npm run start
+**npm run dev** (项目启动完成后在浏览器输入http://localhost:8081/即可打开项目)
 
-// 项目打包
-    npm run build
+
+## 发布
+**npm run bulid** (生成打包之后的项目文件,此文件主要用于项目部署)。
 
 
 ## About
